@@ -1,39 +1,47 @@
-name: Publish Rose & Co
+name: Prepare Rose & Co website
+
 on:
   push:
     branches: [main]
+    paths:
+      - 'rose-co-site.zip'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: rose-co-pages
+  group: rose-and-co-website
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  prepare:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
+      - name: Checkout website source
         uses: actions/checkout@v4
-      - name: Prepare website from uploaded ZIP
+
+      - name: Unpack uploaded website
+        shell: bash
         run: |
-          test -f rose-co-site.zip || { echo "Upload rose-co-site.zip to the repository root first"; exit 1; }
-          mkdir -p _site
-          unzip -q rose-co-site.zip -d _site
-          test -f _site/index.html
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-      - name: Publish to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          set -euo pipefail
+          test -s rose-co-site.zip
+          unzip -t rose-co-site.zip >/dev/null
+          mkdir -p "$RUNNER_TEMP/rose-co-pages"
+          unzip -q rose-co-site.zip -d "$RUNNER_TEMP/rose-co-pages"
+          test -s "$RUNNER_TEMP/rose-co-pages/index.html"
+          touch "$RUNNER_TEMP/rose-co-pages/.nojekyll"
+
+      - name: Publish website files to site branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan site
+          git rm -rf . >/dev/null || true
+          cp -a "$RUNNER_TEMP/rose-co-pages/." .
+          git add -A
+          git commit -m "Prepare Rose & Co website for GitHub Pages"
+          git push --force origin HEAD:refs/heads/site
