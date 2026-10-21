@@ -12,36 +12,42 @@ permissions:
   contents: write
 
 concurrency:
-  group: rose-and-co-website
+  group: rose-co-publish
   cancel-in-progress: true
 
 jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout website source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Unpack uploaded website
+      - name: Extract complete website
         shell: bash
         run: |
           set -euo pipefail
-          test -s rose-co-site.zip
-          unzip -t rose-co-site.zip >/dev/null
-          mkdir -p "$RUNNER_TEMP/rose-co-pages"
-          unzip -q rose-co-site.zip -d "$RUNNER_TEMP/rose-co-pages"
-          test -s "$RUNNER_TEMP/rose-co-pages/index.html"
-          touch "$RUNNER_TEMP/rose-co-pages/.nojekyll"
+          ZIP="rose-co-site.zip"
+          test -s "$ZIP"
+          unzip -t "$ZIP" >/dev/null
+          SITE="$RUNNER_TEMP/rose-co-website"
+          mkdir -p "$SITE"
+          unzip -q "$ZIP" -d "$SITE"
+          test -f "$SITE/index.html"
+          test -f "$SITE/hy/index.html"
+          test -f "$SITE/ru/index.html"
+          test -f "$SITE/en/index.html"
+          touch "$SITE/.nojekyll"
 
-      - name: Publish website files to site branch
+      - name: Publish extracted website to gh-pages branch
         shell: bash
         run: |
           set -euo pipefail
+          SITE="$RUNNER_TEMP/rose-co-website"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout --orphan site
+          git checkout --orphan gh-pages
           git rm -rf . >/dev/null || true
-          cp -a "$RUNNER_TEMP/rose-co-pages/." .
+          cp -a "$SITE/." .
           git add -A
-          git commit -m "Prepare Rose & Co website for GitHub Pages"
-          git push --force origin HEAD:refs/heads/site
+          git commit -m "Publish Rose & Co website"
+          git push --force origin HEAD:refs/heads/gh-pages
