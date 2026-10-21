@@ -1,4 +1,4 @@
-name: Publish Rose & Co website
+name: Prepare Rose & Co website
 
 on:
   push:
@@ -10,8 +10,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: rose-co-static-build
@@ -53,35 +51,3 @@ jobs:
           git add -A
           git commit -m "Publish Rose & Co website for GitHub Pages"
           git push --force origin HEAD:refs/heads/gh-pages
-
-  deploy:
-    needs: prepare
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout prepared website
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          persist-credentials: false
-
-      - name: Verify website files
-        run: |
-          test -s index.html
-          test -f hy/index.html
-          test -f ru/index.html
-          test -f en/index.html
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
