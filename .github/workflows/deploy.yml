@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: rose-co-publish
+  group: rose-co-static-build
   cancel-in-progress: true
 
 jobs:
@@ -22,32 +22,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract complete website
+      - name: Extract uploaded website ZIP
         shell: bash
         run: |
           set -euo pipefail
-          ZIP="rose-co-site.zip"
+          ZIP=rose-co-site.zip
           test -s "$ZIP"
-          unzip -t "$ZIP" >/dev/null
-          SITE="$RUNNER_TEMP/rose-co-website"
+          unzip -t "$ZIP" > /dev/null
+          SITE="$RUNNER_TEMP/rose-co-site"
           mkdir -p "$SITE"
           unzip -q "$ZIP" -d "$SITE"
-          test -f "$SITE/index.html"
+          test -s "$SITE/index.html"
           test -f "$SITE/hy/index.html"
           test -f "$SITE/ru/index.html"
           test -f "$SITE/en/index.html"
           touch "$SITE/.nojekyll"
 
-      - name: Publish extracted website to gh-pages branch
+      - name: Publish extracted files to gh-pages branch
         shell: bash
         run: |
           set -euo pipefail
-          SITE="$RUNNER_TEMP/rose-co-website"
+          SITE="$RUNNER_TEMP/rose-co-site"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan gh-pages
-          git rm -rf . >/dev/null || true
+          git rm -rf . > /dev/null || true
           cp -a "$SITE/." .
           git add -A
-          git commit -m "Publish Rose & Co website"
+          git commit -m "Publish Rose & Co website for GitHub Pages"
           git push --force origin HEAD:refs/heads/gh-pages
