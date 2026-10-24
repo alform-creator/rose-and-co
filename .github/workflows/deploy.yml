@@ -18,6 +18,7 @@ on:
       - '.github/scripts/install-journal-features.py'
       - '.github/scripts/final-site-polish.py'
       - '.github/scripts/install-story-decor.py'
+      - '.github/scripts/install-story-monogram.py'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
       - '.github/scripts/seo-headings.py'
@@ -116,6 +117,10 @@ jobs:
           python3 .github/scripts/final-site-polish.py "$SITE"
           python3 .github/scripts/install-more-journal.py "$SITE"
           python3 .github/scripts/install-story-decor.py "$SITE"
+          python3 .github/scripts/install-story-monogram.py "$SITE"
+          test -s "$SITE/assets/story-rc-monogram.svg"
+          grep -q "story-secondary-monogram" "$SITE/hy/index.html"
+          grep -q "story-secondary-monogram" "$SITE/ru/about/index.html"
           test -s "$SITE/assets/story-rose-ornament.svg"
           test -s "$SITE/assets/story-floral-spray.svg"
           grep -q "story-decor1" "$SITE/hy/about/index.html"
