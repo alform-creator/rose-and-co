@@ -104,10 +104,20 @@ with TemporaryDirectory() as temp:
                     return {svgChanged:before!==after,whatsapp:href.includes('wa.me/'),
                       uniqueLabel:!!label&&!!letter.querySelector('#'+CSS.escape(label.htmlFor)),
                       quiz:!!document.querySelector('#rs-quiz-send'),
-                      forms:document.querySelectorAll('.rs-form').length}
+                      forms:document.querySelectorAll('.rs-form').length,
+                      sampleCount:document.querySelectorAll('.rs-sample-grid .rs-sample-card').length,
+                      sampleScrollable:(()=>{
+                        const rail=document.querySelector('.rs-sample-grid');
+                        return !!rail&&getComputedStyle(rail).gridAutoFlow==='column'&&
+                          rail.scrollWidth>rail.clientWidth+50;})(),
+                      sampleNotice:!!document.querySelector('.rs-editorial-notice'),
+                      sampleArrows:document.querySelectorAll('.rs-sample-arrow').length,
+                      samplePerCardLabels:document.querySelectorAll('.rs-sample-card small').length}
                 """)
                 if not all([state["svgChanged"],state["whatsapp"],state["uniqueLabel"],state["quiz"]]):
                     errors.append(where+" interactive form check failed: "+str(state))
+                if state["sampleCount"]!=30 or not state["sampleScrollable"] or not state["sampleNotice"] or state["sampleArrows"]!=2 or state["samplePerCardLabels"]!=0:
+                    errors.append(where+" editorial carousel check failed: "+str(state))
                 if mobile:
                     menu=driver.execute_script("""
                         const btn=document.querySelector('#menu-toggle');
