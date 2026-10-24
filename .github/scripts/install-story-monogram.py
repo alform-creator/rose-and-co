@@ -344,3 +344,166 @@ assert updated_pages>=18, f"Expected every translated page, found {updated_pages
 assert (assets/"rose-atelier-soft-floral.svg").exists()
 assert (assets/"rose-atelier-gold-floral.svg").exists()
 print(f"Rose & Co unified luxury botanical backgrounds on {updated_pages} pages.")
+
+
+# ROSE-CO-ATELIER-EVERYWHERE-INTRO-20261025
+# This is the final design pass. Match the opening flower-growing animation,
+# desktop/mobile menu, editorial pages, articles, and dialogs to the same
+# botanical silk/blush/champagne background installed above.
+everywhere_css=r'''
+
+/* ROSE-CO-ATELIER-EVERYWHERE-INTRO-20261025 */
+/* All surfaces borrow the story's botanical palette; content retains contrast. */
+body, main { background-color:#fcf6f2; }
+.site-header, .mobile-menu {
+  background-color:#fff9f5;
+  background-image:
+    linear-gradient(112deg,rgba(255,255,255,.78),rgba(249,231,230,.62)),
+    radial-gradient(ellipse at 78% 6%,rgba(223,176,180,.20),transparent 60%);
+}
+.mobile-menu { border-top:1px solid rgba(144,90,103,.13); }
+.marquee {
+  background-image:linear-gradient(108deg,#451827 0%,#733750 52%,#4b1c2e 100%);
+  box-shadow:inset 0 1px rgba(244,213,191,.20),inset 0 -1px rgba(244,213,191,.18);
+}
+.about-spotlight {
+  background-image:
+    var(--rose-atelier-floral),
+    var(--rose-atelier-floral),
+    radial-gradient(ellipse at 12% 15%,rgba(255,250,244,.72),transparent 52%),
+    radial-gradient(ellipse at 88% 76%,rgba(226,170,179,.27),transparent 43%),
+    linear-gradient(137deg,#f9eee9 0%,#f1dedb 51%,#f7e7e3 100%);
+  background-position:left -175px top -200px,right -175px bottom -220px,center,center,center;
+  background-size:clamp(215px,28vw,380px) auto,clamp(215px,28vw,380px) auto,auto,auto,auto;
+  background-repeat:no-repeat;
+}
+.article-body {
+  position:relative;
+  isolation:isolate;
+}
+.article-body::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:50%;
+  top:0;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100vw;
+  background-color:#fcf4ef;
+  background-image:
+    var(--rose-atelier-floral),
+    var(--rose-atelier-floral),
+    radial-gradient(ellipse at 27% 65%,rgba(233,199,199,.16),transparent 62%),
+    linear-gradient(160deg,#fff9f5,#f9eee9 60%,#fbf5f0);
+  background-position:left -170px top 12%,right -160px bottom 10%,center,center;
+  background-size:clamp(240px,29vw,385px) auto,clamp(240px,29vw,385px) auto,auto,auto;
+  background-repeat:no-repeat;
+}
+.article-return {
+  background-image:
+    var(--rose-atelier-floral),
+    linear-gradient(145deg,#fbf2ee,#f6e6e3);
+  background-repeat:no-repeat;
+  background-size:clamp(195px,24vw,325px) auto,auto;
+  background-position:right -135px bottom -205px,center;
+}
+.product-dialog {
+  background-color:#fff8f4;
+  background-image:
+    var(--rose-atelier-floral),
+    radial-gradient(ellipse at 85% 90%,rgba(231,192,192,.25),transparent 58%),
+    linear-gradient(145deg,#fffaf7,#f6e7e3);
+  background-position:right -155px bottom -230px,center,center;
+  background-size:clamp(215px,27vw,325px) auto,auto,auto;
+  background-repeat:no-repeat;
+}
+.modal-info {
+  background:linear-gradient(130deg,rgba(255,252,248,.76),rgba(251,239,234,.69));
+}
+.product-card, .flower-type, .catalog-search, .journal-article-cta {
+  background-color:rgba(255,251,248,.93);
+}
+.journal-article-cta {
+  background-image:
+    radial-gradient(circle at right top,rgba(230,186,191,.22),transparent 58%),
+    linear-gradient(130deg,#fffaf5,#f5e7e5);
+}
+.footer-bottom {border-color:rgba(150,91,110,.21);}
+@media(max-width:640px) {
+  .about-spotlight {
+    background-position:left -115px top -155px,right -120px bottom -155px,center,center,center;
+    background-size:160px auto,160px auto,auto,auto,auto;
+  }
+  .article-body::before {
+    background-position:left -140px top 12%,right -138px bottom 7%,center,center;
+    background-size:170px auto,170px auto,auto,auto;
+  }
+  .article-return {background-position:right -115px bottom -160px,center;background-size:170px auto,auto;}
+  .product-dialog {background-size:185px auto,auto,auto;background-position:right -120px bottom -150px,center,center;}
+}
+'''
+style_file=assets/"styles.css"
+style_text=style_file.read_text(encoding="utf-8")
+if "/* ROSE-CO-ATELIER-EVERYWHERE-INTRO-20261025 */" not in style_text:
+    style_file.write_text(style_text+everywhere_css,encoding="utf-8")
+
+# The intro is loaded as a separate stylesheet AFTER styles.css, so patch it
+# directly rather than relying on cascade order across two static assets.
+intro_path=assets/"bloom-intro.css"
+intro_css=intro_path.read_text(encoding="utf-8")
+intro_addition=r'''
+
+/* ROSE-CO-ATELIER-INTRO-MATCH-20261025 */
+/* From the very first frame the opening uses the story's floral backdrop. */
+html.rose-bloom-on .rose-bloom-overlay {
+  background-color:#f5e6e3;
+  background-image:
+    url("/rose-and-co/assets/rose-atelier-soft-floral.svg?v=luxe-all2"),
+    url("/rose-and-co/assets/rose-atelier-soft-floral.svg?v=luxe-all2"),
+    radial-gradient(ellipse at 50% 37%,rgba(255,252,248,.88) 0%,rgba(255,247,240,.70) 42%,transparent 82%),
+    radial-gradient(ellipse at 83% 82%,rgba(226,170,179,.23),transparent 48%),
+    linear-gradient(140deg,#fff8f3 0%,#f4e3e0 55%,#eed6d3 100%);
+  background-repeat:no-repeat;
+  background-position:left -98px bottom -170px,right -105px top -147px,center,center,center;
+  background-size:clamp(220px,28vw,395px) auto,clamp(220px,28vw,395px) auto,auto,auto,auto;
+}
+.rose-bloom-overlay::before {
+  border:1px solid rgba(183,137,139,.20);
+  background:radial-gradient(circle,rgba(255,252,244,.13),transparent 72%);
+}
+.rose-bloom-overlay::after {
+  border:1px solid rgba(183,137,139,.18);
+  background:radial-gradient(circle,rgba(255,252,244,.13),transparent 72%);
+}
+.rose-bloom-skip {background:rgba(255,250,245,.83);}
+@media(max-width:640px) {
+  html.rose-bloom-on .rose-bloom-overlay {
+    background-position:left -103px bottom -142px,right -102px top -130px,center,center,center;
+    background-size:170px auto,165px auto,auto,auto,auto;
+  }
+}
+'''
+if "/* ROSE-CO-ATELIER-INTRO-MATCH-20261025 */" not in intro_css:
+    intro_path.write_text(intro_css+intro_addition,encoding="utf-8")
+
+# Bust both stylesheet caches on iOS and other mobile browsers.
+page_count=0
+intro_count=0
+for page in root.rglob("*.html"):
+    original=page.read_text(encoding="utf-8")
+    refreshed=re.sub(
+        r'(/rose-and-co/assets/styles\.css)(?:\?v=[^"\']+)?',
+        r'\1?v=rose-atelier-all-20261025', original)
+    refreshed=re.sub(
+        r'(/rose-and-co/assets/bloom-intro\.css)(?:\?v=[^"\']+)?',
+        r'\1?v=rose-atelier-all-20261025', refreshed)
+    if refreshed!=original:
+        page.write_text(refreshed,encoding="utf-8")
+        page_count+=1
+    if "rose-bloom-overlay" in refreshed:
+        intro_count+=1
+assert intro_count==3, f"Intro must still be present in all three languages: {intro_count}"
+assert page_count>=18, f"Page stylesheets were not updated for all locales: {page_count}"
+assert "rose-atelier-soft-floral.svg" in intro_path.read_text(encoding="utf-8")
+print(f"Rose & Co unified theme from intro to footer: {page_count} pages, {intro_count} animated homepages.")
