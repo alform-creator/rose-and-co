@@ -138,14 +138,7 @@ html[lang="hy"] .footer h4 {
   font-family: var(--arm-serif);
   font-weight: 500;
 }
-html[lang="hy"] .brand-type,
-html[lang="hy"] .brand-type small,
-html[lang="hy"] .hero-float-tag,
-html[lang="hy"] .rose-bloom-brand,
-html[lang="hy"] .rose-bloom-subtitle {
-  /* Preserve the Latin-wordmark's visual identity. */
-  font-family: Georgia, serif;
-}
+/* English ROSE & CO lettering keeps its original, unchanged typography. */
 
 /* Responsive, long Armenian headings stay inside the available space. */
 @media (max-width: 960px) {
