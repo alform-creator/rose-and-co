@@ -92,6 +92,30 @@ jobs:
           PY
           python3 .github/scripts/add-animations.py "$SITE"
           test -s "$SITE/assets/rose-motion.js"
+          # Same number for calls and WhatsApp, across all three locales.
+          # The website ZIP may include an older saved WhatsApp number.
+          SITE="$SITE" python3 - <<'PY'
+          from pathlib import Path
+          import os
+
+          root = Path(os.environ["SITE"])
+          changed = 0
+          for ext in ("*.html", "*.js", "*.json"):
+              for file in root.rglob(ext):
+                  content = file.read_text(encoding="utf-8")
+                  updated = (content
+                      .replace("37495806009", "37433081898")
+                      .replace("095 806 009", "033 081 898")
+                      .replace("095806009", "033081898"))
+                  if updated != content:
+                      file.write_text(updated, encoding="utf-8")
+                      changed += 1
+          config = root / "assets" / "contact-config.js"
+          assert config.exists(), "Missing contact configuration"
+          assert "whatsapp: '37433081898'" in config.read_text(encoding="utf-8")
+          assert not any("37495806009" in f.read_text(encoding="utf-8") for f in root.rglob("*.html"))
+          print("Rose & Co WhatsApp: +37433081898; updated", changed, "files")
+          PY
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
