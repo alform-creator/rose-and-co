@@ -129,6 +129,60 @@ css = r'''
 @media(prefers-reduced-motion:reduce) {
   .rose-runner,.rose-runner.rose-runner-active {display:none !important;animation:none !important;}
 }
+
+/* ROSE-CO-ROMANTIC-RUNNER-SEE-IT-v2 */
+/* Stage is obvious on mobile, yet stays beneath native modal dialogs. */
+.rose-runner {
+  width:min(485px,calc(100vw - 16px));
+  height:211px;
+  z-index:2147483000;
+  bottom:max(8px,env(safe-area-inset-bottom,0px));
+}
+.rose-runner::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:26px 6px 4px;
+  border-radius:115px 115px 34px 34px;
+  background:
+    radial-gradient(ellipse at 75% 23%,rgba(255,248,243,.91),transparent 64%),
+    linear-gradient(140deg,rgba(255,249,246,.88),rgba(244,215,217,.93));
+  box-shadow:0 8px 25px rgba(96,42,62,.12), inset 0 1px rgba(255,255,255,.8);
+}
+.rose-runner-art { z-index:1;filter:drop-shadow(0 5px 6px rgba(83,33,51,.13)); }
+.rose-runner-close {top:24px;right:14px;z-index:6;}
+@media(max-width:640px) {
+  .rose-runner {
+    width:min(390px,calc(100vw - 12px));
+    height:177px;
+    bottom:max(8px,env(safe-area-inset-bottom,0px));
+  }
+  .rose-runner::before {inset:16px 3px 2px;border-radius:90px 90px 22px 22px;}
+  .rose-runner-close {top:12px;right:11px;}
+}
+/* Respect reduced-motion preference: show the illustrated exchange
+   without motion, rather than making the entire feature disappear. */
+@media (prefers-reduced-motion:reduce) {
+  .rose-runner {display:block !important;}
+  .rose-runner.rose-runner-active {
+    visibility:visible;
+    opacity:1;
+    transform:translate(-50%,0);
+    animation:none !important;
+  }
+  .rose-runner-active .rr-boy {transform:translateX(174px);}
+  .rose-runner-active .rr-bouquet {transform:translate(13px,-6px) rotate(7deg);}
+  .rose-runner-active .rr-girl-hand {transform:rotate(-19deg);}
+  .rose-runner-active .rr-heart {
+    opacity:.78;
+    transform:translateY(0) scale(.8);
+  }
+  .rose-runner-active .rr-boy-body,
+  .rose-runner-active .rr-left-leg,
+  .rose-runner-active .rr-right-leg,
+  .rose-runner-active .rr-girl-head,
+  .rose-runner-active .rr-spark {animation:none !important;}
+}
 '''
 
 # Detailed vector illustration, not emoji or floating text. The boy runs across
@@ -261,52 +315,72 @@ js = r'''(() => {
   "use strict";
   const stage = document.getElementById("rose-runner");
   if (!stage) return;
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  if (reduced.matches) return;
 
-  const intervalMs = 30000;
-  const durationMs = 5500;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const intervalMs = 30000;  // Every thirty seconds after the first preview
+  const durationMs = 6500;
   const closeButton = stage.querySelector(".rose-runner-close");
   let dismissed = false;
   let finishTimer = null;
+  let intervalTimer = null;
+  let startTimer = null;
 
   function clearScene() {
     if (finishTimer !== null) {
-      clearTimeout(finishTimer);
+      window.clearTimeout(finishTimer);
       finishTimer = null;
     }
     stage.classList.remove("rose-runner-active");
   }
+
   function canPlay() {
-    return !dismissed && !document.hidden && !reduced.matches &&
+    return !dismissed && !document.hidden &&
       !document.documentElement.classList.contains("rose-bloom-on") &&
       !document.querySelector("dialog[open], [aria-modal='true']");
   }
+
   function play() {
     if (!canPlay()) return;
     clearScene();
-    // Restart CSS keyframes even when the browser has kept a finished node.
+    // Force keyframes to restart on every 30s appearance, also on iOS Safari.
     void stage.offsetWidth;
     stage.classList.add("rose-runner-active");
     finishTimer = window.setTimeout(clearScene, durationMs);
   }
 
-  const interval = window.setInterval(play, intervalMs);
+  function begin() {
+    if (dismissed || intervalTimer !== null || startTimer !== null) return;
+    // On homepages, do not cover the separate flower-growing intro.
+    // On interior pages, the first gift appears almost immediately.
+    const delay = document.documentElement.classList.contains("rose-bloom-on")
+      ? 5000 : 1300;
+    startTimer = window.setTimeout(() => {
+      startTimer = null;
+      play();
+      intervalTimer = window.setInterval(play, intervalMs);
+    }, delay);
+  }
+
+  function stopTimers() {
+    if (startTimer !== null) window.clearTimeout(startTimer);
+    if (intervalTimer !== null) window.clearInterval(intervalTimer);
+    startTimer = null;
+    intervalTimer = null;
+    clearScene();
+  }
+
   closeButton?.addEventListener("click", () => {
     dismissed = true;
-    clearInterval(interval);
-    clearScene();
+    stopTimers();
   });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) clearScene();
   });
-  reduced.addEventListener?.("change", () => {
-    if (reduced.matches) clearScene();
+  window.addEventListener("pagehide", stopTimers);
+  window.addEventListener("pageshow", () => {
+    if (!dismissed) begin();
   });
-  window.addEventListener("pagehide", () => {
-    clearInterval(interval);
-    clearScene();
-  }, { once:true });
+  begin();
 })();'''
 
 (assets / "romantic-runner.css").write_text(css + "\n", encoding="utf-8")
@@ -327,8 +401,8 @@ for lang, close_label in locales.items():
         assert "</head>" in html and "</body>" in html, f"Unexpected page: {page}"
         art = markup.replace("__CLOSE__", close_label).replace("__SVG__", svg)
         html = html.replace("</head>",
-            '<link rel="stylesheet" href="/rose-and-co/assets/romantic-runner.css?v=runner1"/>' +
-            '<script defer src="/rose-and-co/assets/romantic-runner.js?v=runner1"></script>' +
+            '<link rel="stylesheet" href="/rose-and-co/assets/romantic-runner.css?v=runner2"/>' +
+            '<script defer src="/rose-and-co/assets/romantic-runner.js?v=runner2"></script>' +
             "</head>", 1)
         html = html.replace("</body>", art + "</body>", 1)
         page.write_text(html, encoding="utf-8")
