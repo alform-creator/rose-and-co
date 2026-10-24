@@ -72,6 +72,23 @@ jobs:
             python3 .github/scripts/add-gifts.py "$SITE"
           fi
           python3 .github/scripts/install-real-photos.py "$SITE"
+          # Remove the green ✳ decorative symbol from all blog articles in
+          # every language. The source archive can reintroduce it on deploy.
+          SITE="$SITE" python3 - <<'PY'
+          from pathlib import Path
+          import os
+          import re
+
+          root = Path(os.environ["SITE"])
+          for page in root.rglob("*.html"):
+              html = page.read_text(encoding="utf-8")
+              html = re.sub(
+                  r'<div\s+class=["\']article-finish["\']>\s*✳\s*</div>',
+                  '', html,
+              )
+              html = html.replace("✳", "")
+              page.write_text(html, encoding="utf-8")
+          PY
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
