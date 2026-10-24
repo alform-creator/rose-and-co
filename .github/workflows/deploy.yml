@@ -17,6 +17,8 @@ on:
       - '.github/scripts/install-brand-logo.py'
       - '.github/scripts/install-journal-features.py'
       - '.github/scripts/final-site-polish.py'
+      - '.github/scripts/install-more-journal.py'
+      - '.github/journal-extra-2026/**'
       - '.github/scripts/seo-headings.py'
       - '.rose-customer-2026/**'
   workflow_dispatch:
@@ -111,6 +113,10 @@ jobs:
           grep -q 'rose-bloom-logo' "$SITE/ru/index.html"
           python3 .github/scripts/install-journal-features.py "$SITE"
           python3 .github/scripts/final-site-polish.py "$SITE"
+          python3 .github/scripts/install-more-journal.py "$SITE"
+          test -f "$SITE/hy/journal/pink-rose-bouquets/index.html"
+          test -f "$SITE/ru/journal/flowers-at-home/index.html"
+          test -f "$SITE/en/journal/flower-boxes-vs-bouquets/index.html"
           test -f "$SITE/hy/journal/bouquet-as-gift/index.html"
           test -f "$SITE/ru/journal/red-roses-51-101/index.html"
           test -f "$SITE/en/journal/ordering-flowers-guide/index.html"
