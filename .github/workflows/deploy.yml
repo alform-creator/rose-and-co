@@ -10,6 +10,8 @@ on:
       - '.github/workflows/deploy.yml'
       - '.github/scripts/refine-photos.py'
       - '.github/scripts/install-premium-roses.py'
+      - '.github/scripts/install-real-photos.py'
+      - '.rose-customer-2026/**'
   workflow_dispatch:
 
 permissions:
@@ -32,7 +34,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install image processing dependency
-        run: python3 -m pip install --quiet 'Pillow>=10,<13'
+        run: python3 -m pip install --quiet 'beautifulsoup4>=4.12,<5'
 
       - name: Extract uploaded website ZIP
         shell: bash
@@ -69,14 +71,7 @@ jobs:
           if [ "$ZIP" = "rose-co-site.zip" ]; then
             python3 .github/scripts/add-gifts.py "$SITE"
           fi
-          # Customer-supplied final photo bundle is already curated and
-          # contains all HTML/catalog data. Never overwrite it with old assets.
-          if [ -f "$SITE/assets/images/customer/flowers-01.webp" ]; then
-            echo "Detected customer photo gallery: preserving all supplied images"
-          else
-            python3 .github/scripts/refine-photos.py "$SITE"
-            python3 .github/scripts/install-premium-roses.py "$SITE"
-          fi
+          python3 .github/scripts/install-real-photos.py "$SITE"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
