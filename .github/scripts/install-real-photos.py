@@ -224,11 +224,19 @@ css.write_text(css.read_text(encoding='utf-8')+'''
 .card-image .photo-brand-tag small {display:block;font-size:9px;letter-spacing:.09em;font-style:normal;margin-top:3px;}
 .card-image .photo-brand-tag:before {content:'';position:absolute;top:-11px;left:48%;height:11px;width:1px;background:rgba(93,77,70,.65);transform:rotate(-8deg);}
 @media (max-width:768px) {.card-image{aspect-ratio:4/5 !important;}.card-image .photo-brand-tag{font-size:11px;bottom:10px;right:9px;padding:7px 6px;min-width:48px;}}
+
+/* Consistent product card heights: every Ask for price stays on the same
+   baseline within its grid row, even when names wrap to extra lines. */
+.product-grid {align-items:stretch;}
+.product-grid .product-card {display:flex;flex-direction:column;height:100%;min-width:0;}
+.product-grid .product-card .card-image {flex:0 0 auto;width:100%;}
+.product-grid .product-card .product-meta {display:flex;flex-direction:column;flex:1 1 auto;min-width:0;}
+.product-grid .product-card .card-action {margin-top:auto;}
 ''',encoding='utf-8')
 # Bust CSS cache on GitHub Pages devices.
 for page in root.rglob('*.html'):
     html=page.read_text(encoding='utf-8')
-    html=html.replace('/rose-and-co/assets/styles.css"','/rose-and-co/assets/styles.css?v=real4"')
+    html=html.replace('/rose-and-co/assets/styles.css"','/rose-and-co/assets/styles.css?v=align5"')
     html=html.replace('/rose-and-co/assets/catalog.js"','/rose-and-co/assets/catalog.js?v=real4"')
     html=html.replace('/rose-and-co/assets/app.js"','/rose-and-co/assets/app.js?v=real4"')
     page.write_text(html,encoding='utf-8')
