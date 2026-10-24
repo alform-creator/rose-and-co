@@ -124,6 +124,28 @@ jobs:
           python3 .github/scripts/install-floral-experience.py "$SITE"
           test -s "$SITE/assets/rose-experience.css"
           test -s "$SITE/assets/rose-experience.js"
+          node --check "$SITE/assets/rose-experience.js"
+          # Builder selection, localization and accessible navigation smoke checks.
+          SITE="$SITE" python3 - <<'PY'
+          from pathlib import Path
+          from bs4 import BeautifulSoup
+          import os
+          root=Path(os.environ['SITE'])
+          for lang in ('hy','ru','en'):
+              html=(root/lang/'index.html').read_text(encoding='utf-8')
+              soup=BeautifulSoup(html,'html.parser')
+              section=soup.select_one('#rose-bouquet-builder')
+              assert section and section.get('data-lang')==lang
+              assert len(section.select('input[name=rose-flower]'))==4
+              assert len(section.select('input[name=rose-color]'))==4
+              assert len(section.select('input[name=rose-wrap]'))==3
+              assert section.select_one('select[name=rose-count]')
+              assert section.select_one('.rose-builder-order')
+              assert len(soup.select('nav .rose-builder-nav'))==2
+              assert soup.select_one('.rose-bloom-ornament')
+              assert soup.select_one('script[src*="rose-experience.js"]')
+          print('Rose & Co bouquet builder: localized markup smoke checks passed.')
+          PY
           grep -q 'id="rose-bouquet-builder"' "$SITE/hy/index.html"
           grep -q 'id="rose-bouquet-builder"' "$SITE/ru/index.html"
           grep -q 'id="rose-bouquet-builder"' "$SITE/en/index.html"
