@@ -65,6 +65,21 @@ for image_path in sorted(photos.glob('flowers-*.webp')) + [photos / 'wreaths-01.
     img.save(image_path, format='WEBP', quality=91, method=6)
     updated += 1
 
+# Restore the wreath category cover as a real photo rather than a montage.
+with Image.open(photos / 'wreaths-01.webp') as wreath:
+    cover = ImageOps.fit(wreath.convert('RGB'), (640, 740),
+                         method=Image.Resampling.LANCZOS)
+cover.save(photos / 'category-wreaths.webp', format='WEBP', quality=91, method=6)
+
+# Keep the visual asset manifest in sync with the published product catalog.
+manifest_path = photos / 'manifest.json'
+if manifest_path.exists():
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    manifest = [entry for entry in manifest if not (
+        entry.get('category') == 'wreaths' and
+        entry.get('file') != 'wreaths-01.webp')]
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
 # Remove only the five artificial/montage wreath assets, never the real wreath.
 for image_path in photos.glob('wreaths-*.webp'):
     if image_path.name != 'wreaths-01.webp':
@@ -75,6 +90,13 @@ for page in site.rglob('*.html'):
     html = page.read_text(encoding='utf-8')
     html = re.sub(r'(/rose-and-co/assets/images/rose50/(?:flowers-\d+|wreaths-01)\.webp)(?:\?v=photo2)?',
                   r'\1?v=photo2', html)
+    # Keep the visible item count aligned with the reduced catalog size.
+    html = html.replace('id="result-count">50 ', 'id="result-count">45 ')
+    # Editorial memorial pages should also show the natural wreath photograph,
+    # instead of the original vector-style decorative placeholder.
+    for old in ('white-wreath.webp', 'crimson-wreath.webp', 'blush-wreath.webp'):
+        html = html.replace('/rose-and-co/assets/images/' + old,
+                            '/rose-and-co/assets/images/rose50/wreaths-01.webp?v=photo2')
     page.write_text(html, encoding='utf-8')
 
 js = assets / 'app.js'
