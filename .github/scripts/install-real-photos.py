@@ -260,4 +260,26 @@ for name in ['pink-peonies.webp','blush-ceremony.webp','atelier-peony.webp','ate
     (root/'assets'/'images'/name).unlink(missing_ok=True)
 # Track correct customer-image inventory for sanity checking.
 (root/'assets'/'images'/'real-2026'/'inventory.json').write_text(json.dumps({'flowers':41,'wreaths':16,'toys':5,'new_sweets':3,'editorial':7,'catalog_products':len(products),'old_sweets_preserved':len(old_sweets)},ensure_ascii=False,indent=2),encoding='utf-8')
+# The business uses the same telephone and WhatsApp number.
+# Normalize source-archive links and displayed labels after rebuilding all pages,
+# including article footers, catalog, and contact pages in HY/RU/EN.
+for page in root.rglob('*.html'):
+    html = page.read_text(encoding='utf-8')
+    html = html.replace('37495806009', '37433081898')
+    html = html.replace('095 806 009', '033 081 898')
+    page.write_text(html, encoding='utf-8')
+for rel_path in ('assets/contact-config.js', 'assets/ui-translations.js'):
+    target = root / rel_path
+    if target.exists():
+        source = target.read_text(encoding='utf-8')
+        source = source.replace('37495806009', '37433081898')
+        source = source.replace('095 806 009', '033 081 898')
+        target.write_text(source, encoding='utf-8')
+
+# Assert the user-facing contact details cannot silently revert.
+assert all('37495806009' not in p.read_text(encoding='utf-8')
+           and '095 806 009' not in p.read_text(encoding='utf-8')
+           for p in root.rglob('*.html'))
+assert 'whatsapp: \'37433081898\'' in (root/'assets/contact-config.js').read_text(encoding='utf-8')
+
 print('Rose & Co: 72 user photographs installed, 71 uniquely pictured catalog items, 6 original sweets preserved, hero untouched; edited',pages,'locale pages.')
