@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'rose-co-site.zip'
+      - 'roseco50.zip'
       - 'Rose-and-Co-50-Photos-Ready-for-GitHub.zip'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
@@ -27,7 +28,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -s "Rose-and-Co-50-Photos-Ready-for-GitHub.zip" ]; then
+          if [ -s "roseco50.zip" ]; then
+            ZIP="roseco50.zip"
+          elif [ -s "Rose-and-Co-50-Photos-Ready-for-GitHub.zip" ]; then
             ZIP="Rose-and-Co-50-Photos-Ready-for-GitHub.zip"
           else
             ZIP="rose-co-site.zip"
