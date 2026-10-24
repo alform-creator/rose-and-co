@@ -20,6 +20,7 @@ on:
       - '.github/scripts/install-story-decor.py'
       - '.github/scripts/install-story-monogram.py'
       - '.github/scripts/install-romantic-runner.py'
+      - '.github/scripts/install-floral-experience.py'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
       - '.github/scripts/seo-headings.py'
@@ -120,6 +121,13 @@ jobs:
           python3 .github/scripts/install-story-decor.py "$SITE"
           python3 .github/scripts/install-story-monogram.py "$SITE"
           python3 .github/scripts/install-romantic-runner.py "$SITE"
+          python3 .github/scripts/install-floral-experience.py "$SITE"
+          test -s "$SITE/assets/rose-experience.css"
+          test -s "$SITE/assets/rose-experience.js"
+          grep -q 'id="rose-bouquet-builder"' "$SITE/hy/index.html"
+          grep -q 'id="rose-bouquet-builder"' "$SITE/ru/index.html"
+          grep -q 'id="rose-bouquet-builder"' "$SITE/en/index.html"
+          grep -q 'rose-experience.js?v=atelier3' "$SITE/hy/catalog/index.html"
           test -s "$SITE/assets/romantic-runner.css"
           test -s "$SITE/assets/romantic-runner.js"
           grep -q 'id="rose-runner"' "$SITE/hy/index.html"
