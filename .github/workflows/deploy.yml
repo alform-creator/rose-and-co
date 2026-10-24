@@ -17,6 +17,7 @@ on:
       - '.github/scripts/install-brand-logo.py'
       - '.github/scripts/install-journal-features.py'
       - '.github/scripts/final-site-polish.py'
+      - '.github/scripts/install-story-decor.py'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
       - '.github/scripts/seo-headings.py'
@@ -114,6 +115,10 @@ jobs:
           python3 .github/scripts/install-journal-features.py "$SITE"
           python3 .github/scripts/final-site-polish.py "$SITE"
           python3 .github/scripts/install-more-journal.py "$SITE"
+          python3 .github/scripts/install-story-decor.py "$SITE"
+          test -s "$SITE/assets/story-rose-ornament.svg"
+          test -s "$SITE/assets/story-floral-spray.svg"
+          grep -q "story-decor1" "$SITE/hy/about/index.html"
           test -f "$SITE/hy/journal/pink-rose-bouquets/index.html"
           test -f "$SITE/ru/journal/flowers-at-home/index.html"
           test -f "$SITE/en/journal/flower-boxes-vs-bouquets/index.html"
