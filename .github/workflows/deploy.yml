@@ -9,6 +9,7 @@ on:
       - 'Rose-and-Co-50-Photos-Ready-for-GitHub.zip'
       - '.github/workflows/deploy.yml'
       - '.github/scripts/refine-photos.py'
+      - '.github/scripts/install-premium-roses.py'
   workflow_dispatch:
 
 permissions:
@@ -69,6 +70,7 @@ jobs:
             python3 .github/scripts/add-gifts.py "$SITE"
           fi
           python3 .github/scripts/refine-photos.py "$SITE"
+          python3 .github/scripts/install-premium-roses.py "$SITE"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
