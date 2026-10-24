@@ -179,8 +179,12 @@ for page in root.rglob('*.html'):
         if original in editorial:
            node['src']=prefix+'real-2026/'+editorial[original]+'?v=real4'
         elif '/rose50/' in src and node.find_parent('article',class_='product-card') is None:
-           # The category tiles are curated independently; keep existing sweets cover untouched.
-           if original=='category-sweets.webp':continue
+           # Use the premium sharp Rose & Co + Raffaello photograph for the
+           # Sweets section cover on all HY/RU/EN homepages. Do not affect
+           # original sweets products or the introductory hero photograph.
+           if original=='category-sweets.webp':
+               node['src']=prefix+'rose50/sweets-05.webp?v=sweets-cover-20261024'
+               continue
            if original.startswith('category-'):
                group=original[len('category-'):-len('.webp')]
                if group in category_img:
