@@ -18,7 +18,7 @@ root=Path(sys.argv[1]).resolve()
 host="https://alform-creator.github.io"
 prefix="/rose-and-co/"
 langs=("hy","ru","en")
-version="final-qa-20261025-v3"
+version="final-qa-20261025-v4"
 META={
 "hy":{
 "about":("Rose & Co-ի պատմությունը․ ծաղիկներ՝ սիրով ու ուշադրությամբ",
@@ -300,6 +300,32 @@ html{scroll-padding-top:22px}
 }
 """
     css_path.write_text(css,encoding="utf-8")
+
+# Genuine ultra-narrow Russian layout issues found by the full 192-case
+# browser crawl: flower-type labels and long-form article copy. Avoid clipping
+# or horizontal scrollbar; do not change the visual proportions above 360px.
+ultra_css = """
+/* ROSE-CO-ULTRA-NARROW-20261025: 320px Russian flower guide + journal */
+@media(max-width:360px) {
+  .flower-types-grid,.flower-type,.flower-type div,.flower-type b,.flower-type small {
+    min-width:0;max-width:100%;
+  }
+  .flower-type {gap:8px;padding:11px 8px;}
+  .flower-type b,.flower-type small {overflow-wrap:anywhere;word-break:normal;}
+  .flower-icon {min-width:37px;width:37px;height:37px;font-size:21px;}
+  .article-body,.article-hero,.article-hero h1,.article-hero p,
+  .article-body p,.article-body li,.article-body a,
+  .article-body strong,.article-body em,.article-body h2,.article-body h3 {
+    min-width:0;max-width:100%;overflow-wrap:anywhere;
+  }
+  .article-body pre,.article-body table {display:block;max-width:100%;overflow-x:auto;}
+  .article-body img,.article-hero img {max-width:100%;height:auto;}
+  .article-meta,.article-meta span,.article-back {min-width:0;overflow-wrap:anywhere;}
+}
+"""
+if "ROSE-CO-ULTRA-NARROW-20261025" not in css_path.read_text(encoding="utf-8"):
+    css_path.write_text(css_path.read_text(encoding="utf-8")+"\\n"+ultra_css,encoding="utf-8")
+
 for p in page_files:
     s=p.read_text(encoding="utf-8")
     s=re.sub(r'(/rose-and-co/assets/styles\.css)\?v=[^"\']+',r'\1?v='+version,s)
