@@ -231,12 +231,14 @@ css.write_text(css.read_text(encoding='utf-8')+'''
 .product-grid .product-card {display:flex;flex-direction:column;height:100%;min-width:0;}
 .product-grid .product-card .card-image {flex:0 0 auto;width:100%;}
 .product-grid .product-card .product-meta {display:flex;flex-direction:column;flex:1 1 auto;min-width:0;}
-.product-grid .product-card .card-action {margin-top:auto;}
+/* Keep the price note on one baseline across each row, despite multi-line names. */
+.product-grid .product-card .product-meta p {margin-top:auto;display:flex;align-items:flex-end;min-width:0;}
+.product-grid .product-card .card-action {margin-top:0;}
 ''',encoding='utf-8')
 # Bust CSS cache on GitHub Pages devices.
 for page in root.rglob('*.html'):
     html=page.read_text(encoding='utf-8')
-    html=html.replace('/rose-and-co/assets/styles.css"','/rose-and-co/assets/styles.css?v=align5"')
+    html=html.replace('/rose-and-co/assets/styles.css"','/rose-and-co/assets/styles.css?v=align6"')
     html=html.replace('/rose-and-co/assets/catalog.js"','/rose-and-co/assets/catalog.js?v=real4"')
     html=html.replace('/rose-and-co/assets/app.js"','/rose-and-co/assets/app.js?v=real4"')
     page.write_text(html,encoding='utf-8')
