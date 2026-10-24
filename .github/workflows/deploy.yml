@@ -36,6 +36,18 @@ jobs:
           test -f "$SITE/hy/index.html"
           test -f "$SITE/ru/index.html"
           test -f "$SITE/en/index.html"
+          # Remove the decorative Unicode symbol rendered as a green emoji on iOS.
+          SITE="$SITE" python3 - <<'PY'
+          from pathlib import Path
+          import os
+
+          root = Path(os.environ["SITE"])
+          for page in root.rglob("*.html"):
+              html = page.read_text(encoding="utf-8")
+              html = html.replace('<span class="h1-flower">✳</span>', '')
+              html = html.replace('<span>✳</span>', '')
+              page.write_text(html, encoding="utf-8")
+          PY
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
