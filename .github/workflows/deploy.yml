@@ -21,6 +21,8 @@ on:
       - '.github/scripts/install-story-monogram.py'
       - '.github/scripts/install-romantic-runner.py'
       - '.github/scripts/install-floral-experience.py'
+      - '.github/scripts/install-rose-services.py'
+      - '.github/rose-services-data.json'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
       - '.github/scripts/seo-headings.py'
@@ -122,6 +124,27 @@ jobs:
           python3 .github/scripts/install-story-monogram.py "$SITE"
           python3 .github/scripts/install-romantic-runner.py "$SITE"
           python3 .github/scripts/install-floral-experience.py "$SITE"
+          python3 .github/scripts/install-rose-services.py "$SITE"
+          test -s "$SITE/assets/rose-services.css"
+          test -s "$SITE/assets/rose-services.js"
+          node --check "$SITE/assets/rose-services.js"
+          SITE="$SITE" python3 - <<'PY'
+          from pathlib import Path
+          from bs4 import BeautifulSoup
+          import os, json
+          root=Path(os.environ["SITE"])
+          for lang in ("hy","ru","en"):
+              doc=BeautifulSoup((root/lang/"index.html").read_text(encoding="utf-8"),"html.parser")
+              for id in ("rose-service-hub","rs-letter","rs-surprise","rs-quiz","rs-delivery","rs-reviews"):
+                  assert doc.select_one("#"+id), (lang,id)
+              assert doc.select_one("#rs-words") and doc.select_one("#rs-data")
+              assert doc.select_one("#rs-surprise-form") and doc.select_one("#rs-review-form")
+              assert doc.select_one("#rs-quiz-form") and doc.select_one("#rs-letter-form")
+              settings=json.loads(doc.select_one("#rs-data").text)
+              assert len(settings["delivery_zones"])==4
+              assert all(z["fee_amd"] is None or z["fee_amd"]>=0 for z in settings["delivery_zones"])
+          print("All five service modules validated in 3 languages.")
+          PY
           test -s "$SITE/assets/rose-experience.css"
           test -s "$SITE/assets/rose-experience.js"
           node --check "$SITE/assets/rose-experience.js"
