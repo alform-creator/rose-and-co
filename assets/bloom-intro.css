@@ -1,0 +1,144 @@
+
+/* Rose & Co — botanical entrance, independent from the original hero image. */
+.rose-bloom-overlay { display: none; }
+html.rose-bloom-on .rose-bloom-overlay {
+  position: fixed; inset: 0; z-index: 9999; display: flex;
+  flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; min-height: 100dvh; width: 100%;
+  padding: max(30px,env(safe-area-inset-top)) 24px max(28px,env(safe-area-inset-bottom));
+  overflow: hidden; isolation: isolate; text-align: center; color: #632f42;
+  background: radial-gradient(ellipse at 50% 40%, #fffaf5 0%, #f9eee9 46%, #eacfd0 100%);
+  animation: rb-leave .65s 3.8s forwards;
+}
+.rose-bloom-overlay::before,
+.rose-bloom-overlay::after {
+  position: absolute; content: ""; border-radius: 50%; pointer-events: none; z-index: -1;
+}
+.rose-bloom-overlay::before {
+  height: min(70vw,550px); width: min(70vw,550px);
+  top: 10%; left: -15%; border: 1px solid rgba(166,102,114,.13);
+}
+.rose-bloom-overlay::after {
+  width: min(52vw,370px); height: min(52vw,370px);
+  bottom: -18%; right: -10%; border: 1px solid rgba(166,102,114,.13);
+}
+.rose-bloom-brand {
+  position: absolute; top: max(45px,env(safe-area-inset-top)); left: 0; right: 0;
+  font-family: Georgia, serif; font-size: clamp(16px, 3vw, 21px);
+  font-weight: normal; letter-spacing: .24em; color: #713247;
+  opacity: 0; animation: rb-caption-in .85s .13s forwards;
+}
+.rose-bloom-brand span { color: #b78f93; font-style: italic; }
+.rose-bloom-skip {
+  position: absolute; right: max(24px,env(safe-area-inset-right));
+  top: max(32px,env(safe-area-inset-top));
+  color: #793f53; border: 1px solid rgba(120,61,82,.24);
+  background: rgba(255,255,255,.53); border-radius: 40px;
+  padding: 9px 17px; font: 500 12px/1.3 'DM Sans','Noto Sans Armenian',sans-serif;
+  letter-spacing: .015em; cursor: pointer; z-index: 2;
+  transition: color .2s, background .2s, border-color .2s;
+}
+.rose-bloom-skip:hover,
+.rose-bloom-skip:focus-visible {
+  color: #fff; background: #6e3048; border-color: #6e3048;
+}
+.rose-bloom-scene {
+  position: relative; width: min(420px,83vw,47vh); min-width: min(290px,83vw);
+  aspect-ratio: 420/390; margin: 12px 0 6px; flex: 0 1 auto;
+}
+.rose-bloom-scene::before {
+  position: absolute; inset: 16% 0 3%; content: ""; border-radius: 50%;
+  background: radial-gradient(circle at center,rgba(255,255,255,.66),rgba(255,255,255,0) 66%);
+}
+.rose-bloom-svg { display: block; width: 100%; height: 100%; overflow: visible; position: relative; }
+.rb-soil { opacity: 0; animation: rb-soil-in 1s .1s forwards; }
+.rb-stem {
+  fill: none; stroke: #526e58; stroke-width: 7.7; stroke-linecap: round;
+  stroke-dasharray: 250; stroke-dashoffset: 250;
+  animation: rb-stem-grow 1.75s .48s cubic-bezier(.28,.05,.16,1) forwards;
+}
+.rb-leaf-left, .rb-leaf-right {
+  opacity: 0; transform-box: fill-box;
+  transform: rotate(-30deg) scale(.08);
+  animation: rb-leaf-open .72s cubic-bezier(.17,.82,.3,1.18) forwards;
+}
+.rb-leaf-left { transform-origin: 96% 92%; animation-delay: 1.08s; }
+.rb-leaf-right { transform-origin: 5% 94%; animation-delay: 1.48s; }
+.rb-leaf-right { transform: rotate(35deg) scale(.08); }
+.rb-bud {
+  opacity: 0; transform-origin: center bottom; transform-box: fill-box;
+  animation: rb-bud-rise 1.05s 1.56s both;
+}
+.rb-petals {
+  opacity: 0; transform-origin: center; transform-box: fill-box;
+  transform: scale(.15) rotate(-35deg);
+  animation: rb-flower-open 1.15s 2.02s cubic-bezier(.18,.65,.16,1) forwards;
+}
+.rb-flower-core {
+  opacity: 0; animation: rb-core-in .65s 2.60s both;
+}
+.rb-sparkle { opacity: 0; animation: rb-sparkle-pop .8s 2.62s both; }
+.rb-sparkle:nth-child(2) { animation-delay:2.75s; }
+.rb-sparkle:nth-child(3) { animation-delay:2.85s; }
+.rose-bloom-caption {
+  font: 400 clamp(18px,3.9vw,25px)/1.45 'Playfair Display',Georgia,'Noto Sans Armenian',serif;
+  letter-spacing: -.015em; margin: 4px 0 0;
+  color: #763c51; opacity: 0; transform: translateY(8px);
+  animation: rb-caption-in .78s 2.28s forwards;
+}
+.rose-bloom-subtitle {
+  margin: 11px 0 0; font: 600 10px/1.3 'DM Sans',sans-serif;
+  letter-spacing: .34em; color: #a88288; opacity: 0;
+  animation: rb-caption-in .8s 2.45s forwards;
+}
+html.rose-bloom-on .rose-bloom-overlay.rose-bloom-closing {
+  animation: rb-leave .48s 0s forwards;
+}
+@keyframes rb-soil-in { from {opacity:0;transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
+@keyframes rb-stem-grow { to {stroke-dashoffset:0} }
+@keyframes rb-leaf-open { to {opacity:1;transform:rotate(0deg) scale(1)} }
+@keyframes rb-bud-rise {
+  0%,10% {opacity:0;transform:scale(.1)}
+  48% {opacity:1;transform:scale(1)}
+  80% {opacity:1;transform:scale(1)}
+  100% {opacity:0;transform:scale(1.12)}
+}
+@keyframes rb-flower-open {
+  0% {opacity:0;transform:scale(.15) rotate(-35deg)}
+  26% {opacity:1}
+  75% {transform:scale(1.06) rotate(3deg)}
+  100% {opacity:1;transform:scale(1) rotate(0deg)}
+}
+@keyframes rb-core-in { from {opacity:0;transform:scale(.2)} to {opacity:1;transform:scale(1)} }
+@keyframes rb-sparkle-pop {
+  0% {opacity:0;transform:translateY(5px) scale(.4)}
+  40% {opacity:.88;transform:translateY(-4px) scale(1)}
+  100% {opacity:0;transform:translateY(-13px) scale(.5)}
+}
+@keyframes rb-caption-in {to {opacity:1;transform:translateY(0)}}
+@keyframes rb-leave {
+  0% {opacity:1;visibility:visible}
+  100% {opacity:0;visibility:hidden;pointer-events:none}
+}
+@media(max-width:640px) {
+  .rose-bloom-brand { top:max(63px,env(safe-area-inset-top)); font-size:17px; }
+  .rose-bloom-skip { top:max(20px,env(safe-area-inset-top));right:17px;font-size:11px;padding:8px 13px; }
+  .rose-bloom-scene { width:min(355px,85vw,47vh);min-width:0; }
+  .rose-bloom-caption { font-size:clamp(17px,5vw,23px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rose-bloom-overlay { display:none !important; }
+}
+
+
+
+/* ROSE-CO-ARMENIAN-TYPOGRAPHY-v1 */
+html[lang="hy"] .rose-bloom-caption {
+  font-family: 'Noto Serif Armenian','Noto Sans Armenian',Georgia,serif;
+  font-weight: 500;
+  letter-spacing: -.012em;
+  line-height: 1.5;
+}
+html[lang="hy"] .rose-bloom-skip {
+  font-family: 'Noto Sans Armenian',system-ui,sans-serif;
+}

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alform-creator.github.io/rose-and-co/sitemap.xml
