@@ -324,7 +324,7 @@ ultra_css = """
 }
 """
 if "ROSE-CO-ULTRA-NARROW-20261025" not in css_path.read_text(encoding="utf-8"):
-    css_path.write_text(css_path.read_text(encoding="utf-8")+"\\n"+ultra_css,encoding="utf-8")
+    css_path.write_text(css_path.read_text(encoding="utf-8")+"\n"+ultra_css,encoding="utf-8")
 
 for p in page_files:
     s=p.read_text(encoding="utf-8")
