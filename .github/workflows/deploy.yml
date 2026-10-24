@@ -8,6 +8,7 @@ on:
       - 'roseco50.zip'
       - 'Rose-and-Co-50-Photos-Ready-for-GitHub.zip'
       - '.github/workflows/deploy.yml'
+      - '.github/scripts/refine-photos.py'
   workflow_dispatch:
 
 permissions:
@@ -23,6 +24,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Prepare image processing
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install image processing dependency
+        run: python3 -m pip install --quiet 'Pillow>=10,<13'
 
       - name: Extract uploaded website ZIP
         shell: bash
@@ -59,6 +68,7 @@ jobs:
           if [ "$ZIP" = "rose-co-site.zip" ]; then
             python3 .github/scripts/add-gifts.py "$SITE"
           fi
+          python3 .github/scripts/refine-photos.py "$SITE"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
