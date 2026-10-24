@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'rose-co-site.zip'
+      - 'Rose-and-Co-50-Photos-Ready-for-GitHub.zip'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
@@ -26,7 +27,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ZIP=rose-co-site.zip
+          if [ -s "Rose-and-Co-50-Photos-Ready-for-GitHub.zip" ]; then
+            ZIP="Rose-and-Co-50-Photos-Ready-for-GitHub.zip"
+          else
+            ZIP="rose-co-site.zip"
+          fi
           test -s "$ZIP"
           unzip -t "$ZIP" > /dev/null
           SITE="$RUNNER_TEMP/rose-co-site"
@@ -48,7 +53,9 @@ jobs:
               html = html.replace('<span>✳</span>', '')
               page.write_text(html, encoding="utf-8")
           PY
-          python3 .github/scripts/add-gifts.py "$SITE"
+          if [ "$ZIP" = "rose-co-site.zip" ]; then
+            python3 .github/scripts/add-gifts.py "$SITE"
+          fi
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
