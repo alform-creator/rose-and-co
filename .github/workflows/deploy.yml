@@ -22,6 +22,7 @@ on:
       - '.github/scripts/install-romantic-runner.py'
       - '.github/scripts/install-floral-experience.py'
       - '.github/scripts/install-rose-services.py'
+      - '.github/scripts/final-seo-qa.py'
       - '.github/rose-services-data.json'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
@@ -216,6 +217,14 @@ jobs:
           assert not any("37495806009" in f.read_text(encoding="utf-8") for f in root.rglob("*.html"))
           print("Rose & Co WhatsApp: +37433081898; updated", changed, "files")
           PY
+          # Final release gate: audit all 78 pages, fix form ids, canonical,
+          # hreflang, OG and sitemap; validate local links, images, H1 and UX.
+          python3 -m py_compile .github/scripts/final-seo-qa.py
+          python3 .github/scripts/final-seo-qa.py "$SITE"
+          test -s "$SITE/sitemap.xml"
+          grep -q 'rel="canonical"' "$SITE/hy/index.html"
+          grep -q 'rel="canonical"' "$SITE/ru/journal/flower-care/index.html"
+          grep -q 'rel="canonical"' "$SITE/en/about/index.html"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
