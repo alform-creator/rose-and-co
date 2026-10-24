@@ -23,6 +23,7 @@ on:
       - '.github/scripts/install-floral-experience.py'
       - '.github/scripts/install-rose-services.py'
       - '.github/scripts/final-seo-qa.py'
+      - '.github/scripts/browser-qa.py'
       - '.github/rose-services-data.json'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
@@ -225,6 +226,8 @@ jobs:
           grep -q 'rel="canonical"' "$SITE/hy/index.html"
           grep -q 'rel="canonical"' "$SITE/ru/journal/flower-care/index.html"
           grep -q 'rel="canonical"' "$SITE/en/about/index.html"
+          python3 -m pip install --quiet 'selenium>=4.20,<5'
+          python3 .github/scripts/browser-qa.py "$SITE"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
