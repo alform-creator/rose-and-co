@@ -78,6 +78,26 @@ with TemporaryDirectory() as temp:
                 };
             """)
             tested+=1
+            if lang=="hy":
+                fontcheck=driver.execute_script("""
+                  const family=s=>{const el=document.querySelector(s);return el?getComputedStyle(el).fontFamily:'';};
+                  return {
+                    loaded:!!document.querySelector('link[href*="armenian-elegance.css"]'),
+                    body:family('body'),
+                    h1:family('main h1'),
+                    builder:family('.rose-builder-header h2'),
+                    service:family('.rs-cardhead h3'),
+                    form:family('.rs-form input')
+                  };
+                """)
+                if not fontcheck["loaded"] or "Noto Sans Armenian" not in fontcheck["body"] or "Noto Serif Armenian" not in fontcheck["h1"]:
+                    errors.append(lang+path+" Armenian typography stylesheet and family test failed: "+str(fontcheck))
+                if path=="/" and not all("Noto Serif Armenian" in fontcheck[key] for key in ("builder","service")):
+                    errors.append(lang+path+" Armenian services display fonts failed: "+str(fontcheck))
+                if path=="/" and "Noto Sans Armenian" not in fontcheck["form"]:
+                    errors.append(lang+path+" Armenian form font failed: "+str(fontcheck))
+            elif driver.execute_script("return !!document.querySelector('link[href*=armenian-elegance.css]')"):
+                errors.append(lang+path+" Armenian-only stylesheet leaked into another locale")
             where=f"{lang}{path} {'mobile' if mobile else 'desktop'}"
             if not result["main"] or result["h1"]!=1:
                 errors.append(where+" incorrect document structure")
@@ -127,8 +147,25 @@ with TemporaryDirectory() as temp:
                         return shown;
                     """)
                     if not menu:errors.append(where+" mobile menu not opening")
+      # Small-phone check: long Armenian headings should never force a
+      # sideways page scroll on 320px devices.
+      driver.execute_cdp_cmd("Emulation.setDeviceMetricsOverride",{
+        "width":320,"height":700,"deviceScaleFactor":1,"mobile":True
+      })
+      for lang in ("hy","ru","en"):
+          for route in ("/","/catalog/"):
+              driver.get(urlroot+"/"+lang+route)
+              driver.execute_script("document.documentElement.classList.remove('rose-bloom-on')")
+              dim=driver.execute_script("""
+                  const r=document.documentElement;
+                  return {width:r.scrollWidth,viewport:r.clientWidth,
+                    title:getComputedStyle(document.querySelector('main h1')).fontFamily};
+              """)
+              tested+=1
+              if dim["width"]>dim["viewport"]+8:
+                  errors.append(lang+route+" 320px device horizontal overflow: "+str(dim))
       print(f"Rose & Co Chrome QA: checked {tested} page/viewport combinations,")
-      print("375px mobile, 1440px desktop, 3 languages, 4 major routes.")
+      print("320px and 375px mobile, 1440px desktop, 3 languages, 4 major routes.")
       print("Bouquet previews, WhatsApp links, label focus and mobile navigation checked.")
       if errors:
           print("Browser QA issues:",*errors,sep="\n- ")
