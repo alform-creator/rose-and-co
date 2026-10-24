@@ -23,6 +23,7 @@ on:
       - '.github/scripts/install-floral-experience.py'
       - '.github/scripts/install-rose-services.py'
       - '.github/scripts/final-seo-qa.py'
+      - '.github/scripts/install-final-armenian-typography.py'
       - '.github/scripts/browser-qa.py'
       - '.github/rose-services-data.json'
       - '.github/scripts/install-more-journal.py'
@@ -222,6 +223,10 @@ jobs:
           # hreflang, OG and sitemap; validate local links, images, H1 and UX.
           python3 -m py_compile .github/scripts/final-seo-qa.py
           python3 .github/scripts/final-seo-qa.py "$SITE"
+          python3 .github/scripts/install-final-armenian-typography.py "$SITE"
+          test -s "$SITE/assets/armenian-elegance.css"
+          grep -q 'armenian-elegance.css' "$SITE/hy/index.html"
+          grep -q 'Noto Serif Armenian' "$SITE/assets/armenian-elegance.css"
           test -s "$SITE/sitemap.xml"
           grep -q 'rel="canonical"' "$SITE/hy/index.html"
           grep -q 'rel="canonical"' "$SITE/ru/journal/flower-care/index.html"
