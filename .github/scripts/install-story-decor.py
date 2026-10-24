@@ -181,17 +181,18 @@ if marker not in css:
 /* ROSE-CO-STORY-FLORAL-DECOR-1 */
 .about-spotlight { position:relative; isolation:isolate; }
 .about-spotlight::before {
-  content:""; position:absolute; z-index:-1; pointer-events:none;
+  content:""; position:absolute; z-index:0; pointer-events:none;
   top:0; left:0; width:min(29vw,310px); height:min(40vw,440px);
   background:url('/rose-and-co/assets/story-floral-spray.svg?v=story-decor1') left top / contain no-repeat;
   opacity:.48;
 }
 .about-spotlight::after {
-  content:""; position:absolute; z-index:-1; pointer-events:none;
+  content:""; position:absolute; z-index:0; pointer-events:none;
   right:-1%; bottom:-10%; width:min(27vw,280px); height:min(33vw,380px);
   background:url('/rose-and-co/assets/story-floral-spray.svg?v=story-decor1') right bottom / contain no-repeat;
   transform:rotate(170deg); opacity:.30;
 }
+.about-spotlight .about-grid {position:relative;z-index:1;}
 .spotlight-gallery .spotlight-large,
 .spotlight-gallery .spotlight-small { border-color:#f7e9e5; }
 .spotlight-gallery .spotlight-large {
