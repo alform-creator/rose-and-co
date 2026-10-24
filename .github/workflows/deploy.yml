@@ -13,6 +13,7 @@ on:
       - '.github/scripts/install-real-photos.py'
       - '.github/scripts/add-animations.py'
       - '.github/scripts/install-bloom-intro.py'
+      - '.github/scripts/install-armenian-fonts.py'
       - '.github/scripts/seo-headings.py'
       - '.rose-customer-2026/**'
   workflow_dispatch:
@@ -98,6 +99,9 @@ jobs:
           test -s "$SITE/assets/bloom-intro.js"
           test -s "$SITE/assets/bloom-intro.css"
           test -s "$SITE/assets/rose-motion.js"
+          python3 .github/scripts/install-armenian-fonts.py "$SITE"
+          grep -q 'Noto+Serif+Armenian' "$SITE/assets/styles.css"
+          grep -q 'styles.css?v=armenian1' "$SITE/hy/index.html"
           # Same number for calls and WhatsApp, across all three locales.
           # The website ZIP may include an older saved WhatsApp number.
           SITE="$SITE" python3 - <<'PY'
