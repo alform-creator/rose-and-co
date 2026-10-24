@@ -96,7 +96,7 @@ with TemporaryDirectory() as temp:
                     errors.append(lang+path+" Armenian services display fonts failed: "+str(fontcheck))
                 if path=="/" and "Noto Sans Armenian" not in fontcheck["form"]:
                     errors.append(lang+path+" Armenian form font failed: "+str(fontcheck))
-            elif driver.execute_script("return !!document.querySelector('link[href*=armenian-elegance.css]')"):
+            elif driver.execute_script("return Array.from(document.querySelectorAll('link[rel=stylesheet]')).some(x=>x.href.includes('armenian-elegance.css'))"):
                 errors.append(lang+path+" Armenian-only stylesheet leaked into another locale")
             where=f"{lang}{path} {'mobile' if mobile else 'desktop'}"
             if not result["main"] or result["h1"]!=1:
