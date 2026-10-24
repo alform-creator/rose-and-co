@@ -48,6 +48,7 @@ jobs:
               html = html.replace('<span>✳</span>', '')
               page.write_text(html, encoding="utf-8")
           PY
+          python3 .github/scripts/add-gifts.py "$SITE"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
