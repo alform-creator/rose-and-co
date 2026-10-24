@@ -25,6 +25,7 @@ on:
       - '.github/scripts/final-seo-qa.py'
       - '.github/scripts/install-final-armenian-typography.py'
       - '.github/scripts/browser-qa.py'
+      - '.github/scripts/full-site-qa.py'
       - '.github/rose-services-data.json'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
@@ -233,6 +234,9 @@ jobs:
           grep -q 'rel="canonical"' "$SITE/en/about/index.html"
           python3 -m pip install --quiet 'selenium>=4.20,<5'
           python3 .github/scripts/browser-qa.py "$SITE"
+          python3 -m pip install --quiet 'Pillow>=10,<13'
+          python3 -m py_compile .github/scripts/full-site-qa.py
+          python3 .github/scripts/full-site-qa.py "$SITE"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
