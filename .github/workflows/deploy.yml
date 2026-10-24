@@ -11,6 +11,7 @@ on:
       - '.github/scripts/refine-photos.py'
       - '.github/scripts/install-premium-roses.py'
       - '.github/scripts/install-real-photos.py'
+      - '.github/scripts/add-animations.py'
       - '.rose-customer-2026/**'
   workflow_dispatch:
 
@@ -89,6 +90,8 @@ jobs:
               html = html.replace("✳", "")
               page.write_text(html, encoding="utf-8")
           PY
+          python3 .github/scripts/add-animations.py "$SITE"
+          test -s "$SITE/assets/rose-motion.js"
           touch "$SITE/.nojekyll"
 
       - name: Publish extracted files to gh-pages branch
