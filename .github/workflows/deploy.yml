@@ -15,6 +15,8 @@ on:
       - '.github/scripts/install-bloom-intro.py'
       - '.github/scripts/install-armenian-fonts.py'
       - '.github/scripts/install-brand-logo.py'
+      - '.github/scripts/install-journal-features.py'
+      - '.github/scripts/final-site-polish.py'
       - '.github/scripts/seo-headings.py'
       - '.rose-customer-2026/**'
   workflow_dispatch:
@@ -107,6 +109,13 @@ jobs:
           test -s "$SITE/assets/brand-rose.svg"
           grep -q 'brand-rose-mark' "$SITE/hy/index.html"
           grep -q 'rose-bloom-logo' "$SITE/ru/index.html"
+          python3 .github/scripts/install-journal-features.py "$SITE"
+          python3 .github/scripts/final-site-polish.py "$SITE"
+          test -f "$SITE/hy/journal/bouquet-as-gift/index.html"
+          test -f "$SITE/ru/journal/red-roses-51-101/index.html"
+          test -f "$SITE/en/journal/ordering-flowers-guide/index.html"
+          grep -q 'about-stamp-rose' "$SITE/hy/about/index.html"
+          grep -q 'wreaths-05.webp' "$SITE/hy/journal/memorial-wreaths/index.html"
           # Same number for calls and WhatsApp, across all three locales.
           # The website ZIP may include an older saved WhatsApp number.
           SITE="$SITE" python3 - <<'PY'
