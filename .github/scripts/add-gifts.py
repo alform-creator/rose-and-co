@@ -5,9 +5,9 @@ import json,html,re,sys
 root=Path(sys.argv[1])
 assert (root/"hy/index.html").exists()
 CALL="033 081 898"
-WA="095 806 009"
+WA="033 081 898"
 NUM="+37433081898"
-WA_NUM="37495806009"
+WA_NUM="37433081898"
 CATS={"hy":["Արջուկներ","Փափուկ խաղալիքներ","Քաղցրավենիք"],
       "ru":["Мишки","Мягкие игрушки","Сладости"],
       "en":["Teddy bears","Soft toys","Sweets"]}
