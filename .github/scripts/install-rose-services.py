@@ -428,9 +428,9 @@ SAMPLE_REVIEWS = {
   ]
 }
 SAMPLE_LABELS = {
-  "hy": ("30 կարծիքի օրինակ՝ տարբեր անուններով", "Ներկայացված անուններն ու տեքստերը հորինված օրինակներ են, ոչ թե իրական հաճախորդների արձագանքներ։", "Օրինակային անուն"),
-  "ru": ("30 примеров отзывов с разными именами", "Все имена и тексты здесь вымышлены. Это примеры, а не отзывы реальных клиентов.", "Пример имени"),
-  "en": ("30 example reviews with different names", "The names and quotes below are fictional examples, not real customer testimonials.", "Example name")
+  "hy": ("Ծաղկային պատմություններ", "Այս բաժնի 30 անուններն ու խոսքերը ստեղծագործական օրինակներ են, ոչ թե իրական գնորդների կարծիքներ։", "Նախորդը", "Հաջորդը"),
+  "ru": ("Цветочные истории", "30 имён и фраз в этой галерее — вымышленные примеры, не отзывы реальных покупателей.", "Назад", "Вперёд"),
+  "en": ("Floral stories", "These 30 names and quotes are fictional examples, not reviews from actual customers.", "Previous", "Next")
 }
 assert all(len(v)==30 and len({name for name,_ in v})==30 for v in SAMPLE_REVIEWS.values())
 
@@ -461,17 +461,19 @@ def make_service(lang):
  delivery='<div class="rs-grid"><form id="rs-delivery-form" class="rs-form"><div><label for="rs-zone">'+h(w["zone"])+'</label><select id="rs-zone" name="zone">'+zones+'</select></div>'+inputfield(w["address"],"address",w["addressPlaceholder"],False,"text",250)
  delivery+='<div class="rs-actions">'+button(w["feeSend"],"rs-delivery-send")+'</div></form><div class="rs-feebox"><span class="eyebrow">'+h(w["fee"])+'</span><strong id="rs-fee">'+h(w["feeUnknown"])+'</strong><p>'+h(w["feeNote"])+'</p></div></div>'
  review='<div class="rs-grid"><div id="rs-reviews-list" class="rs-reviews"><p class="rs-empty">'+h(w["reviewsEmpty"])+'</p></div>'
- label,notice,sample_label=SAMPLE_LABELS[lang]
- # Sample cards are visually distinct from approved genuine testimonials.
- # Each card is individually marked as fiction; no star ratings are shown.
+ label,notice,prev_label,next_label=SAMPLE_LABELS[lang]
+ # Distinct fictional editorial vignette rail; one clear disclosure above
+ # the cards, no invented ratings or misleading customer-review schema.
  samples=''.join(
   '<blockquote class="rs-sample-card" data-example="true"><p>'+h(quote)+'</p>'
-  '<footer><strong>'+h(name)+'</strong><small>'+h(sample_label)+'</small></footer></blockquote>'
+  '<footer><strong>'+h(name)+'</strong></footer></blockquote>'
   for name,quote in SAMPLE_REVIEWS[lang]
  )
  editorial='<section class="rs-editorial rs-editorial-showcase" aria-label="'+h(label)+'">'
  editorial+='<h4 class="rs-editorial-heading">'+h(label)+'</h4><p class="rs-editorial-notice">'+h(notice)+'</p>'
- editorial+='<div class="rs-sample-grid">'+samples+'</div></section>'
+ editorial+='<div class="rs-sample-controls"><button class="rs-sample-arrow" type="button" data-rs-scroll="-1" aria-label="'+h(prev_label)+'">‹</button>'
+ editorial+='<button class="rs-sample-arrow" type="button" data-rs-scroll="1" aria-label="'+h(next_label)+'">›</button></div>'
+ editorial+='<div class="rs-sample-grid" tabindex="0" role="region" aria-label="'+h(label)+'">'+samples+'</div></section>'
  review+='<div class="rs-editorial-wrap">'+editorial+'</div>'
  review+='<form id="rs-review-form" class="rs-form">'+inputfield(w["name"],"name","",True)+selectfield(w["rating"],"rating",["5","4","3","2","1"])+textarea(w["reviewMessage"],"review",w["reviewPlaceholder"],True,700)
  review+='<label class="rs-check"><input type="checkbox" name="permission">'+h(w["permission"])+'</label><div class="rs-actions">'+button(w["reviewSend"],"rs-review-send")+'</div><p class="rs-note">'+h(w["reviewNote"])+'</p></form></div>'
@@ -549,6 +551,52 @@ CSS=r'''
 .rs-sample-card small{font-size:10px;color:#906d79;letter-spacing:.02em}
 @media(max-width:1050px){.rs-sample-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.rs-sample-grid{grid-template-columns:1fr}.rs-sample-card{min-height:0;padding:16px}.rs-editorial-showcase{padding:15px}}
+
+/* ROSE-CO-COMPACT-EDITORIAL-CAROUSEL-20261025 */
+/* Horizontal scroll snap: avoids 30 tall stacked cards, native touch swipes. */
+.rs-editorial-showcase{position:relative;overflow:hidden}
+.rs-editorial-showcase .rs-editorial-heading{letter-spacing:-.015em;margin-bottom:7px}
+.rs-editorial-showcase .rs-editorial-notice{
+  display:block;margin:0 0 14px;max-width:80ch;
+  border-left:3px solid #be8296;padding:9px 12px;
+  background:rgba(248,231,232,.75);font-weight:500;
+}
+.rs-sample-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.rs-sample-arrow{
+  display:grid;place-items:center;appearance:none;cursor:pointer;
+  background:#fffaf7;color:#71344b;border:1px solid #d6abb8;
+  width:36px;height:36px;line-height:1;border-radius:50%;font-size:27px;
+}
+.rs-sample-arrow:hover,.rs-sample-arrow:focus-visible{background:#793e55;color:#fff}
+.rs-editorial-showcase .rs-sample-grid{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(240px,calc((100% - 28px)/3));
+  grid-template-columns:none;
+  gap:14px;overflow-x:auto;overscroll-behavior-inline:contain;
+  scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:0 1px 16px;
+  scrollbar-width:thin;
+  scrollbar-color:#bd8799 #f5e6e5;
+}
+.rs-editorial-showcase .rs-sample-card{
+  scroll-snap-align:start;min-height:162px;max-width:100%;
+  padding:17px;background:linear-gradient(138deg,#fffefa,#f6e9e7);
+}
+.rs-editorial-showcase .rs-sample-card p{font-size:13px;line-height:1.72}
+.rs-editorial-showcase .rs-sample-card footer{padding-top:9px}
+@media(max-width:900px){
+ .rs-editorial-showcase .rs-sample-grid{grid-auto-columns:minmax(235px,calc((100% - 14px)/2));grid-template-columns:none}
+}
+@media(max-width:640px){
+ .rs-editorial-showcase .rs-sample-grid{grid-auto-columns:minmax(225px,86%);grid-template-columns:none}
+ .rs-editorial-showcase .rs-sample-card{min-height:150px;padding:17px}
+ .rs-editorial-showcase .rs-editorial-notice{font-size:11px;line-height:1.65}
+}
+@media(prefers-reduced-motion:reduce){
+ .rs-editorial-showcase .rs-sample-grid{scroll-behavior:auto}
+}
 @media(max-width:900px){.rs-grid,.rs-three{grid-template-columns:1fr}.rs-links{justify-content:flex-start}.rs-card{margin:20px 0}}
 @media(max-width:640px){.rs-card{padding:18px 15px}.rs-two{grid-template-columns:1fr}.rs-links{overflow-x:auto;flex-wrap:nowrap;padding-bottom:10px}.rs-actions{flex-direction:column;align-items:stretch}.rs-actions .button{width:100%}.rs-envelopebox{padding:15px}.rs-envelope{min-height:250px}.rs-cardhead h3{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.rs-envelope::before{transition:none}}
@@ -623,6 +671,18 @@ hub.querySelector("#rs-delivery-send").addEventListener("click",()=>{
  const item=data.delivery_zones.find(z=>z.id===zone.value);
  send([t.feeHello,line(t.zone,item?item.label[lang]:""),value(dl,"address")?line(t.address,value(dl,"address")):"",t.contactEnd]);
 });
+const sampleRail=hub.querySelector(".rs-sample-grid");
+if(sampleRail){
+ hub.querySelectorAll(".rs-sample-arrow").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+   const dir=Number(btn.dataset.rsScroll)||1;
+   const card=sampleRail.querySelector(".rs-sample-card");
+   const gap=parseFloat(getComputedStyle(sampleRail).columnGap)||14;
+   const distance=card?card.getBoundingClientRect().width+gap:290;
+   sampleRail.scrollBy({left:dir*distance,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  });
+ });
+}
 const reviews=hub.querySelector("#rs-reviews-list");
 const approved=(data.reviews||[]).filter(r=>r.approved===true&&r.quote&&r.name);
 if(approved.length){
