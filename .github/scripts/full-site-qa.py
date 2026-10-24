@@ -131,7 +131,7 @@ routes={l:set(p.relative_to(root/l).as_posix() for p in (root/l).rglob("index.ht
 if not (routes["hy"]==routes["ru"]==routes["en"]):
     errors.append("Mismatch between localized route trees")
 for l in langs:
-    article_count=sum("/journal/" in p and p.endswith("index.html") for p in (f"{l}/"+x for x in routes[l]))
+    article_count=sum(x.startswith("journal/") and x!="journal/index.html" for x in routes[l])
     if article_count!=20:errors.append(f"{l}: expected 20 journal posts, got {article_count}")
 
 print("FULL SITE STATIC | pages:",len(pages), "| languages:",", ".join(langs),
@@ -233,7 +233,23 @@ with TemporaryDirectory() as tmp:
             """)
             combinations+=1
             if result["width"]>result["viewport"]+8:
-                errors.append(where+f" HORIZONTAL OVERFLOW {result['width']} > {result['viewport']}")
+                offenders=driver.execute_script("""
+                    const vw=document.documentElement.clientWidth;
+                    const out=[];
+                    for(const el of document.querySelectorAll('main *')) {
+                      const r=el.getBoundingClientRect();
+                      const st=getComputedStyle(el);
+                      if(r.width>0 && r.right>vw+5 && st.position!=='fixed' &&
+                         !el.closest('.rs-sample-grid,.rose-petal-field')) {
+                         out.push({tag:el.tagName, cls:String(el.className||'').slice(0,60),
+                         r:Math.round(r.right), w:Math.round(r.width),
+                         text:(el.textContent||'').trim().slice(0,62)});
+                      }
+                      if(out.length>=12)break;
+                    }
+                    return out;
+                """)
+                errors.append(where+f" HORIZONTAL OVERFLOW {result['width']} > {result['viewport']} offending="+str(offenders))
             if result["h1"]!=1:errors.append(where+" H1 not unique")
             if result["clipped"]:errors.append(where+" cropped important text: "+str(result["clipped"]))
             if result["badImages"]:errors.append(where+" visible broken images: "+str(result["badImages"][:4]))
