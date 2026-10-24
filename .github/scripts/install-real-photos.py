@@ -258,6 +258,23 @@ for name in ['category-romance.webp','category-wedding.webp','category-occasions
 # Removing unused artist-montage assets prevents future confusion; don't touch hero or sweet categories.
 for name in ['pink-peonies.webp','blush-ceremony.webp','atelier-peony.webp','atelier-elegance.webp','atelier-detail.webp','studio-birthday.webp','white-wreath.webp','crimson-wreath.webp','blush-wreath.webp']:
     (root/'assets'/'images'/name).unlink(missing_ok=True)
+# Keep the public phone number and WhatsApp identical in all languages.
+# Apply after extraction and catalog generation so historic ZIP data cannot restore
+# the old WhatsApp number during a later GitHub Pages redeployment.
+for page in root.rglob('*.html'):
+    content = page.read_text(encoding='utf-8')
+    content = content.replace('37495806009', '37433081898')
+    content = content.replace('+37495806009', '+37433081898')
+    content = content.replace('095 806 009', '033 081 898')
+    page.write_text(content, encoding='utf-8')
+for filename in ('contact-config.js', 'ui-translations.js'):
+    asset = root/'assets'/filename
+    if asset.exists():
+        content = asset.read_text(encoding='utf-8')
+        content = content.replace('37495806009', '37433081898')
+        content = content.replace('095 806 009', '033 081 898')
+        asset.write_text(content, encoding='utf-8')
+
 # Track correct customer-image inventory for sanity checking.
 (root/'assets'/'images'/'real-2026'/'inventory.json').write_text(json.dumps({'flowers':41,'wreaths':16,'toys':5,'new_sweets':3,'editorial':7,'catalog_products':len(products),'old_sweets_preserved':len(old_sweets)},ensure_ascii=False,indent=2),encoding='utf-8')
 # The business uses the same telephone and WhatsApp number.
