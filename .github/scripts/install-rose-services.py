@@ -55,81 +55,384 @@ COPY={
 }
 }
 
-# ROSE-CO-INSPIRATIONAL-COPY-V1: editorial sample wording. Never misrepresent as real testimonials.
-EDITORIAL_LINES = {
+
+# ROSE-CO-ILLUSTRATIVE-REVIEWS-30-V2
+# These are fictional EXAMPLE quotes and names, not actual customer testimonials.
+# Do not set approved=True or publish fake review schema, dates, or star ratings.
+SAMPLE_REVIEWS = {
   "hy": [
-    "Ծաղիկները պարզապես հիասքանչ էին։ Ամեն մանրուք այնքան նուրբ էր։",
-    "Այսպիսի գեղեցիկ ծաղկեփունջ վաղուց չէի տեսել։",
-    "Այնքան գեղեցիկ էր, որ ափսոսում էի բացել փաթեթավորումը։",
-    "Ստացողի ժպիտն ամեն ինչ արժեր։",
-    "Շատ ճաշակով ու սիրով պատրաստված կոմպոզիցիա։",
-    "Ծաղիկներն իսկապես խոսում էին իմ փոխարեն։",
-    "Գեղեցկություն՝ ամեն մի թերթիկի մեջ։",
-    "Պարզապես աննկարագրելի նուրբ ու էլեգանտ։",
-    "Իմ պատկերացրածից էլ գեղեցիկ ստացվեց։",
-    "Ծաղկեփունջ, որը երկար կմնա հիշողության մեջ։",
-    "Շատ գեղեցիկ գույների համադրություն ու յուրահատուկ ոճ։",
-    "Ամեն ինչ այնքան խնամքով ու նրբությամբ էր արված։",
-    "Սիրով ընտրված ծաղիկներ՝ սիրելի մարդու համար։",
-    "Այս ծաղկեփունջն իսկական փոքրիկ արվեստի գործ էր։",
-    "Այնպիսի ծաղիկներ, որոնք առանց խոսքերի ուրախացնում են։",
-    "Յուրաքանչյուր դետալ իր տեղում էր։",
-    "Գեղեցիկ փաթեթավորում, նուրբ գույներ, հիանալի արդյունք։",
-    "Անակնկալը ստացվեց հենց այնպես, ինչպես երազում էի։",
-    "Շքեղություն, որը երբեք չափազանցված չի թվում։",
-    "Rose & Co-ն պարզապես ծաղիկներ չէ, այլ գեղեցիկ զգացմունք։"
+    [
+      "Անի",
+      "Վարդագույն ու կրեմագույն ծաղիկների համադրությունը հենց այն նուրբ ոճն է, որ միշտ փնտրում եմ։"
+    ],
+    [
+      "Մարիամ",
+      "Գեղեցիկ փունջը երբեմն ավելի շատ բան է ասում, քան երկար նամակը։"
+    ],
+    [
+      "Դավիթ",
+      "Ուզում էի պարզ, բայց հիշվող անակնկալ․ ծաղիկները միշտ ճիշտ գաղափար են։"
+    ],
+    [
+      "Նարե",
+      "Ինձ ամենաշատը դուր են գալիս փնջերը, որոնց գույները իրար շատ բնական են լրացնում։"
+    ],
+    [
+      "Հայկ",
+      "Ինձ համար կարևոր է, որ նվերը ոչ միայն գեղեցիկ լինի, այլ նաև անձնական։"
+    ],
+    [
+      "Լիլիթ",
+      "Մի քանի նուրբ վարդն ու գեղեցիկ ժապավենը կարող են ամբողջ տրամադրություն փոխել։"
+    ],
+    [
+      "Սոնա",
+      "Սիրում եմ ծաղիկներ, որոնք շքեղ են առանց ավելորդ ճոխության։"
+    ],
+    [
+      "Գոռ",
+      "Լավ ծաղկեփունջ ընտրելու ամենակարևոր մասը ստացողի բնավորությունը հիշելն է։"
+    ],
+    [
+      "Արփի",
+      "Պիոնների փափուկ ձևերն ու բաց երանգներն իմ սիրելի համադրությունն են։"
+    ],
+    [
+      "Վահե",
+      "Կարմիր վարդերը դասական են, բայց ճիշտ փաթեթավորմամբ միշտ յուրահատուկ են թվում։"
+    ],
+    [
+      "Աննա",
+      "Ծաղիկների մեջ ամենագեղեցիկը փոքրիկ, անսպասելի մանրուքներն են։"
+    ],
+    [
+      "Էլեն",
+      "Ուզում եմ, որ ծաղկեփունջը լուսավորի սենյակը, ոչ թե պարզապես դրվի սեղանին։"
+    ],
+    [
+      "Արմեն",
+      "Գեղեցիկ ծաղիկներն ու անկեղծ երկու տողը միասին շատ ջերմ նվեր են դառնում։"
+    ],
+    [
+      "Նելլի",
+      "Ինձ հատկապես գրավում են ծաղկեփնջերի բնական ու ազատ ձևերը։"
+    ],
+    [
+      "Սարգիս",
+      "Անակնկալ ծաղիկներն ամենալավն են, երբ հատուկ առիթ էլ պետք չէ։"
+    ],
+    [
+      "Մանե",
+      "Մեկ փնջի մեջ կարելի է միավորել և՛ քնքշություն, և՛ վառ բնավորություն։"
+    ],
+    [
+      "Տիգրան",
+      "Երբ դժվար է ճիշտ բառերը գտնել, ծաղիկներն օգնում են սկսել խոսակցությունը։"
+    ],
+    [
+      "Լուսինե",
+      "Սպիտակ ու կանաչ ծաղիկների պարզությունը երբեք չի ձանձրացնում։"
+    ],
+    [
+      "Էդգար",
+      "Ինձ համար ամենահետաքրքիրն այն փունջն է, որը կարծես հենց մեկ մարդու համար է ստեղծված։"
+    ],
+    [
+      "Կարինե",
+      "Նուրբ թուղթը, ճիշտ ժապավենն ու ծաղիկների համադրությունը միասին են ստեղծում գեղեցկությունը։"
+    ],
+    [
+      "Արևիկ",
+      "Երբ նայում ես գեղեցիկ փնջին, ուզում ես պարզապես մի պահ ժպտալ։"
+    ],
+    [
+      "Արսեն",
+      "Երբ նվերը ընտրում ես սրտով, նույնիսկ ամենապարզ վարդը մեծ նշանակություն ունի։"
+    ],
+    [
+      "Էմմա",
+      "Յասամանագույն և վարդագույն ծաղիկները միասին այնքան խաղաղ տեսք ունեն։"
+    ],
+    [
+      "Անահիտ",
+      "Ծաղկեփունջը պետք է համապատասխանի ոչ միայն առիթին, այլ նաև տրամադրությանը։"
+    ],
+    [
+      "Սյուզաննա",
+      "Ամենասիրելի նվերներն այն են, որոնց մասին հետո պատմություն ես հիշում։"
+    ],
+    [
+      "Ռուզաննա",
+      "Թարմ ու լուսավոր գույներն առավոտն ավելի գեղեցիկ են դարձնում։"
+    ],
+    [
+      "Գայանե",
+      "Հավանում եմ, երբ ծաղիկների գեղեցկությունը չի կորչում չափազանցված փաթեթավորման մեջ։"
+    ],
+    [
+      "Հասմիկ",
+      "Մի փոքրիկ բացիկը ծաղկեփնջին լրիվ ուրիշ ջերմություն է տալիս։"
+    ],
+    [
+      "Մերի",
+      "Ծաղիկները շատ են գեղեցկանում, երբ ընտրվում են սիրով ու ուշադրությամբ։"
+    ],
+    [
+      "Սիրանուշ",
+      "Ինձ համար իսկական շքեղությունը հանգիստ գույների ու բնական գեղեցկության մեջ է։"
+    ]
   ],
   "ru": [
-    "Цветы были невероятно красивыми, а каждая деталь — нежной.",
-    "Давно не встречала настолько красивый букет.",
-    "Так красиво, что даже жалко было разворачивать упаковку.",
-    "Улыбка получателя стоила всего.",
-    "Композиция создана с любовью и безупречным вкусом.",
-    "Цветы сказали всё за меня.",
-    "Красота в каждом лепестке.",
-    "Невероятно нежно и элегантно.",
-    "Получилось даже прекраснее, чем я представляла.",
-    "Букет, который надолго останется в памяти.",
-    "Прекрасные сочетания оттенков и особый стиль.",
-    "В каждой детали чувствуется забота.",
-    "Цветы, выбранные с любовью для самого дорогого человека.",
-    "Этот букет похож на маленькое произведение искусства.",
-    "Цветы, которые дарят радость без лишних слов.",
-    "Каждая деталь на своём месте.",
-    "Красивая упаковка, мягкие оттенки, прекрасный результат.",
-    "Сюрприз получился именно таким, о каком я мечтала.",
-    "Роскошь без лишней вычурности.",
-    "Rose & Co — это не просто цветы, а красивые эмоции."
+    [
+      "Ани",
+      "Сочетание розовых и кремовых цветов — именно та нежность, которую я всегда ищу."
+    ],
+    [
+      "Мариам",
+      "Красивый букет иногда говорит больше, чем длинное письмо."
+    ],
+    [
+      "Давид",
+      "Хотел простой, но запоминающийся сюрприз. Цветы всегда хорошая идея."
+    ],
+    [
+      "Наре",
+      "Больше всего люблю букеты, в которых оттенки естественно дополняют друг друга."
+    ],
+    [
+      "Айк",
+      "Для меня важно, чтобы подарок был не только красивым, но и личным."
+    ],
+    [
+      "Лилит",
+      "Несколько нежных роз и красивая лента способны изменить настроение."
+    ],
+    [
+      "Сона",
+      "Люблю цветы, которые выглядят роскошно без лишней пышности."
+    ],
+    [
+      "Гор",
+      "Главное при выборе букета — помнить о характере того, кому его даришь."
+    ],
+    [
+      "Арпи",
+      "Нежные формы пионов и светлые оттенки — моё любимое сочетание."
+    ],
+    [
+      "Ваге",
+      "Красные розы — классика, но с правильной упаковкой они всегда особенные."
+    ],
+    [
+      "Анна",
+      "Самое красивое в цветах — маленькие, неожиданные детали."
+    ],
+    [
+      "Элен",
+      "Хочется, чтобы букет наполнял комнату светом, а не просто стоял на столе."
+    ],
+    [
+      "Армен",
+      "Красивые цветы и пара искренних строк превращаются в тёплый подарок."
+    ],
+    [
+      "Нелли",
+      "Особенно люблю естественные, свободные формы букетов."
+    ],
+    [
+      "Саркис",
+      "Лучшие цветочные сюрпризы — те, для которых не нужен повод."
+    ],
+    [
+      "Мане",
+      "В одном букете можно соединить нежность и яркий характер."
+    ],
+    [
+      "Тигран",
+      "Когда трудно подобрать слова, цветы помогают начать разговор."
+    ],
+    [
+      "Лусине",
+      "Простота белых и зелёных цветов никогда не надоедает."
+    ],
+    [
+      "Эдгар",
+      "Самый интересный букет — тот, что будто создан для одного человека."
+    ],
+    [
+      "Карине",
+      "Нежная бумага, подходящая лента и цветы вместе создают красоту."
+    ],
+    [
+      "Аревик",
+      "Смотришь на красивый букет — и хочется просто улыбнуться."
+    ],
+    [
+      "Арсен",
+      "Когда выбираешь подарок сердцем, даже одна роза многое значит."
+    ],
+    [
+      "Эмма",
+      "Сиреневые и розовые цветы вместе выглядят так гармонично."
+    ],
+    [
+      "Анаит",
+      "Букет должен подходить не только к событию, но и к настроению."
+    ],
+    [
+      "Сюзанна",
+      "Любимые подарки — те, с которыми потом связана история."
+    ],
+    [
+      "Рузанна",
+      "Свежие и светлые оттенки делают утро красивее."
+    ],
+    [
+      "Гаяне",
+      "Нравится, когда красота цветов не теряется за слишком сложной упаковкой."
+    ],
+    [
+      "Асмик",
+      "Маленькая открытка добавляет букету особое тепло."
+    ],
+    [
+      "Мери",
+      "Цветы особенно красивы, когда их выбирают с любовью и вниманием."
+    ],
+    [
+      "Сирануш",
+      "Для меня настоящая роскошь — в спокойных оттенках и естественной красоте."
+    ]
   ],
   "en": [
-    "The flowers were breathtaking, with care in every detail.",
-    "I hadn't seen a bouquet this beautiful in ages.",
-    "So lovely I almost didn't want to unwrap it.",
-    "The recipient's smile made it all worthwhile.",
-    "A composition created with love and exquisite taste.",
-    "The flowers said everything I couldn't put into words.",
-    "Beauty in every petal.",
-    "Delicate, elegant and truly unforgettable.",
-    "Even prettier than I had imagined.",
-    "A bouquet that will stay in my memory.",
-    "Beautiful colours brought together with a unique touch.",
-    "Every detail felt thoughtful and tender.",
-    "Flowers chosen with love for someone special.",
-    "Such a bouquet is a little work of art.",
-    "Flowers that bring joy without a single word.",
-    "Every little detail belongs exactly where it is.",
-    "Beautiful wrapping, gentle shades, a lovely result.",
-    "The surprise turned out just as I had dreamed.",
-    "Luxury that feels effortless and never excessive.",
-    "Rose & Co is more than flowers — it's a beautiful feeling."
+    [
+      "Ani",
+      "The blush and ivory combination is exactly the soft style I love."
+    ],
+    [
+      "Mariam",
+      "Sometimes a beautiful bouquet says more than a long letter."
+    ],
+    [
+      "Davit",
+      "I wanted a simple but memorable surprise. Flowers are always a lovely idea."
+    ],
+    [
+      "Nare",
+      "I love bouquets whose shades complement one another naturally."
+    ],
+    [
+      "Hayk",
+      "A gift should feel personal, not just look pretty."
+    ],
+    [
+      "Lilit",
+      "A few delicate roses and a ribbon can change the whole mood."
+    ],
+    [
+      "Sona",
+      "I love flowers that feel luxurious without being overdone."
+    ],
+    [
+      "Gor",
+      "The best bouquet is the one that suits the person receiving it."
+    ],
+    [
+      "Arpi",
+      "Soft peonies in light shades will always be my favourite."
+    ],
+    [
+      "Vahe",
+      "Red roses are classic, yet thoughtful wrapping makes them feel unique."
+    ],
+    [
+      "Anna",
+      "The loveliest part of flowers is often the tiniest unexpected detail."
+    ],
+    [
+      "Elen",
+      "I want a bouquet to brighten a room, not just sit on a table."
+    ],
+    [
+      "Armen",
+      "Beautiful flowers and a heartfelt note make a truly warm gift."
+    ],
+    [
+      "Nelli",
+      "I am especially drawn to natural, relaxed bouquet shapes."
+    ],
+    [
+      "Sargis",
+      "The sweetest flower surprises need no special occasion."
+    ],
+    [
+      "Mane",
+      "A single bouquet can be delicate and full of personality."
+    ],
+    [
+      "Tigran",
+      "When the right words are hard to find, flowers help you begin."
+    ],
+    [
+      "Lusine",
+      "The simplicity of white and green flowers never gets old."
+    ],
+    [
+      "Edgar",
+      "My favourite bouquets look as though they were made for one person alone."
+    ],
+    [
+      "Karine",
+      "Soft paper, the right ribbon and flowers all work together."
+    ],
+    [
+      "Arevik",
+      "A beautiful bouquet can make you smile for no reason at all."
+    ],
+    [
+      "Arsen",
+      "When you choose from the heart, even a single rose means a lot."
+    ],
+    [
+      "Emma",
+      "Lilac and pink flowers together look so peaceful."
+    ],
+    [
+      "Anahit",
+      "A bouquet should match the mood, not only the occasion."
+    ],
+    [
+      "Suzanna",
+      "The gifts we remember most are the ones that become stories."
+    ],
+    [
+      "Ruzanna",
+      "Fresh, bright colours make a morning feel lovelier."
+    ],
+    [
+      "Gayane",
+      "I love when wrapping complements flowers rather than hiding them."
+    ],
+    [
+      "Hasmik",
+      "A little handwritten card gives a bouquet extra warmth."
+    ],
+    [
+      "Meri",
+      "Flowers feel most beautiful when chosen with care."
+    ],
+    [
+      "Siranush",
+      "To me, true elegance is in quiet colours and natural beauty."
+    ]
   ]
 }
-EDITORIAL_LABELS = {
-  "hy": ("20 ստեղծագործական տող՝ ծաղիկների մասին", "Սրանք հորինված օրինակային տեքստեր են, ոչ թե հաճախորդների իրական կարծիքներ։"),
-  "ru": ("20 красивых фраз о цветах", "Это вымышленные примеры текста, а не реальные отзывы покупателей."),
-  "en": ("20 lovely lines about flowers", "These are fictional example lines, not genuine customer testimonials.")
+SAMPLE_LABELS = {
+  "hy": ("30 կարծիքի օրինակ՝ տարբեր անուններով", "Ներկայացված անուններն ու տեքստերը հորինված օրինակներ են, ոչ թե իրական հաճախորդների արձագանքներ։", "Օրինակային անուն"),
+  "ru": ("30 примеров отзывов с разными именами", "Все имена и тексты здесь вымышлены. Это примеры, а не отзывы реальных клиентов.", "Пример имени"),
+  "en": ("30 example reviews with different names", "The names and quotes below are fictional examples, not real customer testimonials.", "Example name")
 }
-assert all(len(lines)==20 for lines in EDITORIAL_LINES.values())
+assert all(len(v)==30 and len({name for name,_ in v})==30 for v in SAMPLE_REVIEWS.values())
 
 def h(s):return escape(str(s),quote=True)
 def inputfield(label,name,placeholder="",required=False,kind="text",length=160):
@@ -158,8 +461,17 @@ def make_service(lang):
  delivery='<div class="rs-grid"><form id="rs-delivery-form" class="rs-form"><div><label for="rs-zone">'+h(w["zone"])+'</label><select id="rs-zone" name="zone">'+zones+'</select></div>'+inputfield(w["address"],"address",w["addressPlaceholder"],False,"text",250)
  delivery+='<div class="rs-actions">'+button(w["feeSend"],"rs-delivery-send")+'</div></form><div class="rs-feebox"><span class="eyebrow">'+h(w["fee"])+'</span><strong id="rs-fee">'+h(w["feeUnknown"])+'</strong><p>'+h(w["feeNote"])+'</p></div></div>'
  review='<div class="rs-grid"><div id="rs-reviews-list" class="rs-reviews"><p class="rs-empty">'+h(w["reviewsEmpty"])+'</p></div>'
- label,notice=EDITORIAL_LABELS[lang]
- editorial='<details class="rs-editorial"><summary>'+h(label)+'</summary><p class="rs-editorial-notice">'+h(notice)+'</p><ol class="rs-editorial-list">'+''.join('<li>'+h(line)+'</li>' for line in EDITORIAL_LINES[lang])+'</ol></details>'
+ label,notice,sample_label=SAMPLE_LABELS[lang]
+ # Sample cards are visually distinct from approved genuine testimonials.
+ # Each card is individually marked as fiction; no star ratings are shown.
+ samples=''.join(
+  '<blockquote class="rs-sample-card" data-example="true"><p>'+h(quote)+'</p>'
+  '<footer><strong>'+h(name)+'</strong><small>'+h(sample_label)+'</small></footer></blockquote>'
+  for name,quote in SAMPLE_REVIEWS[lang]
+ )
+ editorial='<section class="rs-editorial rs-editorial-showcase" aria-label="'+h(label)+'">'
+ editorial+='<h4 class="rs-editorial-heading">'+h(label)+'</h4><p class="rs-editorial-notice">'+h(notice)+'</p>'
+ editorial+='<div class="rs-sample-grid">'+samples+'</div></section>'
  review+='<div class="rs-editorial-wrap">'+editorial+'</div>'
  review+='<form id="rs-review-form" class="rs-form">'+inputfield(w["name"],"name","",True)+selectfield(w["rating"],"rating",["5","4","3","2","1"])+textarea(w["reviewMessage"],"review",w["reviewPlaceholder"],True,700)
  review+='<label class="rs-check"><input type="checkbox" name="permission">'+h(w["permission"])+'</label><div class="rs-actions">'+button(w["reviewSend"],"rs-review-send")+'</div><p class="rs-note">'+h(w["reviewNote"])+'</p></form></div>'
@@ -224,6 +536,19 @@ CSS=r'''
 .rs-editorial-list li{padding:8px 3px;font-size:13px;line-height:1.7;color:#5e4650}
 @media(max-width:700px){.rs-editorial-list{grid-template-columns:1fr}}
 
+
+/* ROSE-CO-ILLUSTRATIVE-REVIEWS-30-V2 */
+.rs-editorial-showcase{padding:clamp(16px,3vw,27px);border:1px solid #e2c5cd;background:#fffaf7}
+.rs-editorial-heading{font:500 clamp(19px,2.2vw,26px)/1.35 var(--serif);color:#6d334c;margin:0 0 5px}
+.rs-editorial-notice{display:block;margin:6px 0 18px;border-left:3px solid #bd8799;background:#f5e7e7;padding:11px 13px;font-size:12px;line-height:1.75;color:#673950;font-weight:600}
+.rs-sample-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.rs-sample-card{margin:0;display:flex;flex-direction:column;justify-content:space-between;min-width:0;min-height:155px;background:linear-gradient(140deg,#fffefd,#f9efed);border:1px solid #ecd9db;padding:18px 17px;box-shadow:0 6px 17px rgba(89,43,60,.04)}
+.rs-sample-card p{margin:0 0 16px;color:#634451;font-size:13px;line-height:1.75;overflow-wrap:anywhere}
+.rs-sample-card footer{display:flex;flex-wrap:wrap;align-items:center;gap:5px 10px;border-top:1px solid #ead6d9;padding-top:11px}
+.rs-sample-card strong{font-size:12px;font-weight:700;color:#71354d}
+.rs-sample-card small{font-size:10px;color:#906d79;letter-spacing:.02em}
+@media(max-width:1050px){.rs-sample-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.rs-sample-grid{grid-template-columns:1fr}.rs-sample-card{min-height:0;padding:16px}.rs-editorial-showcase{padding:15px}}
 @media(max-width:900px){.rs-grid,.rs-three{grid-template-columns:1fr}.rs-links{justify-content:flex-start}.rs-card{margin:20px 0}}
 @media(max-width:640px){.rs-card{padding:18px 15px}.rs-two{grid-template-columns:1fr}.rs-links{overflow-x:auto;flex-wrap:nowrap;padding-bottom:10px}.rs-actions{flex-direction:column;align-items:stretch}.rs-actions .button{width:100%}.rs-envelopebox{padding:15px}.rs-envelope{min-height:250px}.rs-cardhead h3{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.rs-envelope::before{transition:none}}
