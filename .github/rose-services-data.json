@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "delivery_currency": "AMD",
+  "delivery_zones": [
+    {
+      "id": "zovuni",
+      "label": {
+        "hy": "Զովունի",
+        "ru": "Зовуни",
+        "en": "Zovuni"
+      },
+      "fee_amd": null
+    },
+    {
+      "id": "yerevan",
+      "label": {
+        "hy": "Երևան",
+        "ru": "Ереван",
+        "en": "Yerevan"
+      },
+      "fee_amd": null
+    },
+    {
+      "id": "kotayk",
+      "label": {
+        "hy": "Կոտայքի այլ բնակավայրեր",
+        "ru": "Другие населённые пункты Котайка",
+        "en": "Other Kotayk locations"
+      },
+      "fee_amd": null
+    },
+    {
+      "id": "other",
+      "label": {
+        "hy": "Հայաստանի այլ մարզեր",
+        "ru": "Другие регионы Армении",
+        "en": "Other regions of Armenia"
+      },
+      "fee_amd": null
+    }
+  ],
+  "reviews": [],
+  "note": "Set fee_amd to a confirmed nonnegative integer before displaying an amount. Add genuine testimonials to reviews with permission and locale-specific text. An empty list intentionally displays an invitation rather than fabricated endorsements."
+}
