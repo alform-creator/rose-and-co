@@ -19,6 +19,7 @@ on:
       - '.github/scripts/final-site-polish.py'
       - '.github/scripts/install-story-decor.py'
       - '.github/scripts/install-story-monogram.py'
+      - '.github/scripts/install-romantic-runner.py'
       - '.github/scripts/install-more-journal.py'
       - '.github/journal-extra-2026/**'
       - '.github/scripts/seo-headings.py'
@@ -118,6 +119,12 @@ jobs:
           python3 .github/scripts/install-more-journal.py "$SITE"
           python3 .github/scripts/install-story-decor.py "$SITE"
           python3 .github/scripts/install-story-monogram.py "$SITE"
+          python3 .github/scripts/install-romantic-runner.py "$SITE"
+          test -s "$SITE/assets/romantic-runner.css"
+          test -s "$SITE/assets/romantic-runner.js"
+          grep -q 'id="rose-runner"' "$SITE/hy/index.html"
+          grep -q 'id="rose-runner"' "$SITE/ru/catalog/index.html"
+          grep -q 'id="rose-runner"' "$SITE/en/contact/index.html"
           test -s "$SITE/assets/story-rc-monogram.svg"
           grep -q "story-secondary-monogram" "$SITE/hy/index.html"
           grep -q "story-secondary-monogram" "$SITE/ru/about/index.html"
