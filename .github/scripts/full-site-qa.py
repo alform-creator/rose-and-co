@@ -111,6 +111,12 @@ assert all(len(home_sections[l])>=3 for l in langs)
 # Check images are real (not corrupt) and useful in display contexts.
 for f,uses in sorted(seen_images.items()):
     try:
+        if Path(f).suffix.lower()==".svg":
+            from xml.etree import ElementTree
+            svg=ElementTree.parse(f).getroot()
+            if not svg.tag.endswith("svg"):
+                raise ValueError("Not an SVG element")
+            continue
         im=Image.open(f)
         im.verify()
         im=Image.open(f)
