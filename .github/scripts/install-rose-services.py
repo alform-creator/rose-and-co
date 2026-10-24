@@ -54,6 +54,83 @@ COPY={
 "letterHello":"Hello! I'd like to add a letter to my bouquet.","surpriseHello":"Hello! I'd like a surprise delivery.","feeHello":"Hello! I'd like a delivery quote.","reviewHello":"Hello! I'd like to leave feedback for Rose & Co.","yes":"yes","no":"no"
 }
 }
+
+# ROSE-CO-INSPIRATIONAL-COPY-V1: editorial sample wording. Never misrepresent as real testimonials.
+EDITORIAL_LINES = {
+  "hy": [
+    "Ծաղիկները պարզապես հիասքանչ էին։ Ամեն մանրուք այնքան նուրբ էր։",
+    "Այսպիսի գեղեցիկ ծաղկեփունջ վաղուց չէի տեսել։",
+    "Այնքան գեղեցիկ էր, որ ափսոսում էի բացել փաթեթավորումը։",
+    "Ստացողի ժպիտն ամեն ինչ արժեր։",
+    "Շատ ճաշակով ու սիրով պատրաստված կոմպոզիցիա։",
+    "Ծաղիկներն իսկապես խոսում էին իմ փոխարեն։",
+    "Գեղեցկություն՝ ամեն մի թերթիկի մեջ։",
+    "Պարզապես աննկարագրելի նուրբ ու էլեգանտ։",
+    "Իմ պատկերացրածից էլ գեղեցիկ ստացվեց։",
+    "Ծաղկեփունջ, որը երկար կմնա հիշողության մեջ։",
+    "Շատ գեղեցիկ գույների համադրություն ու յուրահատուկ ոճ։",
+    "Ամեն ինչ այնքան խնամքով ու նրբությամբ էր արված։",
+    "Սիրով ընտրված ծաղիկներ՝ սիրելի մարդու համար։",
+    "Այս ծաղկեփունջն իսկական փոքրիկ արվեստի գործ էր։",
+    "Այնպիսի ծաղիկներ, որոնք առանց խոսքերի ուրախացնում են։",
+    "Յուրաքանչյուր դետալ իր տեղում էր։",
+    "Գեղեցիկ փաթեթավորում, նուրբ գույներ, հիանալի արդյունք։",
+    "Անակնկալը ստացվեց հենց այնպես, ինչպես երազում էի։",
+    "Շքեղություն, որը երբեք չափազանցված չի թվում։",
+    "Rose & Co-ն պարզապես ծաղիկներ չէ, այլ գեղեցիկ զգացմունք։"
+  ],
+  "ru": [
+    "Цветы были невероятно красивыми, а каждая деталь — нежной.",
+    "Давно не встречала настолько красивый букет.",
+    "Так красиво, что даже жалко было разворачивать упаковку.",
+    "Улыбка получателя стоила всего.",
+    "Композиция создана с любовью и безупречным вкусом.",
+    "Цветы сказали всё за меня.",
+    "Красота в каждом лепестке.",
+    "Невероятно нежно и элегантно.",
+    "Получилось даже прекраснее, чем я представляла.",
+    "Букет, который надолго останется в памяти.",
+    "Прекрасные сочетания оттенков и особый стиль.",
+    "В каждой детали чувствуется забота.",
+    "Цветы, выбранные с любовью для самого дорогого человека.",
+    "Этот букет похож на маленькое произведение искусства.",
+    "Цветы, которые дарят радость без лишних слов.",
+    "Каждая деталь на своём месте.",
+    "Красивая упаковка, мягкие оттенки, прекрасный результат.",
+    "Сюрприз получился именно таким, о каком я мечтала.",
+    "Роскошь без лишней вычурности.",
+    "Rose & Co — это не просто цветы, а красивые эмоции."
+  ],
+  "en": [
+    "The flowers were breathtaking, with care in every detail.",
+    "I hadn't seen a bouquet this beautiful in ages.",
+    "So lovely I almost didn't want to unwrap it.",
+    "The recipient's smile made it all worthwhile.",
+    "A composition created with love and exquisite taste.",
+    "The flowers said everything I couldn't put into words.",
+    "Beauty in every petal.",
+    "Delicate, elegant and truly unforgettable.",
+    "Even prettier than I had imagined.",
+    "A bouquet that will stay in my memory.",
+    "Beautiful colours brought together with a unique touch.",
+    "Every detail felt thoughtful and tender.",
+    "Flowers chosen with love for someone special.",
+    "Such a bouquet is a little work of art.",
+    "Flowers that bring joy without a single word.",
+    "Every little detail belongs exactly where it is.",
+    "Beautiful wrapping, gentle shades, a lovely result.",
+    "The surprise turned out just as I had dreamed.",
+    "Luxury that feels effortless and never excessive.",
+    "Rose & Co is more than flowers — it's a beautiful feeling."
+  ]
+}
+EDITORIAL_LABELS = {
+  "hy": ("20 ստեղծագործական տող՝ ծաղիկների մասին", "Սրանք հորինված օրինակային տեքստեր են, ոչ թե հաճախորդների իրական կարծիքներ։"),
+  "ru": ("20 красивых фраз о цветах", "Это вымышленные примеры текста, а не реальные отзывы покупателей."),
+  "en": ("20 lovely lines about flowers", "These are fictional example lines, not genuine customer testimonials.")
+}
+assert all(len(lines)==20 for lines in EDITORIAL_LINES.values())
+
 def h(s):return escape(str(s),quote=True)
 def inputfield(label,name,placeholder="",required=False,kind="text",length=160):
  return '<div><label for="rs-'+name+'">'+h(label)+'</label><input id="rs-'+name+'" name="'+name+'" type="'+kind+'" maxlength="'+str(length)+'" placeholder="'+h(placeholder)+'"'+(" required" if required else "")+'></div>'
@@ -81,6 +158,9 @@ def make_service(lang):
  delivery='<div class="rs-grid"><form id="rs-delivery-form" class="rs-form"><div><label for="rs-zone">'+h(w["zone"])+'</label><select id="rs-zone" name="zone">'+zones+'</select></div>'+inputfield(w["address"],"address",w["addressPlaceholder"],False,"text",250)
  delivery+='<div class="rs-actions">'+button(w["feeSend"],"rs-delivery-send")+'</div></form><div class="rs-feebox"><span class="eyebrow">'+h(w["fee"])+'</span><strong id="rs-fee">'+h(w["feeUnknown"])+'</strong><p>'+h(w["feeNote"])+'</p></div></div>'
  review='<div class="rs-grid"><div id="rs-reviews-list" class="rs-reviews"><p class="rs-empty">'+h(w["reviewsEmpty"])+'</p></div>'
+ label,notice=EDITORIAL_LABELS[lang]
+ editorial='<details class="rs-editorial"><summary>'+h(label)+'</summary><p class="rs-editorial-notice">'+h(notice)+'</p><ol class="rs-editorial-list">'+''.join('<li>'+h(line)+'</li>' for line in EDITORIAL_LINES[lang])+'</ol></details>'
+ review+='<div class="rs-editorial-wrap">'+editorial+'</div>'
  review+='<form id="rs-review-form" class="rs-form">'+inputfield(w["name"],"name","",True)+selectfield(w["rating"],"rating",["5","4","3","2","1"])+textarea(w["reviewMessage"],"review",w["reviewPlaceholder"],True,700)
  review+='<label class="rs-check"><input type="checkbox" name="permission">'+h(w["permission"])+'</label><div class="rs-actions">'+button(w["reviewSend"],"rs-review-send")+'</div><p class="rs-note">'+h(w["reviewNote"])+'</p></form></div>'
  all_cards=[panel("letter",w["titles"][0],w["descs"][0],letter),panel("surprise",w["titles"][1],w["descs"][1],surprise),panel("quiz",w["titles"][2],w["descs"][2],quiz),panel("delivery",w["titles"][3],w["descs"][3],delivery),panel("reviews",w["titles"][4],w["descs"][4],review)]
@@ -136,6 +216,14 @@ CSS=r'''
 .rs-stars{color:#a86177;letter-spacing:2px}
 .rs-check{display:flex!important;align-items:flex-start;gap:10px;font-weight:400!important}
 .rs-check input{width:18px;height:18px;flex:none;accent-color:#8b4963}
+.rs-editorial-wrap{grid-column:1/-1;margin-top:2px}
+.rs-editorial{background:#fffaf7;border:1px solid #e4c9d1;padding:19px 20px}
+.rs-editorial summary{color:#733b52;font-size:14px;font-weight:700;cursor:pointer}
+.rs-editorial-notice{font-size:12px;color:#846b74;line-height:1.8;margin:12px 0}
+.rs-editorial-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 29px;padding-left:22px;margin:0}
+.rs-editorial-list li{padding:8px 3px;font-size:13px;line-height:1.7;color:#5e4650}
+@media(max-width:700px){.rs-editorial-list{grid-template-columns:1fr}}
+
 @media(max-width:900px){.rs-grid,.rs-three{grid-template-columns:1fr}.rs-links{justify-content:flex-start}.rs-card{margin:20px 0}}
 @media(max-width:640px){.rs-card{padding:18px 15px}.rs-two{grid-template-columns:1fr}.rs-links{overflow-x:auto;flex-wrap:nowrap;padding-bottom:10px}.rs-actions{flex-direction:column;align-items:stretch}.rs-actions .button{width:100%}.rs-envelopebox{padding:15px}.rs-envelope{min-height:250px}.rs-cardhead h3{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.rs-envelope::before{transition:none}}
