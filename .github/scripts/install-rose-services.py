@@ -474,9 +474,9 @@ def make_service(lang):
  editorial+='<div class="rs-sample-controls"><button class="rs-sample-arrow" type="button" data-rs-scroll="-1" aria-label="'+h(prev_label)+'">‹</button>'
  editorial+='<button class="rs-sample-arrow" type="button" data-rs-scroll="1" aria-label="'+h(next_label)+'">›</button></div>'
  editorial+='<div class="rs-sample-grid" tabindex="0" role="region" aria-label="'+h(label)+'">'+samples+'</div></section>'
- review+='<div class="rs-editorial-wrap">'+editorial+'</div>'
  review+='<form id="rs-review-form" class="rs-form">'+inputfield(w["name"],"name","",True)+selectfield(w["rating"],"rating",["5","4","3","2","1"])+textarea(w["reviewMessage"],"review",w["reviewPlaceholder"],True,700)
- review+='<label class="rs-check"><input type="checkbox" name="permission">'+h(w["permission"])+'</label><div class="rs-actions">'+button(w["reviewSend"],"rs-review-send")+'</div><p class="rs-note">'+h(w["reviewNote"])+'</p></form></div>'
+ review+='<label class="rs-check"><input type="checkbox" name="permission">'+h(w["permission"])+'</label><div class="rs-actions">'+button(w["reviewSend"],"rs-review-send")+'</div><p class="rs-note">'+h(w["reviewNote"])+'</p></form>'
+ review+='<div class="rs-editorial-wrap">'+editorial+'</div></div>'
  all_cards=[panel("letter",w["titles"][0],w["descs"][0],letter),panel("surprise",w["titles"][1],w["descs"][1],surprise),panel("quiz",w["titles"][2],w["descs"][2],quiz),panel("delivery",w["titles"][3],w["descs"][3],delivery),panel("reviews",w["titles"][4],w["descs"][4],review)]
  jump=''.join('<a href="#rs-'+id+'">'+h(t)+'</a>' for id,t in zip(("letter","surprise","quiz","delivery","reviews"),w["tabs"]))
  def script_data(id,obj):
@@ -551,6 +551,20 @@ CSS=r'''
 .rs-sample-card small{font-size:10px;color:#906d79;letter-spacing:.02em}
 @media(max-width:1050px){.rs-sample-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.rs-sample-grid{grid-template-columns:1fr}.rs-sample-card{min-height:0;padding:16px}.rs-editorial-showcase{padding:15px}}
+
+
+/* ROSE-CO-EDITORIAL-MINWIDTH-FIX-20261025 */
+#rs-reviews .rs-grid{min-width:0;max-width:100%;overflow:hidden}
+#rs-reviews .rs-editorial-wrap {
+  grid-column:1/-1;min-width:0;width:100%;max-width:100%;overflow:hidden;
+}
+#rs-reviews .rs-editorial-showcase {
+  min-width:0;max-width:100%;width:100%;box-sizing:border-box;overflow:hidden;
+}
+#rs-reviews .rs-sample-grid {
+  min-width:0;width:100%;max-width:100%;box-sizing:border-box;overflow-x:auto;overflow-y:hidden;
+}
+#rs-reviews .rs-sample-card{min-width:0;box-sizing:border-box}
 
 /* ROSE-CO-COMPACT-EDITORIAL-CAROUSEL-20261025 */
 /* Horizontal scroll snap: avoids 30 tall stacked cards, native touch swipes. */
