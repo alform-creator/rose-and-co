@@ -6,6 +6,7 @@ No external animation libraries, source-photo edits, or layout changes.
 """
 from pathlib import Path
 import sys
+import re
 
 root = Path(sys.argv[1]).resolve()
 css_path = root / "assets" / "styles.css"
@@ -154,92 +155,208 @@ css = r'''
 }
 '''
 
+css += r'''
+/* ROSE-CO-EDITORIAL-MOTION-v2
+   High-end motion details. Animated only on capable, motion-enabled devices. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Slow, subtle atmospheric highlight, without ever replacing the hero photo. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -18% -5%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 11% 26%, rgba(255, 255, 255, .48), transparent 38%),
+      radial-gradient(ellipse at 85% 83%, rgba(197, 127, 147, .16), transparent 45%);
+    animation: rose-ambient 15s ease-in-out infinite alternate;
+  }
+  @keyframes rose-ambient {
+    from { opacity: .65; transform: translate3d(-1%,0,0) scale(1); }
+    to { opacity: 1; transform: translate3d(1%,1%,0) scale(1.035); }
+  }
+  /* Allow the hero message to arrive in a pleasant editorial rhythm. */
+  html.rose-motion-on .hero-copy > h1 { animation-duration: 1.02s; }
+  html.rose-motion-on .hero-image-wrap { animation-duration: 1.28s; }
+  html.rose-motion-on .hero-float-tag {
+    animation: rose-arrive .85s .65s both var(--rose-ease),
+               rose-tag-breathe 7s 1.7s ease-in-out infinite alternate;
+  }
+  @keyframes rose-tag-breathe {
+    from { translate: 0 0; }
+    to { translate: 0 -5px; }
+  }
+  /* Fine calligraphic underline that draws in when a heading is revealed. */
+  .section-head h2::after {
+    content: "";
+    display: block;
+    width: min(82px, 28%);
+    height: 1px;
+    margin: 20px 0 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, #b18679, #d9b5af);
+    transition: transform 1.04s .20s var(--rose-ease);
+  }
+  .section-head.centered h2::after { margin-inline: auto; transform-origin: center; }
+  .section-head.rose-in-view h2::after { transform: scaleX(1); }
+  /* Refined interactive image reflections, limited to mouse/trackpad. */
+  @media (hover: hover) and (pointer: fine) {
+    .product-card .card-image::before {
+      content:""; position:absolute; z-index:2; inset:0; pointer-events:none;
+      background:linear-gradient(112deg, transparent 25%, rgba(255,255,255,.18) 46%, transparent 66%);
+      transform:translate3d(-150%,0,0) skewX(-11deg);
+      transition:transform 1.05s var(--rose-ease);
+    }
+    .product-card:hover .card-image::before,
+    .product-card:focus-visible .card-image::before {
+      transform:translate3d(150%,0,0) skewX(-11deg);
+    }
+    .journal-card .journal-photo img, .spotlight-gallery img {
+      transition:transform 1.15s var(--rose-ease), filter .6s ease;
+    }
+    .journal-card:hover .journal-photo img { transform: scale(1.045); }
+    .spotlight-gallery:hover img { transform: scale(1.025); }
+    .filter-chip, .type-chip {
+      transition: color .22s, background .22s, border-color .22s, transform .35s var(--rose-ease);
+    }
+    .filter-chip:hover, .type-chip:hover { transform: translate3d(0,-2px,0); }
+    .journal-read { display:inline-flex; align-items:center; }
+    .journal-card:hover .journal-read { color:var(--wine); }
+  }
+  /* Micro feedback on taps, without a continuous hover animation. */
+  .button:active, .filter-chip:active, .type-chip:active {
+    transform: scale(.985);
+    transition-duration: .12s;
+  }
+  /* No abrupt modal appearance when inspecting flowers or gifts. */
+  .product-dialog[open] .modal-photo img {
+    animation: rose-modal-image .78s .11s both var(--rose-ease);
+  }
+  @keyframes rose-modal-image {
+    from { opacity:.6; transform: scale(1.025); }
+    to { opacity:1; transform: scale(1); }
+  }
+}
+/* Opt out of nonessential ambient motion on small screens and touch devices. */
+@media (max-width: 640px) {
+  .hero::before { animation:none !important; }
+  html.rose-motion-on .hero-float-tag {
+    animation:rose-arrive .7s .35s both var(--rose-ease);
+  }
+  html.rose-motion-on [data-rose-reveal] {
+    transition-duration:.64s,.72s;
+  }
+  html.rose-motion-on [data-rose-reveal]:not(.rose-in-view) {
+    transform: translate3d(0,18px,0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation:none !important; }
+  .section-head h2::after { transform:none !important; transition:none !important; }
+  .product-dialog[open] .modal-photo img { animation:none !important; }
+}
+'''
+
 js = r'''(() => {
   "use strict";
-  // Progressive enhancement only: static content stays visible without JS.
+  // The page remains perfectly readable without animation-capable JavaScript.
   if (!("IntersectionObserver" in window) ||
       !("matchMedia" in window) ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      !("requestAnimationFrame" in window) ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const selector = [
     ".section-head", ".occasion-card", ".product-card",
     ".spotlight-gallery", ".spotlight-copy", ".flower-type",
     ".journal-card", ".contact-grid > *", ".about-grid > *",
-    ".article-photo", ".article-body > p",
-    ".page-intro > .container > *", ".article-hero > h1",
-    ".article-hero > p", ".article-return > *"
+    ".article-photo", ".article-body > h2", ".article-body > h3",
+    ".article-body > p", ".page-intro > .container > *",
+    ".article-hero > h1", ".article-hero > p", ".article-return > *",
+    ".seo-section-title"
   ].join(", ");
-  const items = [...document.querySelectorAll(selector)]
-    .filter(node => !node.closest("[hidden]"));
+  const items = [...document.querySelectorAll(selector)];
   if (!items.length && !document.querySelector(".hero")) return;
 
-  // Per-grid stagger gives order without making long pages feel slow.
-  const staggerClasses = [".occasion-card", ".product-card", ".flower-type", ".journal-card"];
-  items.forEach((node, index) => {
-    node.setAttribute("data-rose-reveal", "");
-    const grid = staggerClasses.some(s => node.matches(s));
-    if (grid) {
-      let position = 0;
-      let previous = node.previousElementSibling;
-      while (previous && position < 3) {
-        if (previous.matches(node.tagName + "." + node.classList[0])) position++;
-        previous = previous.previousElementSibling;
+  // A restrained 70 ms rhythm for card rows. Items further down the catalog
+  // do not accumulate increasingly long delays.
+  const staggerClass = [".occasion-card", ".product-card", ".flower-type", ".journal-card"];
+  for (const node of items) {
+    node.dataset.roseReveal = "";
+    if (staggerClass.some(s => node.matches(s))) {
+      let place = 0;
+      let sibling = node.previousElementSibling;
+      while (sibling && place < 3) {
+        if (sibling.classList.contains(node.classList[0])) place++;
+        sibling = sibling.previousElementSibling;
       }
-      node.style.setProperty("--rose-delay", (position * 70) + "ms");
+      node.style.setProperty("--rose-delay", (place * 70) + "ms");
     }
-    // Above-the-fold content should never start hidden.
-    const bounds = node.getBoundingClientRect();
-    if (bounds.top <= window.innerHeight + 30 && bounds.bottom >= -25) {
+    // Everything already onscreen stays immediately readable.
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 32 && rect.bottom > -20) {
       node.classList.add("rose-in-view");
     }
-  });
+  }
   document.documentElement.classList.add("rose-motion-on");
+
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
       entry.target.classList.add("rose-in-view");
       observer.unobserve(entry.target);
-    });
-  }, { rootMargin: "0px 0px -26px 0px", threshold: .06 });
-  items.forEach(node => {
-    if (!node.classList.contains("rose-in-view")) observer.observe(node);
-  });
-
-  // Visible, discreet page position — only on long pages.
-  let progress;
-  let pending = false;
-  function updateProgress() {
-    pending = false;
-    if (!progress) return;
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.transform = "scaleX(" + (max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0) + ")";
-  }
-  function scheduleProgress() {
-    if (!pending) {
-      pending = true;
-      requestAnimationFrame(updateProgress);
     }
+  }, {rootMargin: "0px 0px -20px 0px", threshold: .06});
+
+  for (const node of items) {
+    if (!node.classList.contains("rose-in-view")) observer.observe(node);
   }
-  if (document.documentElement.scrollHeight > window.innerHeight * 1.55) {
+  // Filtering catalogs can reveal a formerly hidden product. Make sure that
+  // new result cards never remain transparent after user interaction.
+  const catalog = document.querySelector("#catalog-grid");
+  if (catalog) {
+    const showVisible = () => {
+      for (const card of catalog.querySelectorAll(".product-card:not([hidden])")) {
+        if (card.getBoundingClientRect().top < innerHeight + 80)
+          card.classList.add("rose-in-view");
+      }
+    };
+    document.querySelectorAll(".filter-chip").forEach(chip =>
+      chip.addEventListener("click", () => requestAnimationFrame(showVisible)));
+    document.querySelector("#catalog-search")?.addEventListener("input", () =>
+      requestAnimationFrame(showVisible));
+  }
+
+  // Very thin, passive page-position indicator on longer pages.
+  let progress = null, queued = false;
+  const render = () => {
+    queued = false;
+    if (!progress) return;
+    const length = document.documentElement.scrollHeight - innerHeight;
+    const fraction = length > 0 ? Math.max(0, Math.min(1, scrollY / length)) : 0;
+    progress.style.transform = "scaleX(" + fraction + ")";
+  };
+  const update = () => {
+    if (!queued) { queued = true; requestAnimationFrame(render); }
+  };
+  if (document.documentElement.scrollHeight > innerHeight * 1.55) {
     progress = document.createElement("div");
     progress.className = "rose-scroll-progress";
     progress.setAttribute("aria-hidden", "true");
     document.body.appendChild(progress);
-    window.addEventListener("scroll", scheduleProgress, { passive: true });
-    window.addEventListener("resize", scheduleProgress, { passive: true });
-    updateProgress();
+    addEventListener("scroll", update, {passive: true});
+    addEventListener("resize", update, {passive: true});
+    render();
   }
-
-  // Browser back/forward and filter changes must not leave cards hidden.
-  window.addEventListener("pageshow", () => {
-    items.forEach(node => {
-      if (!node.hidden && node.getBoundingClientRect().top < window.innerHeight + 30 &&
-          node.getBoundingClientRect().bottom > -25) node.classList.add("rose-in-view");
-    });
-    scheduleProgress();
+  addEventListener("pageshow", () => {
+    for (const node of items) {
+      const rect = node.getBoundingClientRect();
+      if (!node.hidden && rect.top < innerHeight + 40 && rect.bottom > -20)
+        node.classList.add("rose-in-view");
+    }
+    update();
   });
-})();
-'''
+})();'''
 
 old_css = css_path.read_text(encoding="utf-8")
 if css_marker not in old_css:
@@ -247,15 +364,18 @@ if css_marker not in old_css:
 js_path.write_text(js, encoding="utf-8")
 
 changed = 0
-tag = '<script defer src="/rose-and-co/assets/rose-motion.js?v=motion1"></script>'
+tag = '<script defer src="/rose-and-co/assets/rose-motion.js?v=motion2"></script>'
 for page in root.rglob("*.html"):
     html = page.read_text(encoding="utf-8")
     if 'rose-motion.js' not in html:
         if "</head>" not in html:
             raise RuntimeError(f"Missing closing head: {page}")
         html = html.replace("</head>", tag + "</head>", 1)
-    # Change ONLY the stylesheet version, never the image/hero URLs.
-    html = html.replace("styles.css?v=align6", "styles.css?v=motion1")
+    # Refresh stale GitHub Pages CSS and JS caches without touching images.
+    html = re.sub(r'(/rose-and-co/assets/styles\.css)(?:\?v=[\w-]+)?',
+                  r'\1?v=motion2', html)
+    html = re.sub(r'/rose-and-co/assets/rose-motion\.js(?:\?v=[\w-]+)?',
+                  '/rose-and-co/assets/rose-motion.js?v=motion2', html)
     page.write_text(html, encoding="utf-8")
     changed += 1
 
