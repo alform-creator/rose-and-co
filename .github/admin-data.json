@@ -1,0 +1,1296 @@
+{
+  "schema": 1,
+  "products": [
+    {
+      "id": "RF01",
+      "img": "real-2026/flowers-01",
+      "cat": "occasions",
+      "name": {
+        "hy": "Վարդագույն և սպիտակ ծաղկեփունջ",
+        "ru": "Розово-белый букет",
+        "en": "Pink and White Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF02",
+      "img": "real-2026/flowers-02",
+      "cat": "romance",
+      "name": {
+        "hy": "Սպիտակ և վարդագույն վարդեր",
+        "ru": "Белые и розовые розы",
+        "en": "White and Pink Roses"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF03",
+      "img": "real-2026/flowers-03",
+      "cat": "occasions",
+      "name": {
+        "hy": "Վարդագույն ծաղիկներով փունջ",
+        "ru": "Букет с розовыми цветами",
+        "en": "Pink Flower Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF04",
+      "img": "real-2026/flowers-04",
+      "cat": "romance",
+      "name": {
+        "hy": "Վարդագույն փունջ",
+        "ru": "Розовый букет",
+        "en": "Pink Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF05",
+      "img": "real-2026/flowers-05",
+      "cat": "wedding",
+      "name": {
+        "hy": "Սպիտակ և կանաչ ծաղկեփունջ",
+        "ru": "Бело-зелёный букет",
+        "en": "White and Green Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF06",
+      "img": "real-2026/flowers-06",
+      "cat": "signature",
+      "name": {
+        "hy": "Գունավոր ծաղիկներ տուփում",
+        "ru": "Цветы в коробке",
+        "en": "Mixed Flowers in a Box"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF07",
+      "img": "real-2026/flowers-07",
+      "cat": "occasions",
+      "name": {
+        "hy": "Դեղին և կապույտ ծաղիկներ",
+        "ru": "Жёлтые и синие цветы",
+        "en": "Yellow and Blue Flowers"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF08",
+      "img": "real-2026/flowers-08",
+      "cat": "romance",
+      "name": {
+        "hy": "Վարդագույն վարդերի փունջ",
+        "ru": "Букет розовых роз",
+        "en": "Pink Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF09",
+      "img": "real-2026/flowers-09",
+      "cat": "occasions",
+      "name": {
+        "hy": "Կապույտ և սպիտակ քրիզանթեմներ",
+        "ru": "Синие и белые хризантемы",
+        "en": "Blue and White Chrysanthemums"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF10",
+      "img": "real-2026/flowers-10",
+      "cat": "signature",
+      "name": {
+        "hy": "Կրեմագույն և մանուշակագույն ծաղիկներ",
+        "ru": "Кремово-сиреневые цветы",
+        "en": "Cream and Lilac Flowers"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF11",
+      "img": "real-2026/flowers-11",
+      "cat": "romance",
+      "name": {
+        "hy": "Վարդագույն վարդերի փոքր փունջ",
+        "ru": "Небольшой букет розовых роз",
+        "en": "Small Pink Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF12",
+      "img": "real-2026/flowers-12",
+      "cat": "signature",
+      "name": {
+        "hy": "Վարդագույն վարդեր զամբյուղում",
+        "ru": "Розовые розы в корзине",
+        "en": "Pink Roses in a Basket"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF13",
+      "img": "real-2026/flowers-13",
+      "cat": "occasions",
+      "name": {
+        "hy": "Դեղձագույն վարդերով ծաղկեփունջ",
+        "ru": "Букет с персиковыми розами",
+        "en": "Peach Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF14",
+      "img": "real-2026/flowers-14",
+      "cat": "signature",
+      "name": {
+        "hy": "Դեղձագույն խառը ծաղկեփունջ",
+        "ru": "Смешанный персиковый букет",
+        "en": "Peach Mixed Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF15",
+      "img": "real-2026/flowers-15",
+      "cat": "occasions",
+      "name": {
+        "hy": "Վարդագույն և կանաչ ծաղիկներ",
+        "ru": "Розово-зелёные цветы",
+        "en": "Pink and Green Flowers"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF16",
+      "img": "real-2026/flowers-16",
+      "cat": "romance",
+      "name": {
+        "hy": "Վարդագույն վարդեր և քրիզանթեմներ",
+        "ru": "Розовые розы и хризантемы",
+        "en": "Pink Roses and Chrysanthemums"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF17",
+      "img": "real-2026/flowers-17",
+      "cat": "wedding",
+      "name": {
+        "hy": "Սպիտակ ծաղկեփունջ",
+        "ru": "Белый букет",
+        "en": "White Flower Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF18",
+      "img": "real-2026/flowers-18",
+      "cat": "occasions",
+      "name": {
+        "hy": "Վարդագույն խառը փունջ",
+        "ru": "Смешанный розовый букет",
+        "en": "Pink Mixed Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF19",
+      "img": "real-2026/flowers-19",
+      "cat": "seasonal",
+      "name": {
+        "hy": "Արևածաղիկների փունջ",
+        "ru": "Букет подсолнухов",
+        "en": "Sunflower Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF20",
+      "img": "real-2026/flowers-20",
+      "cat": "signature",
+      "name": {
+        "hy": "Մանուշակագույն ծաղիկներ զամբյուղում",
+        "ru": "Сиреневые цветы в корзине",
+        "en": "Lilac Flowers in a Basket"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF21",
+      "img": "real-2026/flowers-21",
+      "cat": "signature",
+      "name": {
+        "hy": "Մանուշակագույն և կրեմագույն փունջ",
+        "ru": "Сиренево-кремовый букет",
+        "en": "Lilac and Cream Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF22",
+      "img": "real-2026/flowers-22",
+      "cat": "occasions",
+      "name": {
+        "hy": "Կապույտ և սպիտակ ծաղիկներ",
+        "ru": "Синие и белые цветы",
+        "en": "Blue and White Flowers"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF23",
+      "img": "real-2026/flowers-23",
+      "cat": "romance",
+      "name": {
+        "hy": "Վարդագույն վարդերով ծաղկեփունջ",
+        "ru": "Букет с розовыми розами",
+        "en": "Bouquet with Pink Roses"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF24",
+      "img": "real-2026/flowers-24",
+      "cat": "wedding",
+      "name": {
+        "hy": "Հարսանեկան սպիտակ փունջ",
+        "ru": "Белый свадебный букет",
+        "en": "White Bridal Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF25",
+      "img": "real-2026/flowers-25",
+      "cat": "romance",
+      "name": {
+        "hy": "51 սպիտակ վարդ",
+        "ru": "51 белая роза",
+        "en": "51 White Roses"
+      },
+      "desc": {
+        "hy": "Կարող եք ընտրել սովորական կամ երկար ցողուններով տարբերակը։ Հասանելիությունը ճշտեք պատվիրելիս։",
+        "ru": "Можно выбрать стандартные или длинные стебли. Наличие уточняйте при заказе.",
+        "en": "Choose standard or long stems. Please confirm availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF26",
+      "img": "real-2026/flowers-26",
+      "cat": "romance",
+      "name": {
+        "hy": "101 կարմիր վարդ",
+        "ru": "101 красная роза",
+        "en": "101 Red Roses"
+      },
+      "desc": {
+        "hy": "Կարող եք ընտրել սովորական կամ երկար ցողուններով տարբերակը։ Հասանելիությունը ճշտեք պատվիրելիս։",
+        "ru": "Можно выбрать стандартные или длинные стебли. Наличие уточняйте при заказе.",
+        "en": "Choose standard or long stems. Please confirm availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF27",
+      "img": "real-2026/flowers-27",
+      "cat": "signature",
+      "name": {
+        "hy": "Կապույտ վարդերի փունջ",
+        "ru": "Букет синих роз",
+        "en": "Blue Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF28",
+      "img": "real-2026/flowers-28",
+      "cat": "signature",
+      "name": {
+        "hy": "Վարդեր զամբյուղում",
+        "ru": "Розы в корзине",
+        "en": "Roses in a Basket"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF29",
+      "img": "real-2026/flowers-29",
+      "cat": "wedding",
+      "name": {
+        "hy": "Սպիտակ վարդերի փոքր փունջ",
+        "ru": "Небольшой букет белых роз",
+        "en": "Small White Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF30",
+      "img": "real-2026/flowers-30",
+      "cat": "signature",
+      "name": {
+        "hy": "Վարդագույն հորտենզիաներով փունջ",
+        "ru": "Букет с розовой гортензией",
+        "en": "Pink Hydrangea Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF31",
+      "img": "real-2026/flowers-31",
+      "cat": "occasions",
+      "name": {
+        "hy": "Սպիտակ ծաղիկներով նվերային զամբյուղ",
+        "ru": "Подарочная корзина с белыми цветами",
+        "en": "White Flower Gift Basket"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF32",
+      "img": "real-2026/flowers-32",
+      "cat": "romance",
+      "name": {
+        "hy": "Կարմիր վարդեր տուփում",
+        "ru": "Красные розы в коробке",
+        "en": "Red Roses in a Box"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF33",
+      "img": "real-2026/flowers-33",
+      "cat": "romance",
+      "name": {
+        "hy": "Մուգ վարդագույն վարդերի փունջ",
+        "ru": "Букет ярко-розовых роз",
+        "en": "Deep Pink Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF34",
+      "img": "real-2026/flowers-34",
+      "cat": "romance",
+      "name": {
+        "hy": "Մանր վարդագույն վարդերի փունջ",
+        "ru": "Букет мелких розовых роз",
+        "en": "Pink Spray Rose Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF35",
+      "img": "real-2026/flowers-35",
+      "cat": "seasonal",
+      "name": {
+        "hy": "Վարդագույն գիպսոֆիլա զամբյուղում",
+        "ru": "Розовая гипсофила в корзине",
+        "en": "Pink Baby’s Breath Basket"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF36",
+      "img": "real-2026/flowers-36",
+      "cat": "romance",
+      "name": {
+        "hy": "Սպիտակ և վարդագույն մանր վարդեր",
+        "ru": "Бело-розовые кустовые розы",
+        "en": "White and Pink Spray Roses"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF37",
+      "img": "real-2026/flowers-37",
+      "cat": "seasonal",
+      "name": {
+        "hy": "Գունավոր քրիզանթեմների փունջ",
+        "ru": "Букет разноцветных хризантем",
+        "en": "Colorful Chrysanthemum Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF38",
+      "img": "real-2026/flowers-38",
+      "cat": "romance",
+      "name": {
+        "hy": "Կարմիր վարդերով կլոր տուփ",
+        "ru": "Круглая коробка с красными розами",
+        "en": "Round Box of Red Roses"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF39",
+      "img": "real-2026/flowers-39",
+      "cat": "signature",
+      "name": {
+        "hy": "Դեղձագույն վարդեր զամբյուղում",
+        "ru": "Персиковые розы в корзине",
+        "en": "Peach Roses in a Basket"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RF40",
+      "img": "real-2026/flowers-40",
+      "cat": "wedding",
+      "name": {
+        "hy": "Բաց վարդագույն և սպիտակ վարդեր",
+        "ru": "Светло-розовые и белые розы",
+        "en": "Pale Pink and White Roses"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RF41",
+      "img": "real-2026/flowers-41",
+      "cat": "seasonal",
+      "name": {
+        "hy": "Արևածաղիկների փոքր փունջ",
+        "ru": "Небольшой букет подсолнухов",
+        "en": "Small Sunflower Bouquet"
+      },
+      "desc": {
+        "hy": "Պատվիրելու համար կապ հաստատեք մեզ հետ։ Ծաղիկների առկայությունը և փնջի կազմը կարող են փոխվել։",
+        "ru": "Свяжитесь с нами, чтобы оформить заказ. Наличие цветов и состав букета уточняются.",
+        "en": "Contact us to order. Flower availability and bouquet composition are confirmed on request."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW01",
+      "img": "real-2026/wreaths-01",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": true
+    },
+    {
+      "id": "RW02",
+      "img": "real-2026/wreaths-02",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW03",
+      "img": "real-2026/wreaths-03",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW04",
+      "img": "real-2026/wreaths-04",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW05",
+      "img": "real-2026/wreaths-05",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW06",
+      "img": "real-2026/wreaths-06",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW07",
+      "img": "real-2026/wreaths-07",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW08",
+      "img": "real-2026/wreaths-08",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW09",
+      "img": "real-2026/wreaths-09",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW10",
+      "img": "real-2026/wreaths-10",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW11",
+      "img": "real-2026/wreaths-11",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW12",
+      "img": "real-2026/wreaths-12",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW13",
+      "img": "real-2026/wreaths-13",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW14",
+      "img": "real-2026/wreaths-14",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW15",
+      "img": "real-2026/wreaths-15",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RW16",
+      "img": "real-2026/wreaths-16",
+      "cat": "wreaths",
+      "name": {
+        "hy": "Պսակ",
+        "ru": "Венок",
+        "en": "Wreath"
+      },
+      "desc": {
+        "hy": "Պսակի տեսքը, ծաղիկների ընտրությունն ու առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Внешний вид, состав и наличие венка уточняйте при заказе.",
+        "en": "Confirm wreath composition and availability when ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RT01",
+      "img": "real-2026/toys-01",
+      "cat": "plush",
+      "name": {
+        "hy": "Փափուկ նապաստակ",
+        "ru": "Плюшевый зайчик",
+        "en": "Plush Bunny"
+      },
+      "desc": {
+        "hy": "Գույնը, չափսը և առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Уточните цвет, размер и наличие перед заказом.",
+        "en": "Please confirm color, size and availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RT02",
+      "img": "real-2026/toys-02",
+      "cat": "teddies",
+      "name": {
+        "hy": "Մոխրագույն արջուկ",
+        "ru": "Серый мишка",
+        "en": "Grey Teddy Bear"
+      },
+      "desc": {
+        "hy": "Գույնը, չափսը և առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Уточните цвет, размер и наличие перед заказом.",
+        "en": "Please confirm color, size and availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RT03",
+      "img": "real-2026/toys-03",
+      "cat": "plush",
+      "name": {
+        "hy": "Վարդագույն արջուկ",
+        "ru": "Розовый мишка",
+        "en": "Pink Teddy Bear"
+      },
+      "desc": {
+        "hy": "Գույնը, չափսը և առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Уточните цвет, размер и наличие перед заказом.",
+        "en": "Please confirm color, size and availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RT04",
+      "img": "real-2026/toys-04",
+      "cat": "teddies",
+      "name": {
+        "hy": "Բեժ արջուկ",
+        "ru": "Бежевый мишка",
+        "en": "Beige Teddy Bear"
+      },
+      "desc": {
+        "hy": "Գույնը, չափսը և առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Уточните цвет, размер и наличие перед заказом.",
+        "en": "Please confirm color, size and availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RT05",
+      "img": "real-2026/toys-05",
+      "cat": "teddies",
+      "name": {
+        "hy": "Սպիտակ արջուկ",
+        "ru": "Белый мишка",
+        "en": "White Teddy Bear"
+      },
+      "desc": {
+        "hy": "Գույնը, չափսը և առկայությունը ճշտեք պատվիրելիս։",
+        "ru": "Уточните цвет, размер и наличие перед заказом.",
+        "en": "Please confirm color, size and availability before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RG05",
+      "img": "rose50/sweets-01",
+      "cat": "sweets",
+      "name": {
+        "hy": "Շոկոլադե նվեր",
+        "ru": "Шоколадный подарок",
+        "en": "Chocolate Gift Box"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի նվերային տարբերակ։ Տեսականին, առկայությունն ու գինը ճշտեք մեզ հետ։",
+        "ru": "Иллюстративный сладкий подарок. Ассортимент и цену уточняйте.",
+        "en": "Illustrative sweets arrangement. Ask us about selection, availability and price."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RG06",
+      "img": "rose50/sweets-02",
+      "cat": "sweets",
+      "name": {
+        "hy": "Քաղցր վարդերի տուփ",
+        "ru": "Коробка роз со сладостями",
+        "en": "Rose & Chocolate Box"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի նվերային տարբերակ։ Տեսականին, առկայությունն ու գինը ճշտեք մեզ հետ։",
+        "ru": "Иллюстративный сладкий подарок. Ассортимент и цену уточняйте.",
+        "en": "Illustrative sweets arrangement. Ask us about selection, availability and price."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RG11",
+      "img": "rose50/sweets-03",
+      "cat": "sweets",
+      "name": {
+        "hy": "Քաղցր անակնկալի զամբյուղ",
+        "ru": "Сладкая корзина-сюрприз",
+        "en": "Sweet Surprise Basket"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի նվերային տարբերակ։ Տեսականին, առկայությունն ու գինը ճշտեք մեզ հետ։",
+        "ru": "Иллюстративный сладкий подарок. Ассортимент и цену уточняйте.",
+        "en": "Illustrative sweets arrangement. Ask us about selection, availability and price."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RG12",
+      "img": "rose50/sweets-04",
+      "cat": "sweets",
+      "name": {
+        "hy": "Քաղցրավենիքի փունջ",
+        "ru": "Букет из сладостей",
+        "en": "Sweet Treat Bouquet"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի նվերային տարբերակ։ Տեսականին, առկայությունն ու գինը ճշտեք մեզ հետ։",
+        "ru": "Иллюстративный сладкий подарок. Ассортимент и цену уточняйте.",
+        "en": "Illustrative sweets arrangement. Ask us about selection, availability and price."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RG13",
+      "img": "rose50/sweets-05",
+      "cat": "sweets",
+      "name": {
+        "hy": "Քաղցրավենիք և ծաղիկներ",
+        "ru": "Сладости с цветами",
+        "en": "Flowers & Sweets"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի նվերային տարբերակ։ Տեսականին, առկայությունն ու գինը ճշտեք մեզ հետ։",
+        "ru": "Иллюстративный сладкий подарок. Ассортимент и цену уточняйте.",
+        "en": "Illustrative sweets arrangement. Ask us about selection, availability and price."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RG14",
+      "img": "rose50/sweets-06",
+      "cat": "sweets",
+      "name": {
+        "hy": "Քաղցր նվերային հավաքածու",
+        "ru": "Сладкий подарочный набор",
+        "en": "Sweet Gift Collection"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի նվերային տարբերակ։ Տեսականին, առկայությունն ու գինը ճշտեք մեզ հետ։",
+        "ru": "Иллюстративный сладкий подарок. Ассортимент и цену уточняйте.",
+        "en": "Illustrative sweets arrangement. Ask us about selection, availability and price."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RS01",
+      "img": "real-2026/sweets-01",
+      "cat": "sweets",
+      "name": {
+        "hy": "Շոկոլադ և արջուկ",
+        "ru": "Шоколад и мишка",
+        "en": "Chocolate and Teddy Bear"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի տեսականին և կազմը կարող են տարբերվել՝ ճշտեք պատվիրելիս։",
+        "ru": "Состав подарка и ассортимент сладостей уточняйте при заказе.",
+        "en": "Confirm the gift contents and sweet selection before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RS02",
+      "img": "real-2026/sweets-02",
+      "cat": "sweets",
+      "name": {
+        "hy": "Շոկոլադե նվերային հավաքածու",
+        "ru": "Подарочный набор шоколада",
+        "en": "Chocolate Gift Set"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի տեսականին և կազմը կարող են տարբերվել՝ ճշտեք պատվիրելիս։",
+        "ru": "Состав подарка и ассортимент сладостей уточняйте при заказе.",
+        "en": "Confirm the gift contents and sweet selection before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    },
+    {
+      "id": "RS03",
+      "img": "real-2026/sweets-03",
+      "cat": "sweets",
+      "name": {
+        "hy": "Վարդեր և քաղցրավենիք տուփում",
+        "ru": "Розы и сладости в коробке",
+        "en": "Roses and Sweets in a Box"
+      },
+      "desc": {
+        "hy": "Քաղցրավենիքի տեսականին և կազմը կարող են տարբերվել՝ ճշտեք պատվիրելիս։",
+        "ru": "Состав подарка и ассортимент сладостей уточняйте при заказе.",
+        "en": "Confirm the gift contents and sweet selection before ordering."
+      },
+      "price_amd": null,
+      "enabled": true,
+      "featured": false
+    }
+  ],
+  "settings": {
+    "phone": "+37433081898",
+    "whatsapp": "37433081898",
+    "instagram": "https://www.instagram.com/rose___co/",
+    "delivery": {
+      "zovuni": null,
+      "yerevan": null,
+      "kotayk": null,
+      "other": null
+    }
+  },
+  "reviews": [],
+  "pages": {}
+}
