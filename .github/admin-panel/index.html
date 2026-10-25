@@ -7,15 +7,16 @@
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
 <title>Rose & Co — Կառավարման վահանակ</title>
-<link rel="stylesheet" href="./admin.css?v=4">
-<script src="./admin.js?v=4" defer></script>
+<link rel="stylesheet" href="./admin.css?v=5">
+<script src="./admin.js?v=5" defer></script>
 </head>
 <body>
 <div class="app">
   <aside class="sidebar">
     <div class="logo"><span class="flower">✿</span><span>Rose <i>&amp;</i> Co<small>ԿԱՌԱՎԱՐՈՒՄ</small></span></div>
     <nav class="nav" id="nav">
-      <button data-tab="products" class="current">🌹 Ապրանքներ</button>
+      <button data-tab="overview" class="current">⌂ Գլխավոր</button>
+      <button data-tab="products">🌹 Ապրանքներ</button>
       <button data-tab="settings">⚙ Կարգավորումներ</button>
       <button data-tab="reviews">♡ Կարծիքներ</button>
       <button data-tab="pages">✎ Էջերի տեքստեր</button>
@@ -26,7 +27,7 @@
   </aside>
   <div class="main">
     <header class="topbar">
-      <div class="top-title"><span class="eyebrow">FLOWER ATELIER</span><h1 id="page-heading">Ապրանքների կառավարում</h1></div>
+      <div class="top-title"><span class="eyebrow">FLOWER ATELIER</span><h1 id="page-heading">Կառավարման գլխավոր էջ</h1></div>
       <div class="top-actions"><span id="connection" class="pill offline">Չմիացված</span><button id="publish" class="primary" disabled>Հրապարակել փոփոխությունները</button></div>
     </header>
     <div id="banner" class="banner" hidden role="status"></div>
@@ -43,7 +44,17 @@
           <button id="setup-save" type="submit" class="primary">Պահպանել և մուտք գործել</button>
         </form>
         <p class="hint">Անհրաժեշտ է <strong>alform-creator/rose-and-co</strong> նախագծի fine-grained token՝ <strong>Contents: Read and write</strong> թույլտվությամբ։ Token-ը պահվում է AES-GCM գաղտնագրմամբ՝ գաղտնաբառից ստացված բանալիով։</p>
-        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Ստեղծել GitHub-ի բանալի ↗</a>
+        <details class="token-guide">
+          <summary>Ինչպե՞ս ստանալ GitHub-ի բանալին</summary>
+          <ol>
+            <li>Բացիր <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">GitHub-ի բանալի ստեղծելու էջը ↗</a>։</li>
+            <li>Անունը՝ <code>RoseCoAdmin</code>։ Expiration՝ օրինակ 90 օր։</li>
+            <li>Repository access՝ <strong>Only select repositories</strong> → <code>alform-creator/rose-and-co</code>։</li>
+            <li>Repository permissions → Contents → <strong>Read and write</strong>։</li>
+            <li>Սեղմիր Generate token, պատճենիր բանալին և տեղադրիր վերևի դաշտում։</li>
+          </ol>
+          <p class="hint">Բանալին երբեք մի ուղարկիր նամակով կամ զրույցով։</p>
+        </details>
       </div>
       <div id="vault-login" hidden>
         <h2>Մուտք Rose & Co Admin</h2>
@@ -59,7 +70,32 @@
       <p class="hint">Մուտքը գործում է <strong>միայն այս բրաուզերում</strong>։ Նոր հեռախոսով կամ համակարգչով առաջին անգամ անհրաժեշտ է նույն կարգավորումն անել։</p>
     </section>
     <div id="workspace" hidden>
-      <section class="tab" id="tab-products">
+      <section class="tab" id="tab-overview">
+        <div class="welcome-head">
+          <span class="eyebrow">WELCOME TO ROSE &amp; CO</span>
+          <h2>Բարի գալուստ խանութի կառավարում</h2>
+          <p>Կայքի բովանդակությունը փոխելու համար ընտրիր անհրաժեշտ բաժինը։ Փոփոխությունները միանգամից տեսանելի չեն լինի, մինչև չսեղմես վերևի «Հրապարակել» կոճակը։</p>
+        </div>
+        <div class="stats-grid" id="stats-grid" aria-label="Խանութի վիճակագրություն">
+          <div class="panel stat"><span>Ընդհանուր ապրանքներ</span><strong id="stat-all">—</strong></div>
+          <div class="panel stat"><span>Տեսանելի ապրանքներ</span><strong id="stat-visible">—</strong></div>
+          <div class="panel stat"><span>Գներով ապրանքներ</span><strong id="stat-priced">—</strong></div>
+          <div class="panel stat"><span>Իրական կարծիքներ</span><strong id="stat-reviews">—</strong></div>
+        </div>
+        <h3 class="quick-title">Արագ գործողություններ</h3>
+        <div class="quick-grid">
+          <button type="button" class="quick-action" data-goto="products"><span class="quick-icon">✿</span><strong>Խմբագրել ապրանքները</strong><small>Նկարներ, գներ, անվանումներ</small></button>
+          <button type="button" class="quick-action" id="quick-new-product"><span class="quick-icon">＋</span><strong>Ավելացնել նոր ապրանք</strong><small>Նկար և 3 լեզվի տվյալներ</small></button>
+          <button type="button" class="quick-action" data-goto="settings"><span class="quick-icon">⚙</span><strong>Փոխել կոնտակտները</strong><small>Հեռախոս, WhatsApp, առաքում</small></button>
+          <button type="button" class="quick-action" data-goto="pages"><span class="quick-icon">✎</span><strong>Փոխել կայքի տեքստերը</strong><small>Էջերի վերնագրեր և SEO</small></button>
+        </div>
+        <div class="panel launch-note">
+          <h3>Ինչպե՞ս փոխել ինչ-որ բան</h3>
+          <p>Ընտրիր ապրանքը, փոխիր գինը կամ նկարը, ապա սեղմիր «Հրապարակել փոփոխությունները»։ Կայքի հրապարակումը կատարվում է ավտոմատ GitHub-ի միջոցով։</p>
+          <p class="hint">Նշում․ պատվերներն այժմ գալիս են WhatsApp-ով, ոչ թե այս պանելի պատվերների բազա։</p>
+        </div>
+      </section>
+      <section class="tab" id="tab-products" hidden>
         <div class="toolbar">
           <div><h2>Ծաղկեփնջեր և ապրանքներ</h2><p>Նկար, անուն, գին, կատեգորիա, ցուցադրել կամ թաքցնել։</p></div>
           <button id="add-product" class="primary">+ Նոր ապրանք</button>
@@ -127,6 +163,18 @@
           </ol>
           <p><strong>Անվտանգություն.</strong> Գաղտնագրված GitHub token-ը պահվում է միայն այս սարքի բրաուզերում, ոչ թե հրապարակային կոդում։ Մուտքի գաղտնաբառը երբեք չի պահվում բաց տեքստով։ Առանձին սերվերային հաշիվ դեռ միացված չէ։</p>
           <p><strong>Պատվերներ.</strong> Գործող կայքը պատվերի հարցումները փոխանցում է WhatsApp-ին։ Այն չունի պատվերների սերվերային բազա, հետևաբար այս պանելում WhatsApp հաղորդագրությունների պատմությունը հասանելի չէ։</p>
+          <h3>Փոխել այս սարքի գաղտնաբառը</h3>
+          <form id="change-password-form" autocomplete="off">
+            <label for="old-password">Գործող գաղտնաբառը</label>
+            <input id="old-password" type="password" autocomplete="current-password" required>
+            <label for="new-password">Նոր գաղտնաբառը (առնվազն 12 նիշ)</label>
+            <input id="new-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+            <label for="confirm-new-password">Կրկնել նոր գաղտնաբառը</label>
+            <input id="confirm-new-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+            <button type="submit" class="secondary">Փոխել գաղտնաբառը</button>
+          </form>
+          <p class="hint">Սա փոխում է միայն այս սարքում պահված գաղտնագրված մուտքը։</p>
+          <hr class="soft-divider">
           <button id="disconnect" class="secondary">Դուրս գալ ադմին պանելից</button>
         </div>
       </section>
