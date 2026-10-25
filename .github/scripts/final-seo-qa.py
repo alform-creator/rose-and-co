@@ -18,7 +18,7 @@ root=Path(sys.argv[1]).resolve()
 host="https://alform-creator.github.io"
 prefix="/rose-and-co/"
 langs=("hy","ru","en")
-version="final-qa-20261025-v4"
+version="final-qa-20261025-v5"
 META={
 "hy":{
 "about":("Rose & Co-ի պատմությունը․ ծաղիկներ՝ սիրով ու ուշադրությամբ",
@@ -306,6 +306,20 @@ html{scroll-padding-top:22px}
 # or horizontal scrollbar; do not change the visual proportions above 360px.
 ultra_css = """
 /* ROSE-CO-ULTRA-NARROW-20261025: 320px Russian flower guide + journal */
+/* Compact heading and navigation safely for the smallest iPhones. */
+html,body {max-width:100%;overflow-x:clip}
+.site-header,.notice-strip,.site-footer,body>footer {max-width:100%;overflow-x:clip}
+.navbar{gap:8px}
+.brand{min-width:0;gap:4px}
+.brand-type{font-size:clamp(19px,6.8vw,23px);letter-spacing:.085em}
+.brand-rose-mark{width:36px!important;height:36px!important;flex:0 0 36px}
+.header-actions{min-width:0;gap:6px}
+.language-switcher{gap:1px}
+.language-switcher a{padding:6px 2px;font-size:9px}
+.menu-toggle{flex:0 0 35px}
+.about-grid,.spotlight-gallery,.spotlight-copy{min-width:0;max-width:100%}
+.about-spotlight,.page-intro,.article-hero{max-width:100%;overflow-x:clip}
+
 @media(max-width:360px) {
   .flower-types-grid,.flower-type,.flower-type div,.flower-type b,.flower-type small {
     min-width:0;max-width:100%;
