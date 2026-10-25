@@ -8,7 +8,7 @@ import json,re,sys
 root=Path(sys.argv[1]).resolve()
 langs=("hy","ru","en")
 pages=sorted(p for l in langs for p in (root/l).rglob("index.html"))
-assert len(pages)==78,("Unexpected page count",len(pages))
+assert len(pages)==96,("Unexpected page count",len(pages))
 config=json.loads(Path(".github/admin-data.json").read_text(encoding="utf-8"))
 products=[p for p in config["products"] if p.get("enabled",True)]
 expected_ids={"product-"+p["id"] for p in products}
@@ -49,7 +49,7 @@ for page in pages:
         assert tree.select_one("img.hero-image[fetchpriority='high']"),name
     else:
         assert tree.select_one(".rc-breadcrumb"),name
-        assert any(x.get("@type")=="BreadcrumbList" for x in structured if isinstance(x,dict)),name
+        assert any(x.get("@type")=="BreadcrumbList" or any(z.get("@type")=="BreadcrumbList" for z in x.get("@graph",[]) if isinstance(z,dict)) for x in structured if isinstance(x,dict)),name
     if is_catalog:
         assert len(tree.select(".rc-guide-qa"))==3,name
         got={node["id"] for node in tree.select("#catalog-grid .product-card[id]")}
@@ -65,4 +65,4 @@ css=(root/"assets/rose-couture-finish.css").read_text(encoding="utf-8")
 assert ".rc-skip:focus" in css and "prefers-reduced-motion" in css
 app=(root/"assets/app.js").read_text(encoding="utf-8")
 assert "p.price_amd ? Number(p.price_amd)" in app
-print("COUTURE QA PASS: 78 pages / 3 languages / canonical and hreflang / schema / product links / images / local guide / admin prices / internal links.")
+print("COUTURE QA PASS: 96 pages / 3 languages / canonical and hreflang / schema / product links / images / local guide / admin prices / internal links.")
