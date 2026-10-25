@@ -229,7 +229,7 @@ for file in (site/"hy").rglob("*.html"):
     src=src.replace("</head>",f'<link rel="stylesheet" href="/rose-and-co/assets/armenian-elegance.css?v={version}"/></head>',1)
     file.write_text(src,encoding="utf-8")
     count+=1
-assert count==26,f"Expected 26 Armenian pages, got {count}"
+assert count==32,f"Expected 32 Armenian pages, got {count}"
 assert "armenian-elegance.css" not in (site/"ru"/"index.html").read_text(encoding="utf-8")
 assert "armenian-elegance.css" not in (site/"en"/"index.html").read_text(encoding="utf-8")
 print(f"Rose & Co Armenian premium typography applied to {count} Armenian pages; no RU/EN changes.")
