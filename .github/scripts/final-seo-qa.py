@@ -40,7 +40,8 @@ META={
 }
 }
 page_files=sorted(p for lang in langs for p in (root/lang).rglob("index.html"))
-assert len(page_files)==78, f"Expected 78 localised pages, got {len(page_files)}"
+assert len(page_files)==96, f"Expected 96 localised pages, got {len(page_files)}"
+assert all((root/l/'collections'/c/'index.html').is_file() for l in langs for c in ('romance','wedding','occasions','signature','wreaths','seasonal'))
 repaired_ids=0
 unique_titles={}
 validated_anchors=0
@@ -345,12 +346,12 @@ for p in page_files:
     s=re.sub(r'(/rose-and-co/assets/styles\.css)\?v=[^"\']+',r'\1?v='+version,s)
     p.write_text(s,encoding="utf-8")
 
-assert len(allurls)==78
+assert len(allurls)==96
 print("Rose & Co final QA | localized pages:",len(page_files),
       "| rewritten form IDs:",repaired_ids,
       "| inspected internal links:",validated_anchors,
       "| sitemap URLs:",len(allurls))
-print("SEO | canonical:78 | hreflang: 4 per page | unique titles:",len(unique_titles))
+print("SEO | canonical:96 | hreflang: 4 per page | unique titles:",len(unique_titles))
 print("Language + mobile | hy/ru/en complete | original forms, copy and images preserved")
 if missing_links:print("BROKEN INTERNAL LINKS ("+str(len(missing_links))+"):",*missing_links[:25],sep="\n  ")
 if missing_assets:print("MISSING IMAGE FILES ("+str(len(missing_assets))+"):",*missing_assets[:25],sep="\n  ")
