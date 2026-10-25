@@ -5,13 +5,24 @@ const BASE='https://api.github.com/repos/'+REPO+'/contents/';
 const LANGS=['hy','ru','en'];
 const CATS={romance:'Սիրո փնջեր',wedding:'Հարսանեկան',occasions:'Տոնական',signature:'Հեղինակային',wreaths:'Ծաղկեպսակներ',seasonal:'Սեզոնային',teddies:'Արջուկներ',plush:'Փափուկ խաղալիքներ',sweets:'Քաղցրավենիք'};
 const $=id=>document.getElementById(id);
-let token='',data=null,configSha='',selectedId=null,selectedReview=null,currentPage='',pendingPhotos=new Map(),loading=false,dirty=false;
+let token='',data=null,configSha='',selectedId=null,selectedReview=null,currentPage='',pendingPhotos=new Map(),loading=false,dirty=false,currentUsername='';
 const imgUrl=p=>p&&p.img?'/rose-and-co/assets/images/'+p.img+'.webp?v=adm2':'';
 function notice(message,error=false){
  const el=$('banner');el.hidden=false;el.textContent=message;el.classList.toggle('error',error);
  if(!error)setTimeout(()=>{if(el.textContent===message)el.hidden=true},8000);
 }
-function status(d){dirty=d;const p=$('publish');p.disabled=!data||loading||!d;p.textContent=loading?'Հրապարակվում է…':d?'Հրապարակել փոփոխությունները':'Փոփոխություններ չկան';}
+function status(d){
+ dirty=d;const p=$('publish');p.disabled=!data||loading||!d;
+ p.textContent=loading?'Հրապարակվում է…':d?'Հրապարակել փոփոխությունները':'Փոփոխություններ չկան';
+ renderOverview();
+}
+function renderOverview(){
+ if(!data)return;
+ $('stat-all').textContent=data.products.length.toLocaleString('en-US');
+ $('stat-visible').textContent=data.products.filter(p=>p.enabled!==false).length.toLocaleString('en-US');
+ $('stat-priced').textContent=data.products.filter(p=>Number.isInteger(p.price_amd)&&p.price_amd>0).length.toLocaleString('en-US');
+ $('stat-reviews').textContent=(data.reviews||[]).filter(r=>r.approved===true).length.toLocaleString('en-US');
+}
 function text(id,value){const el=$(id);if(el)el.value=value??'';}
 function value(id){return ($(id)?.value||'').trim();}
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));}
@@ -44,7 +55,7 @@ function nav(tab){
  for(const b of document.querySelectorAll('[data-tab]'))b.classList.toggle('current',b.dataset.tab===tab);
  for(const el of document.querySelectorAll('.tab'))el.hidden=el.id!=='tab-'+tab;
  $('page-heading').textContent=({
- products:'Ապրանքների կառավարում',settings:'Կայքի կարգավորումներ',
+ overview:'Կառավարման գլխավոր էջ',products:'Ապրանքների կառավարում',settings:'Կայքի կարգավորումներ',
  reviews:'Հաճախորդների կարծիքներ',pages:'Էջերի տեքստեր',help:'Օգնություն'
  })[tab]||'Rose & Co';
 }
@@ -180,8 +191,8 @@ async function processImage(file,id){
  if(existing)URL.revokeObjectURL(existing.url);
  const url=URL.createObjectURL(blob);
  pendingPhotos.set(id,{name,content:base64(array),url});
- const p=getProduct();if(p)p.img=name;
- $('photo-preview').src=url;
+ const p=data.products.find(x=>x.id===id);if(p)p.img=name;
+ if(selectedId===id)$('photo-preview').src=url;
  status(true);renderList();notice('Նկարը պատրաստ է։ Հրապարակելիս այն կտեղադրվի GitHub-ում։');
 }
 const VAULT_KEY='rose_co_admin_encrypted_v1';
@@ -251,6 +262,7 @@ async function setupAccount(event){
    const vault=await makeVault(username,password,candidate);
    localStorage.setItem(VAULT_KEY,vault);
    $('setup-token').value='';$('setup-password').value='';$('setup-confirm').value='';
+   currentUsername=username;
    renderAuth();
    notice('Լոգինն ու գաղտնաբառը կարգավորվել են այս սարքի համար։');
  }catch(e){notice('Կարգավորումը չհաջողվեց․ '+e.message,true);}
@@ -264,6 +276,7 @@ async function signIn(event){
  try{
    const candidate=await readVault(username,password);
    await connectWithToken(candidate);
+   currentUsername=username;
    $('login-password').value='';
  }catch(e){
    notice('Մուտքը չհաջողվեց։ Ստուգիր լոգինը, գաղտնաբառը կամ GitHub-ի բանալու գործողությունը։',true);
@@ -294,11 +307,13 @@ async function publish(){
  loading=true;status(true);
  try{
   for(const [id,photo] of pendingPhotos){
+   if(photo.uploaded)continue;
    $('publish').textContent='Նկարի ներբեռնում՝ '+id+'…';
    await api('.github/admin-media/'+photo.name.slice('admin/'.length)+'.webp',{
     method:'PUT',
     body:{message:'Rose & Co admin: upload '+id+' product photo',content:photo.content,branch:'main'}
    });
+   photo.uploaded=true;
   }
   $('publish').textContent='Տվյալների պահպանում…';
   const updated=await api('.github/admin-data.json',{method:'PUT',
@@ -313,11 +328,30 @@ async function publish(){
  }catch(e){loading=false;status(true);notice('Պահպանել չհաջողվեց․ '+e.message,true);}
 }
 function disconnect(){
- token='';data=null;configSha='';selectedId=null;loading=false;
+ token='';data=null;configSha='';selectedId=null;loading=false;currentUsername='';
  for(const v of pendingPhotos.values())URL.revokeObjectURL(v.url);
  pendingPhotos.clear();$('workspace').hidden=true;$('auth').hidden=false;
  $('connection').textContent='Չմիացված';$('connection').classList.add('offline');
  $('banner').hidden=true;text('login-password','');renderAuth();status(false);
+}
+async function changeDevicePassword(event){
+ event.preventDefault();
+ if(!token||!currentUsername){notice('Կրկին մուտք գործիր և փորձիր փոխել գաղտնաբառը։',true);return;}
+ const oldPassword=$('old-password').value;
+ const nextPassword=$('new-password').value;
+ const confirmed=$('confirm-new-password').value;
+ if(nextPassword.length<12||nextPassword.length>128){notice('Նոր գաղտնաբառը պետք է լինի առնվազն 12 նիշ։',true);return;}
+ if(nextPassword!==confirmed){notice('Նոր գաղտնաբառերը չեն համընկնում։',true);return;}
+ const form=$('change-password-form');
+ const button=form.querySelector('button[type=submit]');button.disabled=true;
+ try{
+  const unlocked=await readVault(currentUsername,oldPassword);
+  if(unlocked!==token)throw Error('Այս սարքի հաշիվը չի համապատասխանում ընթացիկ մուտքին։');
+  localStorage.setItem(VAULT_KEY,await makeVault(currentUsername,nextPassword,unlocked));
+  form.reset();
+  notice('Նոր գաղտնաբառը պահպանվեց այս սարքի համար։');
+ }catch(e){notice('Գործող գաղտնաբառը սխալ է կամ տվյալները վնասվել են։',true);}
+ finally{button.disabled=false;}
 }
 for(const btn of document.querySelectorAll('[data-tab]'))btn.addEventListener('click',()=>nav(btn.dataset.tab));
 $('setup-form').addEventListener('submit',setupAccount);
@@ -331,6 +365,11 @@ $('reset-vault').addEventListener('click',()=>{
 });
 $('publish').addEventListener('click',publish);
 $('disconnect').addEventListener('click',disconnect);
+$('change-password-form').addEventListener('submit',changeDevicePassword);
+for(const link of document.querySelectorAll('[data-goto]'))link.addEventListener('click',()=>nav(link.dataset.goto));
+$('quick-new-product').addEventListener('click',()=>{
+ nav('products');$('add-product').click();
+});
 $('product-search').addEventListener('input',renderList);
 const cat=$('product-cat');for(const [id,name] of Object.entries(CATS)){const opt=document.createElement('option');opt.value=id;opt.textContent=name;cat.append(opt);}
 $('product-form').addEventListener('submit',e=>e.preventDefault());
@@ -371,5 +410,5 @@ $('review-delete').addEventListener('click',()=>{
 $('page-select').addEventListener('change',renderPage);
 for(const id of ['page-h1','page-title','page-description','page-intro'])$(id).addEventListener('input',updatePage);
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
-renderAuth();nav('products');status(false);
+renderAuth();nav('overview');status(false);
 })();
