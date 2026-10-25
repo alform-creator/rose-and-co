@@ -7,8 +7,8 @@
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
 <title>Rose & Co — Կառավարման վահանակ</title>
-<link rel="stylesheet" href="./admin.css?v=5">
-<script src="./admin.js?v=5" defer></script>
+<link rel="stylesheet" href="./admin.css?v=6">
+<script src="./admin.js?v=6" defer></script>
 </head>
 <body>
 <div class="app">
@@ -126,6 +126,11 @@
         <form id="settings-form" class="panel wide" autocomplete="off">
           <div class="grid2"><div><label for="setting-phone">Հեռախոս (+374…)</label><input id="setting-phone" inputmode="tel"></div><div><label for="setting-wa">WhatsApp համար</label><input id="setting-wa" inputmode="numeric"></div></div>
           <label for="setting-instagram">Instagram-ի հասցե</label><input type="url" id="setting-instagram">
+          <h3>Google Search Console</h3>
+          <p class="hint">Google-ի սեփականության հաստատման (HTML tag) կոդը կարող ես մուտքագրել այստեղ։ Տեղադրիր միայն <strong>content=</strong> արժեքը, ոչ ամբողջ HTML-ը։ Առանց կոդի այս դաշտը դատարկ թող։</p>
+          <label for="setting-google-verify">Google site verification code</label>
+          <input id="setting-google-verify" type="text" maxlength="160" autocomplete="off" spellcheck="false" placeholder="Կոդը Google Search Console-ից">
+          <p class="hint"><a href="https://search.google.com/search-console/welcome" target="_blank" rel="noopener noreferrer">Բացել Search Console ↗</a> · URL-prefix՝ https://alform-creator.github.io/rose-and-co/ · Sitemap՝ sitemap.xml։ Գործում է հրապարակումից հետո։</p>
           <h3>Առաքման վճարներ (դրամ)</h3><p class="hint">Դաշտը դատարկ թողնելիս հաճախորդը կտեսնի «Գինը ճշտել»։ Մի լրացրու չհաստատված սակագներ։</p>
           <div class="grid2"><div><label for="fee-zovuni">Զովունի</label><input id="fee-zovuni" type="number" min="0"></div><div><label for="fee-yerevan">Երևան</label><input id="fee-yerevan" type="number" min="0"></div><div><label for="fee-kotayk">Կոտայքի այլ բնակավայրեր</label><input id="fee-kotayk" type="number" min="0"></div><div><label for="fee-other">Հայաստանի այլ մարզեր</label><input id="fee-other" type="number" min="0"></div></div>
         </form>
