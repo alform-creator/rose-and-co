@@ -210,13 +210,15 @@ with TemporaryDirectory() as temp:
                editor:!document.querySelector('#product-fields').hidden,
                width:document.documentElement.scrollWidth,
                viewport:document.documentElement.clientWidth,
+               homeVisible:!document.querySelector('#tab-overview').hidden,
+               stat:Number(document.querySelector('#stat-all').textContent),
                vault:!!vault,
                safe:!vault.includes('github_pat_test')&&!vault.includes('strong-test-password'),
                tokenField:document.querySelector('#setup-token').value};
           """)
           if not all([logged["workspace"],logged["list"]>=60,logged["editor"],
                       logged["width"]<=logged["viewport"]+8,
-                      logged["vault"],logged["safe"],not logged["tokenField"]]):
+                      logged["vault"],logged["safe"],logged["homeVisible"],logged["stat"]>=60,not logged["tokenField"]]):
               errors.append("Encrypted admin account setup failed: "+str(logged))
               continue
           # Password-only login on the same browser after sign out.
@@ -227,6 +229,31 @@ with TemporaryDirectory() as temp:
             document.querySelector('#login-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
           """)
           WebDriverWait(driver,9).until(lambda x:x.execute_script("return !document.querySelector('#workspace').hidden"))
+          # Change the device password and verify encrypted vault rotates.
+          previous=driver.execute_script("return localStorage.getItem('rose_co_admin_encrypted_v1')")
+          driver.execute_script("""
+             document.querySelector('[data-tab=help]').click();
+             document.querySelector('#old-password').value='strong-test-password-1234';
+             document.querySelector('#new-password').value='my-better-test-password-5678';
+             document.querySelector('#confirm-new-password').value='my-better-test-password-5678';
+             document.querySelector('#change-password-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+          """)
+          WebDriverWait(driver,9).until(lambda x:x.execute_script("""
+            return document.querySelector('#change-password-form button').disabled===false &&
+              document.querySelector('#banner').textContent.includes('Նոր գաղտնաբառը պահպանվեց');
+          """))
+          now=driver.execute_script("return localStorage.getItem('rose_co_admin_encrypted_v1')")
+          if previous==now:errors.append("Admin device password did not rotate encryption")
+          driver.execute_script("""
+            document.querySelector('#disconnect').click();
+            document.querySelector('#login-user').value='roseowner';
+            document.querySelector('#login-password').value='my-better-test-password-5678';
+            document.querySelector('#login-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+          """)
+          WebDriverWait(driver,9).until(lambda x:x.execute_script("return !document.querySelector('#workspace').hidden"))
+          driver.execute_script("""
+             document.querySelector('[data-tab=products]').click();
+          """)
           driver.execute_script("""
               const price=document.querySelector('#product-price');
               price.value='12999';
@@ -241,7 +268,7 @@ with TemporaryDirectory() as temp:
           """)
           if not output["saved"] or output["price"]!=12999 or not output["hidden"]:
               errors.append("Admin password login & publish test failed: "+str(output))
-      print("Rose & Co Admin QA: encrypted first-time setup, password-only sign-in and GitHub mock publish passed on phone and desktop.")
+      print("Rose & Co Admin QA: dashboard metrics, encrypted setup, sign-in, password rotation and mock GitHub publish passed on phone and desktop.")
       print(f"Rose & Co Chrome QA: checked {tested} page/viewport combinations,")
       print("320px and 375px mobile, 1440px desktop, 3 languages, 4 major routes.")
       print("Bouquet previews, WhatsApp links, label focus and mobile navigation checked.")
