@@ -202,7 +202,7 @@ with TemporaryDirectory() as temp:
             document.querySelector('#setup-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
           """,fixture)
           from selenium.webdriver.support.ui import WebDriverWait
-          WebDriverWait(driver,9).until(lambda x:x.execute_script("return !document.querySelector('#workspace').hidden"))
+          WebDriverWait(driver,9).until(lambda x:x.execute_script("return !document.querySelector('#workspace').hidden && !!localStorage.getItem('rose_co_admin_encrypted_v1') && document.querySelector('#setup-token').value===''"))
           logged=driver.execute_script("""
              const vault=localStorage.getItem('rose_co_admin_encrypted_v1')||'';
              return {workspace:!document.querySelector('#workspace').hidden,
