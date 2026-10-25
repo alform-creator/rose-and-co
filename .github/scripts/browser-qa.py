@@ -164,6 +164,66 @@ with TemporaryDirectory() as temp:
               tested+=1
               if dim["width"]>dim["viewport"]+8:
                   errors.append(lang+route+" 320px device horizontal overflow: "+str(dim))
+      # Real Chrome interaction of the admin dashboard without external writes.
+      # Intercept GitHub requests and emulate a fine-grained token session.
+      import base64
+      fixture=base64.b64encode((Path(__file__).resolve().parents[2]/".github/admin-data.json").read_bytes()).decode("ascii")
+      for admin_mobile in (True,False):
+          if admin_mobile:
+              driver.execute_cdp_cmd("Emulation.setDeviceMetricsOverride",{
+                  "width":375,"height":812,"deviceScaleFactor":1,"mobile":True
+              })
+          else:
+              driver.execute_cdp_cmd("Emulation.clearDeviceMetricsOverride",{})
+              driver.set_window_size(1440,900)
+          driver.get(urlroot+"/admin/")
+          driver.execute_script("""
+            window.__savedAdminData=null;
+            window.confirm=()=>true;
+            const fixture=arguments[0];
+            window.fetch=async (url,opts={})=>{
+              if(url.includes('/contents/.github/admin-data.json')){
+                if(opts.method==='PUT'){
+                  const req=JSON.parse(opts.body);
+                  const bytes=Uint8Array.from(atob(req.content),x=>x.charCodeAt(0));
+                  window.__savedAdminData=JSON.parse(new TextDecoder().decode(bytes));
+                  return {ok:true,json:async()=>({content:{sha:'mock-new-sha'}})};
+                }
+                return {ok:true,json:async()=>({sha:'mock-old-sha',content:fixture})};
+              }
+              throw Error('Unexpected test network request: '+url);
+            };
+            document.querySelector('#token').value='github_pat_test_no_permissions';
+            document.querySelector('#connect').click();
+          """,fixture)
+          time.sleep(.28)
+          logged=driver.execute_script("""
+             return {workspace:!document.querySelector('#workspace').hidden,
+               list:document.querySelectorAll('.item').length,
+               editor:!document.querySelector('#product-fields').hidden,
+               width:document.documentElement.scrollWidth,
+               viewport:document.documentElement.clientWidth,
+               tokenField:document.querySelector('#token').value};
+          """)
+          if not logged["workspace"] or logged["list"]<60 or not logged["editor"] or logged["width"]>logged["viewport"]+8 or logged["tokenField"]:
+              errors.append("Admin session UI failed: "+str(logged))
+              continue
+          driver.execute_script("""
+              const price=document.querySelector('#product-price');
+              price.value='12999';
+              price.dispatchEvent(new Event('input',{bubbles:true}));
+              document.querySelector('#publish').click();
+          """)
+          time.sleep(.26)
+          output=driver.execute_script("""
+            return {saved:!!window.__savedAdminData,
+              price:window.__savedAdminData?.products[0]?.price_amd,
+              status:document.querySelector('#banner').textContent,
+              hidden:document.querySelector('#auth').hidden};
+          """)
+          if not output["saved"] or output["price"]!=12999 or not output["hidden"]:
+              errors.append("Admin publish test failed: "+str(output))
+      print("Rose & Co Admin QA: GitHub connection mocked, product edited, publish saved, desktop + mobile.")
       print(f"Rose & Co Chrome QA: checked {tested} page/viewport combinations,")
       print("320px and 375px mobile, 1440px desktop, 3 languages, 4 major routes.")
       print("Bouquet previews, WhatsApp links, label focus and mobile navigation checked.")
