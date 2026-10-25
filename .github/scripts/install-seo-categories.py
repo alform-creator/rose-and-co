@@ -37,7 +37,7 @@ L={
 'note':'Հիշեցում․ լուսանկարներն իրական աշխատանքների օրինակներ են, ոչ թե տվյալ պահին առկա ապրանքի երաշխիք։',
 'contact':'Հարցերի կամ անհատական պատվերի համար գրեք մեզ կամ զանգահարեք։',
 'catNames':{'romance':'Սիրային փնջեր','wedding':'Հարսանեկան ծաղիկներ','occasions':'Տոնական փնջեր','signature':'Հեղինակային կոմպոզիցիաներ','wreaths':'Ծաղկեպսակներ','seasonal':'Սեզոնային ծաղիկներ'},
-'waText':'Բարև, հետաքրքրված եմ Rose & Co-ի'},
+'waText':'Բարև, հետաքրքրված եմ Rose & Co-ի',
 'priceSuffix':' ֏'},
 'ru':{
 'home':'Главная','catalog':'Каталог','collection':'Коллекции цветочных композиций',
@@ -48,7 +48,7 @@ L={
 'note':'Обратите внимание: фотографии показывают примеры выполненных работ и не гарантируют наличие точно такой же композиции.',
 'contact':'Для вопросов или индивидуального заказа напишите нам или позвоните.',
 'catNames':{'romance':'Романтические букеты','wedding':'Свадебные цветы','occasions':'Праздничные букеты','signature':'Авторские композиции','wreaths':'Траурные венки','seasonal':'Сезонные цветы'},
-'waText':'Здравствуйте, меня интересует коллекция Rose & Co'},
+'waText':'Здравствуйте, меня интересует коллекция Rose & Co',
 'priceSuffix':' AMD'},
 'en':{
 'home':'Home','catalog':'Catalog','collection':'Flower and Bouquet Collections',
@@ -59,7 +59,7 @@ L={
 'note':'Please note: photographs are examples of completed work and do not guarantee that the exact same flowers are currently available.',
 'contact':'For questions or a personalised request, message or call us.',
 'catNames':{'romance':'Romantic bouquets','wedding':'Wedding flowers','occasions':'Celebration bouquets','signature':'Signature arrangements','wreaths':'Memorial wreaths','seasonal':'Seasonal flowers'},
-'waText':'Hello, I am interested in Rose & Co collection'},
+'waText':'Hello, I am interested in Rose & Co collection',
 'priceSuffix':' AMD'}
 }
 
