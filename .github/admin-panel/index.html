@@ -7,8 +7,8 @@
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
 <title>Rose & Co — Կառավարման վահանակ</title>
-<link rel="stylesheet" href="./admin.css?v=3">
-<script src="./admin.js?v=3" defer></script>
+<link rel="stylesheet" href="./admin.css?v=4">
+<script src="./admin.js?v=4" defer></script>
 </head>
 <body>
 <div class="app">
@@ -31,12 +31,32 @@
     </header>
     <div id="banner" class="banner" hidden role="status"></div>
     <section id="auth" class="login panel">
-      <div class="login-icon">✿</div><h2>Մուտք ադմին պանել</h2>
-      <p>Rose & Co-ի տվյալները փոխելու համար անհրաժեշտ է GitHub-ի <strong>fine-grained token</strong>՝ այս նախագծի <strong>Contents: Read and write</strong> թույլտվությամբ։ Գաղտնաբառ կամ token կայքի ֆայլերում չի պահվում։</p>
-      <label for="token">GitHub-ի մուտքի բանալի</label>
-      <div class="loginrow"><input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"><button id="connect" class="primary">Միանալ</button></div>
-      <p class="hint">Բանալին մնում է միայն բաց էջի հիշողության մեջ։ Էջը փակելիս այն մոռացվում է։ Օգտագործիր միայն քեզ պատկանող GitHub-ի բանալին։</p>
-      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Ստեղծել fine-grained token GitHub-ում ↗</a>
+      <div class="login-icon">✿</div>
+      <div id="vault-setup" hidden>
+        <h2>Առաջին մուտքի կարգավորում</h2>
+        <p>Ստեղծիր քո լոգինն ու գաղտնաբառը։ Միայն առաջին անգամ պետք է GitHub-ի հատուկ բանալի՝ կայքի փոփոխությունները պահպանելու համար։ Բանալին այս սարքում պահվում է գաղտնագրված և <strong>չի ուղարկվում Rose & Co-ի սերվերի</strong>։</p>
+        <form id="setup-form" autocomplete="off">
+          <label for="setup-user">Նոր լոգին</label><input id="setup-user" type="text" autocomplete="username" minlength="3" maxlength="60" placeholder="roseadmin" required>
+          <label for="setup-password">Նոր գաղտնաբառ</label><input id="setup-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required placeholder="Առնվազն 12 նիշ">
+          <label for="setup-confirm">Կրկնիր գաղտնաբառը</label><input id="setup-confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+          <label for="setup-token">GitHub-ի բանալի (միայն մեկ անգամ)</label><input id="setup-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" required>
+          <button id="setup-save" type="submit" class="primary">Պահպանել և մուտք գործել</button>
+        </form>
+        <p class="hint">Անհրաժեշտ է <strong>alform-creator/rose-and-co</strong> նախագծի fine-grained token՝ <strong>Contents: Read and write</strong> թույլտվությամբ։ Token-ը պահվում է AES-GCM գաղտնագրմամբ՝ գաղտնաբառից ստացված բանալիով։</p>
+        <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Ստեղծել GitHub-ի բանալի ↗</a>
+      </div>
+      <div id="vault-login" hidden>
+        <h2>Մուտք Rose & Co Admin</h2>
+        <p>Մուտք գործիր քո ընտրած լոգինով և գաղտնաբառով։</p>
+        <form id="login-form">
+          <label for="login-user">Լոգին</label><input id="login-user" type="text" autocomplete="username" maxlength="60" required>
+          <label for="login-password">Գաղտնաբառ</label><input id="login-password" type="password" autocomplete="current-password" required>
+          <button id="login-submit" type="submit" class="primary">Մուտք գործել</button>
+        </form>
+        <button id="reset-vault" type="button" class="reset-link">Փոխել սարքի մուտքի կարգավորումը</button>
+      </div>
+      <p id="login-error" class="form-error" role="alert" hidden></p>
+      <p class="hint">Մուտքը գործում է <strong>միայն այս բրաուզերում</strong>։ Նոր հեռախոսով կամ համակարգչով առաջին անգամ անհրաժեշտ է նույն կարգավորումն անել։</p>
     </section>
     <div id="workspace" hidden>
       <section class="tab" id="tab-products">
@@ -100,12 +120,12 @@
         <div class="panel wide">
           <h2>Ինչպես օգտագործել</h2>
           <ol>
-            <li>Ստեղծիր GitHub fine-grained token՝ միայն <strong>alform-creator/rose-and-co</strong> նախագծի <strong>Contents: Read and write</strong> իրավունքով։</li>
-            <li>Մուտք գործիր վերևի դաշտով։ Պարզ ձևերով փոխիր ապրանքները, գները, նկարները և տեքստերը։</li>
+            <li>Առաջին անգամ ստեղծիր GitHub fine-grained token՝ միայն <strong>alform-creator/rose-and-co</strong> նախագծի <strong>Contents: Read and write</strong> իրավունքով։</li>
+            <li>Նշիր քո ընտրած լոգինն ու ուժեղ գաղտնաբառը։ Հաջորդ անգամ նույն սարքով մուտք գործիր միայն դրանցով։ Փոխիր ապրանքները, գները, նկարները և տեքստերը։</li>
             <li>Սեղմիր <strong>«Հրապարակել փոփոխությունները»</strong>։ Նկարներն ու տվյալները կուղարկվեն GitHub, և կայքը ավտոմատ կթարմացվի։</li>
-            <li>Եթե պանելի փոփոխությունները ուրիշ աշխատակից է կատարել, մինչև աշխատելդ թարմացրու էջը, որպեսզի չվերագրես նրա աշխատանքը։</li>
+            <li>Եթե պանելի փոփոխությունները ուրիշ աշխատակից է կատարել, մինչև աշխատելդ թարմացրու էջը, որպեսզի չվերագրես նրա աշխատանքը։ Նոր սարքի կարգավորումը առանձին է։</li>
           </ol>
-          <p><strong>Անվտանգություն.</strong> Ոչ մի GitHub token չի պահվում կայքի կոդում կամ persistent browser storage-ում։ Նոր պանելի մուտքը պահանջում է GitHub-ի համապատասխան թույլտվություններ։</p>
+          <p><strong>Անվտանգություն.</strong> Գաղտնագրված GitHub token-ը պահվում է միայն այս սարքի բրաուզերում, ոչ թե հրապարակային կոդում։ Մուտքի գաղտնաբառը երբեք չի պահվում բաց տեքստով։ Առանձին սերվերային հաշիվ դեռ միացված չէ։</p>
           <p><strong>Պատվերներ.</strong> Գործող կայքը պատվերի հարցումները փոխանցում է WhatsApp-ին։ Այն չունի պատվերների սերվերային բազա, հետևաբար այս պանելում WhatsApp հաղորդագրությունների պատմությունը հասանելի չէ։</p>
           <button id="disconnect" class="secondary">Դուրս գալ ադմին պանելից</button>
         </div>
