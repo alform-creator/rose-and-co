@@ -164,8 +164,8 @@ with TemporaryDirectory() as temp:
               tested+=1
               if dim["width"]>dim["viewport"]+8:
                   errors.append(lang+route+" 320px device horizontal overflow: "+str(dim))
-      # Real Chrome interaction of the admin dashboard without external writes.
-      # Intercept GitHub requests and emulate a fine-grained token session.
+      # Test encrypted first-time credential setup, recurring password
+      # login, and GitHub publishing; mock all external writes.
       import base64
       fixture=base64.b64encode((Path(__file__).resolve().parents[2]/".github/admin-data.json").read_bytes()).decode("ascii")
       for admin_mobile in (True,False):
@@ -177,6 +177,8 @@ with TemporaryDirectory() as temp:
               driver.execute_cdp_cmd("Emulation.clearDeviceMetricsOverride",{})
               driver.set_window_size(1440,900)
           driver.get(urlroot+"/admin/")
+          driver.execute_script("localStorage.removeItem('rose_co_admin_encrypted_v1')")
+          driver.refresh()
           driver.execute_script("""
             window.__savedAdminData=null;
             window.confirm=()=>true;
@@ -193,37 +195,53 @@ with TemporaryDirectory() as temp:
               }
               throw Error('Unexpected test network request: '+url);
             };
-            document.querySelector('#token').value='github_pat_test_no_permissions';
-            document.querySelector('#connect').click();
+            document.querySelector('#setup-user').value='roseowner';
+            document.querySelector('#setup-password').value='strong-test-password-1234';
+            document.querySelector('#setup-confirm').value='strong-test-password-1234';
+            document.querySelector('#setup-token').value='github_pat_test_no_permissions';
+            document.querySelector('#setup-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
           """,fixture)
-          time.sleep(.28)
+          from selenium.webdriver.support.ui import WebDriverWait
+          WebDriverWait(driver,9).until(lambda x:x.execute_script("return !document.querySelector('#workspace').hidden"))
           logged=driver.execute_script("""
+             const vault=localStorage.getItem('rose_co_admin_encrypted_v1')||'';
              return {workspace:!document.querySelector('#workspace').hidden,
                list:document.querySelectorAll('.item').length,
                editor:!document.querySelector('#product-fields').hidden,
                width:document.documentElement.scrollWidth,
                viewport:document.documentElement.clientWidth,
-               tokenField:document.querySelector('#token').value};
+               vault:!!vault,
+               safe:!vault.includes('github_pat_test')&&!vault.includes('strong-test-password'),
+               tokenField:document.querySelector('#setup-token').value};
           """)
-          if not logged["workspace"] or logged["list"]<60 or not logged["editor"] or logged["width"]>logged["viewport"]+8 or logged["tokenField"]:
-              errors.append("Admin session UI failed: "+str(logged))
+          if not all([logged["workspace"],logged["list"]>=60,logged["editor"],
+                      logged["width"]<=logged["viewport"]+8,
+                      logged["vault"],logged["safe"],not logged["tokenField"]]):
+              errors.append("Encrypted admin account setup failed: "+str(logged))
               continue
+          # Password-only login on the same browser after sign out.
+          driver.execute_script("""
+            document.querySelector('#disconnect').click();
+            document.querySelector('#login-user').value='roseowner';
+            document.querySelector('#login-password').value='strong-test-password-1234';
+            document.querySelector('#login-form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+          """)
+          WebDriverWait(driver,9).until(lambda x:x.execute_script("return !document.querySelector('#workspace').hidden"))
           driver.execute_script("""
               const price=document.querySelector('#product-price');
               price.value='12999';
               price.dispatchEvent(new Event('input',{bubbles:true}));
               document.querySelector('#publish').click();
           """)
-          time.sleep(.26)
+          WebDriverWait(driver,6).until(lambda x:x.execute_script("return !!window.__savedAdminData"))
           output=driver.execute_script("""
             return {saved:!!window.__savedAdminData,
               price:window.__savedAdminData?.products[0]?.price_amd,
-              status:document.querySelector('#banner').textContent,
               hidden:document.querySelector('#auth').hidden};
           """)
           if not output["saved"] or output["price"]!=12999 or not output["hidden"]:
-              errors.append("Admin publish test failed: "+str(output))
-      print("Rose & Co Admin QA: GitHub connection mocked, product edited, publish saved, desktop + mobile.")
+              errors.append("Admin password login & publish test failed: "+str(output))
+      print("Rose & Co Admin QA: encrypted first-time setup, password-only sign-in and GitHub mock publish passed on phone and desktop.")
       print(f"Rose & Co Chrome QA: checked {tested} page/viewport combinations,")
       print("320px and 375px mobile, 1440px desktop, 3 languages, 4 major routes.")
       print("Bouquet previews, WhatsApp links, label focus and mobile navigation checked.")
