@@ -19,6 +19,7 @@ on:
       - '.github/scripts/final-site-polish.py'
       - '.github/scripts/rose-couture-finish.css'
       - '.github/scripts/install-couture-finish.py'
+      - '.github/scripts/couture-qa.py'
       - '.github/scripts/install-story-decor.py'
       - '.github/scripts/install-story-monogram.py'
       - '.github/scripts/install-romantic-runner.py'
@@ -236,6 +237,8 @@ jobs:
           # The visual/SEO finish is deliberately last, after administrator edits.
           python3 -m py_compile .github/scripts/install-couture-finish.py
           python3 .github/scripts/install-couture-finish.py "$SITE"
+          python3 -m py_compile .github/scripts/couture-qa.py
+          python3 .github/scripts/couture-qa.py "$SITE"
           node --check "$SITE/assets/app.js"
           test -s "$SITE/assets/rose-couture-finish.css"
           grep -q 'rc-guide-title' "$SITE/hy/catalog/index.html"
