@@ -17,6 +17,8 @@ on:
       - '.github/scripts/install-brand-logo.py'
       - '.github/scripts/install-journal-features.py'
       - '.github/scripts/final-site-polish.py'
+      - '.github/scripts/rose-couture-finish.css'
+      - '.github/scripts/install-couture-finish.py'
       - '.github/scripts/install-story-decor.py'
       - '.github/scripts/install-story-monogram.py'
       - '.github/scripts/install-romantic-runner.py'
@@ -231,6 +233,14 @@ jobs:
           python3 .github/scripts/install-final-armenian-typography.py "$SITE"
           python3 -m py_compile .github/scripts/install-admin-panel.py
           python3 .github/scripts/install-admin-panel.py "$SITE"
+          # The visual/SEO finish is deliberately last, after administrator edits.
+          python3 -m py_compile .github/scripts/install-couture-finish.py
+          python3 .github/scripts/install-couture-finish.py "$SITE"
+          node --check "$SITE/assets/app.js"
+          test -s "$SITE/assets/rose-couture-finish.css"
+          grep -q 'rc-guide-title' "$SITE/hy/catalog/index.html"
+          grep -q 'BreadcrumbList' "$SITE/ru/about/index.html"
+          grep -q 'ItemList' "$SITE/en/catalog/index.html"
           test -s "$SITE/admin/index.html"
           test -s "$SITE/admin/admin.js"
           node --check "$SITE/admin/admin.js"
