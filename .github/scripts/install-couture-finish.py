@@ -143,7 +143,7 @@ for lang in ("hy","ru","en"):
     section.insert_before(soupof(markup).section)
   for card in doc.select(".product-card[data-item]"):
    if re.fullmatch(r"[A-Za-z0-9_-]{2,20}",card["data-item"]):card["id"]="product-"+card["data-item"]
-  if not home:
+  if not home and not doc.main.select_one('.rc-breadcrumb'):
    is_top=group in w["names"] and not article
    title=w["names"][group] if is_top else doc.h1.get_text(" ",strip=True)
    crumbs=[(w["home"],prefix+lang+"/")]
@@ -207,5 +207,5 @@ css.write_text(css.read_text(encoding="utf-8")+'''
  padding:10px 18px;border-radius:4px;font-size:13px;box-shadow:0 8px 22px rgba(0,0,0,.2)}
 .rc-skip:focus{top:12px}
 ''',encoding="utf-8")
-assert seen==78,seen
-print("Rose & Co couture: 78 localized pages; consistent design, admin pricing, accessible paths, ItemList & BreadcrumbList.")
+assert seen==96,seen
+print("Rose & Co couture: 96 localized pages; consistent design, admin pricing, accessible paths, ItemList & BreadcrumbList.")
