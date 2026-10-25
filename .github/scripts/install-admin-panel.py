@@ -34,6 +34,8 @@ settings=data.get('settings',{})
 phone=settings.get('phone','+37433081898')
 whatsapp=settings.get('whatsapp','37433081898')
 instagram=settings.get('instagram','https://www.instagram.com/rose___co/')
+verification=settings.get('google_site_verification','').strip()
+assert not verification or re.fullmatch(r'[A-Za-z0-9_-]{10,160}',verification)
 assert re.fullmatch(r'\+?\d{7,15}',phone)
 assert re.fullmatch(r'\d{7,15}',whatsapp)
 assert instagram.startswith('https://www.instagram.com/')
@@ -108,6 +110,12 @@ for lang in langs:
             if override.get('title'):
                 x=soup.select_one('meta[property="og:title"]')
                 if x:x['content']=override['title']
+        if verification:
+            meta=soup.select_one('meta[name="google-site-verification"]')
+            if meta is None:
+                meta=soup.new_tag('meta',attrs={'name':'google-site-verification'})
+                soup.head.append(meta)
+            meta['content']=verification
         file.write_text(str(soup),encoding='utf-8')
 
 # Use owner-set prices in product dialog as well as catalog cards.
@@ -117,6 +125,19 @@ assert 'esc(t.price)' in appsrc
 appsrc=appsrc.replace('esc(t.price)',"esc(p.price_amd ? Number(p.price_amd).toLocaleString('en-US')+' ֏' : t.price)")
 appsrc=appsrc.replace('data.products.find(x=>x.id===id)',"data.products.find(x=>x.id===id)")
 app.write_text(appsrc,encoding='utf-8')
+# The project-root redirect is also a valid verification surface for
+# Google's URL-prefix property; retain the tag across deploys.
+if verification:
+    homepage=site/'index.html'
+    if homepage.is_file():
+        soup=BeautifulSoup(homepage.read_text(encoding='utf-8'),'html.parser')
+        if soup.head:
+            meta=soup.select_one('meta[name="google-site-verification"]')
+            if meta is None:
+                meta=soup.new_tag('meta',attrs={'name':'google-site-verification'})
+                soup.head.append(meta)
+            meta['content']=verification
+            homepage.write_text(str(soup),encoding='utf-8')
 dash=site/'admin'
 dash.mkdir(exist_ok=True)
 for name in ('index.html','admin.css','admin.js'):
