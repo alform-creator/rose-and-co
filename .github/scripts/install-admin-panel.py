@@ -86,7 +86,7 @@ for lang in langs:
         if setting:
             ctx=json.loads(setting.string or setting.get_text())
             for zone in ctx.get('delivery_zones',[]):zone['fee_amd']=delivery.get(zone['id'])
-            ctx['reviews']=[dict(name=r['name'],rating=int(r.get('rating',5)),text=r.get('text',{}))
+            ctx['reviews']=[dict(name=r['name'],rating=int(r.get('rating',5)),quote=r.get('text',{}),approved=True)
                             for r in reviews if r.get('approved')]
             setting.string=json.dumps(ctx,ensure_ascii=False,separators=(',',':')).replace('<','\\u003c')
         for a in soup.select('a[href]'):
