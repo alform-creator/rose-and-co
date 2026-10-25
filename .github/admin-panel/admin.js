@@ -102,12 +102,13 @@ function setFieldsFromProduct(){
 function renderSettings(){
  const s=data.settings||{};
  text('setting-phone',s.phone);text('setting-wa',s.whatsapp);text('setting-instagram',s.instagram);
+ text('setting-google-verify',s.google_site_verification||'');
  for(const z of ['zovuni','yerevan','kotayk','other'])text('fee-'+z,s.delivery?.[z]??'');
 }
 function readSettings(){
  const s=data.settings||(data.settings={});
  s.phone=value('setting-phone');s.whatsapp=value('setting-wa');
- s.instagram=value('setting-instagram');s.delivery=s.delivery||{};
+ s.instagram=value('setting-instagram');s.google_site_verification=value('setting-google-verify').trim();s.delivery=s.delivery||{};
  for(const z of ['zovuni','yerevan','kotayk','other']){
   const n=value('fee-'+z);s.delivery[z]=n===''?null:Number(n);
  }
@@ -297,6 +298,7 @@ function validate(){
  if(!/^\+?\d{7,15}$/.test(data.settings.phone))throw Error('Հեռախոսահամարը սխալ է։');
  if(!/^\d{7,15}$/.test(data.settings.whatsapp))throw Error('WhatsApp համարը սխալ է։');
  if(!data.settings.instagram.startsWith('https://www.instagram.com/'))throw Error('Instagram հղումը սխալ է։');
+ if(data.settings.google_site_verification&&!/^[A-Za-z0-9_-]{10,160}$/.test(data.settings.google_site_verification))throw Error('Google verification կոդը սխալ է։ Պետք է տեղադրել միայն content-ի արժեքը։');
  for(const z of Object.values(data.settings.delivery||{}))if(z!==null&&(!Number.isInteger(z)||z<0))throw Error('Առաքման գինը սխալ է։');
  for(const r of data.reviews)if(r.approved&&(!r.name||LANGS.some(l=>!r.text?.[l])))throw Error('Հաստատված կարծիքն անվանում և երեք լեզվի տեքստ պետք է ունենա։');
 }
