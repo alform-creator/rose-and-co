@@ -184,10 +184,44 @@ async function processImage(file,id){
  $('photo-preview').src=url;
  status(true);renderList();notice('Նկարը պատրաստ է։ Հրապարակելիս այն կտեղադրվի GitHub-ում։');
 }
-async function connect(){
- const field=$('token');const candidate=field.value.trim();field.value='';
- if(!candidate){notice('Մուտքագրիր GitHub-ի բանալին։',true);return;}
- token=candidate;$('connect').disabled=true;
+const VAULT_KEY='rose_co_admin_encrypted_v1';
+const encoder=new TextEncoder();
+const decoder=new TextDecoder();
+function renderAuth(){
+ const stored=localStorage.getItem(VAULT_KEY);
+ $('vault-login').hidden=!stored;
+ $('vault-setup').hidden=!!stored;
+ $('login-error').hidden=true;
+}
+async function derivePasswordKey(password,salt){
+ const keyMaterial=await crypto.subtle.importKey('raw',encoder.encode(password),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',iterations:480000,salt},
+  keyMaterial,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function makeVault(username,password,secret){
+ const salt=crypto.getRandomValues(new Uint8Array(16));
+ const iv=crypto.getRandomValues(new Uint8Array(12));
+ const key=await derivePasswordKey(password,salt);
+ const plaintext=encoder.encode(JSON.stringify({username,token:secret,version:1}));
+ const encrypted=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,plaintext));
+ return JSON.stringify({v:1,salt:base64(salt),iv:base64(iv),data:base64(encrypted)});
+}
+async function readVault(username,password){
+ const raw=localStorage.getItem(VAULT_KEY);if(!raw)throw Error('Այս սարքում հաշիվ դեռ կարգավորված չէ։');
+ const stored=JSON.parse(raw);
+ if(stored.v!==1||!stored.salt||!stored.iv||!stored.data)throw Error('Անվավեր մուտքի տվյալներ։');
+ const salt=Uint8Array.from(atob(stored.salt),c=>c.charCodeAt(0));
+ const iv=Uint8Array.from(atob(stored.iv),c=>c.charCodeAt(0));
+ const encrypted=Uint8Array.from(atob(stored.data),c=>c.charCodeAt(0));
+ const key=await derivePasswordKey(password,salt);
+ const bytes=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,encrypted);
+ const result=JSON.parse(decoder.decode(bytes));
+ if(result.username!==username||typeof result.token!=='string'||result.version!==1)
+  throw Error('Սխալ լոգին կամ գաղտնաբառ։');
+ return result.token;
+}
+async function connectWithToken(candidate){
+ token=candidate;
  try{
   const doc=await api('.github/admin-data.json');
   data=JSON.parse(utf8(doc.content));configSha=doc.sha;
@@ -198,8 +232,42 @@ async function connect(){
   renderList();selectProduct(data.products[0]?.id);
   renderSettings();renderReviews();await loadPages();
   status(false);notice('Մուտքն հաջողվեց։ Կարող ես խմբագրել կայքը։');
- }catch(e){token='';notice(e.message,true);}
- finally{$('connect').disabled=false;}
+ }catch(e){token='';data=null;throw e;}
+}
+async function setupAccount(event){
+ event.preventDefault();
+ const username=value('setup-user');
+ const password=$('setup-password').value;
+ const confirmPassword=$('setup-confirm').value;
+ const candidate=value('setup-token');
+ const button=$('setup-save');
+ if(username.length<3||username.length>60||!(/^[\p{L}\p{N}_.-]+$/u.test(username))){notice('Լոգինը պետք է լինի 3–60 նիշ՝ տառեր, թվեր, կետ, գծիկ կամ ներքևի գծիկ։',true);return;}
+ if(password.length<12||password.length>128){notice('Ընտրիր առնվազն 12 նիշից բաղկացած գաղտնաբառ։',true);return;}
+ if(password!==confirmPassword){notice('Գաղտնաբառերը չեն համընկնում։',true);return;}
+ if(!candidate){notice('Առաջին անգամ անհրաժեշտ է GitHub-ի բանալին։',true);return;}
+ button.disabled=true;
+ try{
+   await connectWithToken(candidate);
+   const vault=await makeVault(username,password,candidate);
+   localStorage.setItem(VAULT_KEY,vault);
+   $('setup-token').value='';$('setup-password').value='';$('setup-confirm').value='';
+   renderAuth();
+   notice('Լոգինն ու գաղտնաբառը կարգավորվել են այս սարքի համար։');
+ }catch(e){notice('Կարգավորումը չհաջողվեց․ '+e.message,true);}
+ finally{button.disabled=false;}
+}
+async function signIn(event){
+ event.preventDefault();
+ const username=value('login-user');
+ const password=$('login-password').value;
+ const button=$('login-submit');button.disabled=true;
+ try{
+   const candidate=await readVault(username,password);
+   await connectWithToken(candidate);
+   $('login-password').value='';
+ }catch(e){
+   notice('Մուտքը չհաջողվեց։ Ստուգիր լոգինը, գաղտնաբառը կամ GitHub-ի բանալու գործողությունը։',true);
+ }finally{button.disabled=false;}
 }
 function validate(){
  if(data.products.length===0)throw Error('Կատալոգը չի կարող դատարկ լինել։');
@@ -249,11 +317,18 @@ function disconnect(){
  for(const v of pendingPhotos.values())URL.revokeObjectURL(v.url);
  pendingPhotos.clear();$('workspace').hidden=true;$('auth').hidden=false;
  $('connection').textContent='Չմիացված';$('connection').classList.add('offline');
- $('banner').hidden=true;text('token','');status(false);
+ $('banner').hidden=true;text('login-password','');renderAuth();status(false);
 }
 for(const btn of document.querySelectorAll('[data-tab]'))btn.addEventListener('click',()=>nav(btn.dataset.tab));
-$('connect').addEventListener('click',connect);
-$('token').addEventListener('keydown',e=>{if(e.key==='Enter')connect();});
+$('setup-form').addEventListener('submit',setupAccount);
+$('login-form').addEventListener('submit',signIn);
+$('reset-vault').addEventListener('click',()=>{
+ if(confirm('Այս սարքի գաղտնագրված մուտքի տվյալները մաքրե՞լ։ Դրանք վերականգնելու համար կրկին պետք կլինի GitHub-ի բանալին։')){
+  localStorage.removeItem(VAULT_KEY);
+  disconnect();
+  renderAuth();
+ }
+});
 $('publish').addEventListener('click',publish);
 $('disconnect').addEventListener('click',disconnect);
 $('product-search').addEventListener('input',renderList);
@@ -296,5 +371,5 @@ $('review-delete').addEventListener('click',()=>{
 $('page-select').addEventListener('change',renderPage);
 for(const id of ['page-h1','page-title','page-description','page-intro'])$(id).addEventListener('input',updatePage);
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
-nav('products');status(false);
+renderAuth();nav('products');status(false);
 })();
