@@ -26,6 +26,8 @@ on:
       - '.github/scripts/install-floral-experience.py'
       - '.github/scripts/install-rose-services.py'
       - '.github/scripts/final-seo-qa.py'
+      - '.github/scripts/install-seo-categories.py'
+      - '.github/seo-category-content.json'
       - '.github/scripts/install-final-armenian-typography.py'
       - '.github/scripts/browser-qa.py'
       - '.github/scripts/full-site-qa.py'
@@ -230,6 +232,14 @@ jobs:
           # Final release gate: audit all 78 pages, fix form ids, canonical,
           # hreflang, OG and sitemap; validate local links, images, H1 and UX.
           python3 -m py_compile .github/scripts/final-seo-qa.py
+          # Six purposeful category landing pages per locale, with real product
+          # links and original purchase guidance — no thin auto-generated SKU pages.
+          python3 -m py_compile .github/scripts/install-seo-categories.py
+          python3 .github/scripts/install-seo-categories.py "$SITE"
+          test -f "$SITE/hy/collections/romance/index.html"
+          test -f "$SITE/ru/collections/wedding/index.html"
+          test -f "$SITE/en/collections/wreaths/index.html"
+          test -f "$SITE/assets/seo-collections.css"
           python3 .github/scripts/final-seo-qa.py "$SITE"
           python3 .github/scripts/install-final-armenian-typography.py "$SITE"
           python3 -m py_compile .github/scripts/install-admin-panel.py
@@ -247,6 +257,27 @@ jobs:
           test -s "$SITE/admin/index.html"
           test -s "$SITE/admin/admin.js"
           node --check "$SITE/admin/admin.js"
+          # Each collection card must link to a stable product ID in the
+          # owner-edited catalog, including after admin-panel regeneration.
+          SITE="$SITE" python3 - <<'PY'
+          from pathlib import Path
+          from bs4 import BeautifulSoup
+          import os, re, json
+          root=Path(os.environ["SITE"])
+          data=json.loads(Path(".github/admin-data.json").read_text(encoding="utf-8"))
+          for lang in ("hy","ru","en"):
+              catalog=BeautifulSoup((root/lang/"catalog/index.html").read_text(encoding="utf-8"),"html.parser")
+              ids={x.get("id") for x in catalog.select("#catalog-grid .product-card")}
+              expected={"product-"+x["id"] for x in data["products"] if x.get("enabled",True)}
+              assert ids==expected, (lang,len(ids),len(expected))
+              for page in (root/lang/"collections").glob("*/index.html"):
+                  soup=BeautifulSoup(page.read_text(encoding="utf-8"),"html.parser")
+                  cards=soup.select(".seo-product-card")
+                  assert len(cards)>=4, (page,len(cards))
+                  assert all(card["href"].split("#")[-1] in ids for card in cards)
+                  assert len(soup.select("main h1"))==1
+          print("SEO category deep links verified across 3 languages.")
+          PY
           grep -q 'name="robots" content="noindex' "$SITE/admin/index.html"
           test -s "$SITE/assets/armenian-elegance.css"
           grep -q 'armenian-elegance.css' "$SITE/hy/index.html"
