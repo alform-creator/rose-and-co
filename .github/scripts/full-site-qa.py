@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Complete production release QA for Rose & Co across all 78 localized pages.
+"""Complete production release QA for Rose & Co across all 96 localized pages.
 
 Two phases:
   1. static SEO/content/image inventory of every URL + file;
@@ -32,7 +32,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES=False
 root=Path(sys.argv[1]).resolve()
 langs=("hy","ru","en")
 pages=sorted(p for l in langs for p in (root/l).rglob("index.html"))
-assert len(pages)==78, f"Unexpected page count: {len(pages)}"
+assert len(pages)==96, f"Unexpected page count: {len(pages)}"
 errors=[];warnings=[]
 seo_titles={};seen_images={};page_inventory={}
 images_by_stem=defaultdict(list)
