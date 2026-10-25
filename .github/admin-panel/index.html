@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
+<title>Rose & Co — Կառավարման վահանակ</title>
+<link rel="stylesheet" href="./admin.css?v=3">
+<script src="./admin.js?v=3" defer></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo"><span class="flower">✿</span><span>Rose <i>&amp;</i> Co<small>ԿԱՌԱՎԱՐՈՒՄ</small></span></div>
+    <nav class="nav" id="nav">
+      <button data-tab="products" class="current">🌹 Ապրանքներ</button>
+      <button data-tab="settings">⚙ Կարգավորումներ</button>
+      <button data-tab="reviews">♡ Կարծիքներ</button>
+      <button data-tab="pages">✎ Էջերի տեքստեր</button>
+      <button data-tab="help">? Օգնություն</button>
+    </nav>
+    <p class="smallnote">Փոփոխությունները պահպանվում են միայն GitHub-ում հրապարակելուց հետո։</p>
+    <a class="site-link" href="/rose-and-co/hy/" target="_blank" rel="noopener">↗ Դիտել կայքը</a>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="top-title"><span class="eyebrow">FLOWER ATELIER</span><h1 id="page-heading">Ապրանքների կառավարում</h1></div>
+      <div class="top-actions"><span id="connection" class="pill offline">Չմիացված</span><button id="publish" class="primary" disabled>Հրապարակել փոփոխությունները</button></div>
+    </header>
+    <div id="banner" class="banner" hidden role="status"></div>
+    <section id="auth" class="login panel">
+      <div class="login-icon">✿</div><h2>Մուտք ադմին պանել</h2>
+      <p>Rose & Co-ի տվյալները փոխելու համար անհրաժեշտ է GitHub-ի <strong>fine-grained token</strong>՝ այս նախագծի <strong>Contents: Read and write</strong> թույլտվությամբ։ Գաղտնաբառ կամ token կայքի ֆայլերում չի պահվում։</p>
+      <label for="token">GitHub-ի մուտքի բանալի</label>
+      <div class="loginrow"><input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…"><button id="connect" class="primary">Միանալ</button></div>
+      <p class="hint">Բանալին մնում է միայն բաց էջի հիշողության մեջ։ Էջը փակելիս այն մոռացվում է։ Օգտագործիր միայն քեզ պատկանող GitHub-ի բանալին։</p>
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Ստեղծել fine-grained token GitHub-ում ↗</a>
+    </section>
+    <div id="workspace" hidden>
+      <section class="tab" id="tab-products">
+        <div class="toolbar">
+          <div><h2>Ծաղկեփնջեր և ապրանքներ</h2><p>Նկար, անուն, գին, կատեգորիա, ցուցադրել կամ թաքցնել։</p></div>
+          <button id="add-product" class="primary">+ Նոր ապրանք</button>
+        </div>
+        <div class="products">
+          <div class="panel product-list">
+            <input type="search" id="product-search" placeholder="Որոնել անունով կամ համարով…" aria-label="Որոնել ապրանք">
+            <div id="product-count" class="hint"></div>
+            <div id="product-items" class="items"></div>
+          </div>
+          <form class="panel editor" id="product-form" autocomplete="off">
+            <h3 id="product-title">Ընտրիր ապրանք</h3>
+            <div id="product-fields" hidden>
+              <div class="preview"><img id="photo-preview" alt="Ապրանքի նկարը"><div><label for="photo-input" class="upload">📷 Փոխել նկարը</label><input id="photo-input" type="file" accept="image/*"><p class="hint">Նկարը ավտոմատ սեղմվում է։ Առավելագույնը 10 ՄԲ։</p></div></div>
+              <div class="grid2"><div><label for="product-id">Ապրանքի համարը</label><input id="product-id" type="text" readonly></div><div><label for="product-cat">Կատեգորիա</label><select id="product-cat"></select></div></div>
+              <div class="grid2"><div><label for="product-price">Գին (դրամ)</label><input id="product-price" inputmode="numeric" type="number" min="1" max="100000000" placeholder="Չնշված"></div><div class="switchbox"><label><input type="checkbox" id="product-enabled"> Ցուցադրել կայքում</label><label><input type="checkbox" id="product-featured"> Գլխավոր էջում</label></div></div>
+              <div class="langs"><h4>Հայերեն</h4><label for="name-hy">Անվանում</label><input id="name-hy" maxlength="160"><label for="desc-hy">Նկարագրություն</label><textarea id="desc-hy" rows="2" maxlength="800"></textarea></div>
+              <div class="langs"><h4>Русский</h4><label for="name-ru">Название</label><input id="name-ru" maxlength="160"><label for="desc-ru">Описание</label><textarea id="desc-ru" rows="2" maxlength="800"></textarea></div>
+              <div class="langs"><h4>English</h4><label for="name-en">Name</label><input id="name-en" maxlength="160"><label for="desc-en">Description</label><textarea id="desc-en" rows="2" maxlength="800"></textarea></div>
+              <p class="hint">Ապրանքի փոփոխությունները պահվում են խմբագրիչում։ Սեղմիր վերևի «Հրապարակել» կոճակը՝ կայքում տեղադրելու համար։</p>
+              <button type="button" id="remove-product" class="danger">Հեռացնել ապրանքը ցանկից</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="tab" id="tab-settings" hidden>
+        <div class="toolbar"><div><h2>Հիմնական տվյալներ</h2><p>Հեռախոս, WhatsApp, Instagram և առաքման սակագներ։</p></div></div>
+        <form id="settings-form" class="panel wide" autocomplete="off">
+          <div class="grid2"><div><label for="setting-phone">Հեռախոս (+374…)</label><input id="setting-phone" inputmode="tel"></div><div><label for="setting-wa">WhatsApp համար</label><input id="setting-wa" inputmode="numeric"></div></div>
+          <label for="setting-instagram">Instagram-ի հասցե</label><input type="url" id="setting-instagram">
+          <h3>Առաքման վճարներ (դրամ)</h3><p class="hint">Դաշտը դատարկ թողնելիս հաճախորդը կտեսնի «Գինը ճշտել»։ Մի լրացրու չհաստատված սակագներ։</p>
+          <div class="grid2"><div><label for="fee-zovuni">Զովունի</label><input id="fee-zovuni" type="number" min="0"></div><div><label for="fee-yerevan">Երևան</label><input id="fee-yerevan" type="number" min="0"></div><div><label for="fee-kotayk">Կոտայքի այլ բնակավայրեր</label><input id="fee-kotayk" type="number" min="0"></div><div><label for="fee-other">Հայաստանի այլ մարզեր</label><input id="fee-other" type="number" min="0"></div></div>
+        </form>
+      </section>
+      <section class="tab" id="tab-reviews" hidden>
+        <div class="toolbar"><div><h2>Իրական կարծիքներ</h2><p>Ավելացրու միայն իրական հաճախորդի համաձայնությամբ ստացված կարծիք։</p></div><button id="add-review" class="primary">+ Կարծիք</button></div>
+        <div class="panel wide"><div id="review-list"></div><div id="review-editor" hidden>
+          <h3>Խմբագրել կարծիքը</h3>
+          <label for="review-name">Հաճախորդի անուն</label><input id="review-name" maxlength="90">
+          <label for="review-rating">Գնահատական</label><select id="review-rating"><option value="5">5 / 5</option><option value="4">4 / 5</option><option value="3">3 / 5</option><option value="2">2 / 5</option><option value="1">1 / 5</option></select>
+          <div class="langs"><label for="review-hy">Հայերեն</label><textarea id="review-hy" rows="3" maxlength="700"></textarea><label for="review-ru">Русский</label><textarea id="review-ru" rows="3" maxlength="700"></textarea><label for="review-en">English</label><textarea id="review-en" rows="3" maxlength="700"></textarea></div>
+          <label class="checkboxline"><input id="review-approved" type="checkbox"> Այս կարծիքը իրական է, հաճախորդի հրապարակման համաձայնությունը կա</label>
+          <button type="button" id="review-delete" class="danger">Ջնջել կարծիքը</button>
+        </div></div>
+      </section>
+      <section class="tab" id="tab-pages" hidden>
+        <div class="toolbar"><div><h2>Էջերի վերնագրեր և SEO</h2><p>Փոխիր H1 վերնագիրը, էջի նկարագրությունը կամ ներածական տեքստը։</p></div></div>
+        <div class="panel wide">
+          <label for="page-select">Ընտրիր էջը</label><select id="page-select"></select>
+          <label for="page-h1">Գլխավոր վերնագիր (H1)</label><input id="page-h1" maxlength="180">
+          <label for="page-title">Google վերնագիր (Title)</label><input id="page-title" maxlength="130">
+          <label for="page-description">Google նկարագրություն</label><textarea id="page-description" maxlength="300" rows="3"></textarea>
+          <label for="page-intro">Էջի ներածություն (եթե կա)</label><textarea id="page-intro" maxlength="900" rows="4"></textarea>
+          <p class="hint">Դատարկ դաշտերը պահպանում են կայքի սկզբնական տեքստը։</p>
+        </div>
+      </section>
+      <section class="tab" id="tab-help" hidden>
+        <div class="panel wide">
+          <h2>Ինչպես օգտագործել</h2>
+          <ol>
+            <li>Ստեղծիր GitHub fine-grained token՝ միայն <strong>alform-creator/rose-and-co</strong> նախագծի <strong>Contents: Read and write</strong> իրավունքով։</li>
+            <li>Մուտք գործիր վերևի դաշտով։ Պարզ ձևերով փոխիր ապրանքները, գները, նկարները և տեքստերը։</li>
+            <li>Սեղմիր <strong>«Հրապարակել փոփոխությունները»</strong>։ Նկարներն ու տվյալները կուղարկվեն GitHub, և կայքը ավտոմատ կթարմացվի։</li>
+            <li>Եթե պանելի փոփոխությունները ուրիշ աշխատակից է կատարել, մինչև աշխատելդ թարմացրու էջը, որպեսզի չվերագրես նրա աշխատանքը։</li>
+          </ol>
+          <p><strong>Անվտանգություն.</strong> Ոչ մի GitHub token չի պահվում կայքի կոդում կամ persistent browser storage-ում։ Նոր պանելի մուտքը պահանջում է GitHub-ի համապատասխան թույլտվություններ։</p>
+          <p><strong>Պատվերներ.</strong> Գործող կայքը պատվերի հարցումները փոխանցում է WhatsApp-ին։ Այն չունի պատվերների սերվերային բազա, հետևաբար այս պանելում WhatsApp հաղորդագրությունների պատմությունը հասանելի չէ։</p>
+          <button id="disconnect" class="secondary">Դուրս գալ ադմին պանելից</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+</body>
+</html>
