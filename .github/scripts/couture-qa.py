@@ -22,7 +22,9 @@ for page in pages:
     assert tree.select_one(".rc-skip[href='#main']"),name
     assert tree.select_one("main#main"),name
     assert len(tree.select("h1"))==1,name
-    assert len(tree.select('link[href*="rose-couture-finish.css"]'))==1,name
+    is_home=name==language+"/index.html"
+    # Respect the owner's approved original homepage visual design.
+    assert len(tree.select('link[href*="rose-couture-finish.css"]'))==(0 if is_home else 1),name
     assert tree.select_one('link[rel="canonical"]'),name
     assert tree.select_one('meta[property="og:description"]'),name
     desc=tree.select_one('meta[name="description"]')
@@ -45,7 +47,8 @@ for page in pages:
     is_catalog=name==language+"/catalog/index.html"
     is_contact=name==language+"/contact/index.html"
     if is_home:
-        assert len(tree.select(".rc-promise-item"))==3,name
+        assert not tree.select(".rc-promise-item"),name
+        assert tree.select_one(".hero-copy>p") and len(tree.select_one(".hero-copy>p").get_text(strip=True))>80,name
         assert tree.select_one("img.hero-image[fetchpriority='high']"),name
     else:
         assert tree.select_one(".rc-breadcrumb"),name
