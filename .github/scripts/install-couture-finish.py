@@ -59,6 +59,13 @@ words={
 "whatsapp":"Enquire on WhatsApp","contact":"Contact us","contact_copy":"We confirm the flower availability, final composition and delivery details before every order.",
 "contact_h":"Already found a bouquet?","contact_note":"Send the arrangement name or reference number and preferred date. We'll confirm prices, availability and delivery options.","go_catalog":"View collection"}
 }
+# The original Rose & Co hero copy was approved before the couture refresh.
+# Preserve it on HY/RU/EN; the newer SEO/collection enhancements remain elsewhere.
+CLASSIC_HERO={
+"hy":"Արտիստիկ ծաղկեփնջեր, նրբագեղ հարսանեկան ձևավորումներ և հիշատակի ծաղկեպսակներ։ Ընտրեք ձեր ոճը, իսկ գինն ու հասանելիությունը ճշտեք մեզ հետ։",
+"ru":"Авторские букеты, утончённая свадебная флористика и памятные венки. Выбирайте вдохновение, а цену и наличие уточняйте лично.",
+"en":"Artfully styled bouquets, elegant wedding flowers and thoughtful remembrance wreaths. Find your inspiration and enquire for availability and pricing."
+}
 def soupof(source):return BeautifulSoup(source,"html.parser")
 def settext(node,val):node.clear();node.append(val)
 def setmeta(doc,attr,val):
@@ -84,7 +91,10 @@ for lang in ("hy","ru","en"):
   doc=soupof(path.read_text(encoding="utf-8"))
   assert doc.head and doc.main and doc.h1,rel
   doc.html["data-finish"]="couture-v1"
-  doc.head.append(doc.new_tag("link",rel="stylesheet",href=prefix+"assets/rose-couture-finish.css?v=1"))
+  # The homepage keeps the previously approved rose atelier design.
+  # Other 95 localized pages retain the refinements and SEO rules.
+  if not home:
+   doc.head.append(doc.new_tag("link",rel="stylesheet",href=prefix+"assets/rose-couture-finish.css?v=1"))
   for origin in ("https://fonts.googleapis.com","https://fonts.gstatic.com"):
    if not doc.head.select_one('link[rel="preconnect"][href="'+origin+'"]'):
     link=doc.new_tag("link",rel="preconnect",href=origin)
@@ -104,17 +114,14 @@ for lang in ("hy","ru","en"):
 
   if home:
    intro=doc.select_one(".hero-copy>p")
-   if intro and not edit.get("intro"):settext(intro,w["hero"])
+   if intro and not edit.get("intro"):settext(intro,CLASSIC_HERO[lang])
    hero=doc.select_one("img.hero-image")
    if hero:
-    hero["alt"]=w["alt"];hero["loading"]="eager";hero["fetchpriority"]="high";hero["decoding"]="async"
+    hero["alt"]="Luxurious pink floral arrangement";hero["loading"]="eager";hero["fetchpriority"]="high";hero["decoding"]="async"
    if not edit.get("description"):
     setmeta(doc,'meta[name="description"]',w["meta_home"])
     setmeta(doc,'meta[property="og:description"]',w["meta_home"])
-   cards=''.join('<div class="rc-promise-item"><span class="rc-promise-num" aria-hidden="true">'+f"{n:02d}"+'</span><div><h2>'+escape(t)+'</h2><p>'+escape(d)+'</p></div></div>' for n,(t,d) in enumerate(w["promise"],1))
-   section=soupof('<section class="rc-promise"><div class="container rc-promise-grid">'+cards+'</div></section>').section
-   anchor=doc.select_one(".marquee") or doc.main.select_one(".hero")
-   if anchor:anchor.insert_after(section)
+   # Do not insert the later three-column promise strip on the original homepage.
   if catalog:
    if not edit.get("description"):
     setmeta(doc,'meta[name="description"]',w["meta_catalog"])
@@ -207,5 +214,16 @@ css.write_text(css.read_text(encoding="utf-8")+'''
  padding:10px 18px;border-radius:4px;font-size:13px;box-shadow:0 8px 22px rgba(0,0,0,.2)}
 .rc-skip:focus{top:12px}
 ''',encoding="utf-8")
+# Keep keyboard-accessible skip navigation without applying the later couture
+# stylesheet that changed the approved homepage hero composition and spacing.
+base_css=site/"assets/styles.css"
+base_text=base_css.read_text(encoding="utf-8")
+marker="/* ROSE HOME CLASSIC SKIP NAV */"
+if marker not in base_text:
+ base_css.write_text(base_text+"""
+/* ROSE HOME CLASSIC SKIP NAV */
+.rc-skip{position:fixed;left:12px;top:-120px;z-index:150;background:#542036;color:#fff;padding:10px 18px;border-radius:4px;font-size:13px;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+.rc-skip:focus{top:12px}
+""",encoding="utf-8")
 assert seen==96,seen
 print("Rose & Co couture: 96 localized pages; consistent design, admin pricing, accessible paths, ItemList & BreadcrumbList.")
