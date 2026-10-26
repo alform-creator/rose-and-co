@@ -320,7 +320,8 @@ js = r'''(() => {
   const intervalMs = 30000;  // Every thirty seconds after the first preview
   const durationMs = 6500;
   const closeButton = stage.querySelector(".rose-runner-close");
-  let dismissed = false;
+  let dismissed = reduced.matches;
+  try { dismissed = dismissed || sessionStorage.getItem('rose-runner-dismissed') === '1'; } catch {}
   let finishTimer = null;
   let intervalTimer = null;
   let startTimer = null;
@@ -352,8 +353,7 @@ js = r'''(() => {
     if (dismissed || intervalTimer !== null || startTimer !== null) return;
     // On homepages, do not cover the separate flower-growing intro.
     // On interior pages, the first gift appears almost immediately.
-    const delay = document.documentElement.classList.contains("rose-bloom-on")
-      ? 5000 : 1300;
+    const delay = 30000;
     startTimer = window.setTimeout(() => {
       startTimer = null;
       play();
@@ -371,6 +371,7 @@ js = r'''(() => {
 
   closeButton?.addEventListener("click", () => {
     dismissed = true;
+    try { sessionStorage.setItem('rose-runner-dismissed', '1'); } catch {}
     stopTimers();
   });
   document.addEventListener("visibilitychange", () => {

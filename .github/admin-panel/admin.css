@@ -46,3 +46,5 @@
 .soft-divider{border:0;border-top:1px solid var(--border);margin:24px 0}
 @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.stats-grid{gap:8px;margin:12px 0 20px}.stat{padding:15px}.quick-grid{grid-template-columns:1fr;gap:10px}.quick-action{padding:14px 16px}.stat span{font-size:11px}}
+
+.vault-transfer{border-top:1px solid var(--border);margin-top:22px;padding-top:12px}.vault-transfer input{max-width:100%}button{min-height:44px}@media(max-width:640px){input,select,textarea{font-size:16px!important}}

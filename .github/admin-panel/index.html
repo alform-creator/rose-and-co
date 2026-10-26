@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
 <title>Rose & Co — Կառավարման վահանակ</title>
-<link rel="stylesheet" href="./admin.css?v=6">
-<script src="./admin.js?v=6" defer></script>
+<link rel="stylesheet" href="./admin.css?v=7">
+<script src="./admin.js?v=7" defer></script>
 </head>
 <body>
 <div class="app">
@@ -66,8 +66,13 @@
         </form>
         <button id="reset-vault" type="button" class="reset-link">Փոխել սարքի մուտքի կարգավորումը</button>
       </div>
+      <div class="vault-transfer">
+        <label for="vault-import">Արդեն կարգավորե՞լ ես մուտքն այլ սարքում</label>
+        <input id="vault-import" type="file" accept="application/json,.json" aria-describedby="vault-import-note">
+        <p id="vault-import-note" class="hint">Ընտրիր ադմինից ներբեռնած գաղտնագրված մուտքի ֆայլը։ Հետո մուտք գործիր նույն լոգինով ու գաղտնաբառով՝ առանց GitHub-ի բանալին նորից գրելու։</p>
+      </div>
       <p id="login-error" class="form-error" role="alert" hidden></p>
-      <p class="hint">Մուտքը գործում է <strong>միայն այս բրաուզերում</strong>։ Նոր հեռախոսով կամ համակարգչով առաջին անգամ անհրաժեշտ է նույն կարգավորումն անել։</p>
+      <p class="hint">Մուտքը պահվում է այս բրաուզերում։ Նոր սարք տեղափոխվելու համար օգտվիր գաղտնագրված մուտքի ֆայլից։ Մասնավոր ռեժիմից դուրս գալիս կամ բրաուզերի տվյալները մաքրելիս տեղային մուտքը կարող է ջնջվել։</p>
     </section>
     <div id="workspace" hidden>
       <section class="tab" id="tab-overview">
@@ -168,6 +173,10 @@
           </ol>
           <p><strong>Անվտանգություն.</strong> Գաղտնագրված GitHub token-ը պահվում է միայն այս սարքի բրաուզերում, ոչ թե հրապարակային կոդում։ Մուտքի գաղտնաբառը երբեք չի պահվում բաց տեքստով։ Առանձին սերվերային հաշիվ դեռ միացված չէ։</p>
           <p><strong>Պատվերներ.</strong> Գործող կայքը պատվերի հարցումները փոխանցում է WhatsApp-ին։ Այն չունի պատվերների սերվերային բազա, հետևաբար այս պանելում WhatsApp հաղորդագրությունների պատմությունը հասանելի չէ։</p>
+          <h3>Մուտք գործել նաև այլ սարքից</h3>
+          <p>Ներբեռնիր մուտքի գաղտնագրված ֆայլը, նոր սարքում բացիր այս ադմինի էջը և ընտրիր այդ ֆայլը։ Հետո օգտագործիր նույն լոգինն ու գաղտնաբառը։ Ֆայլը պահիր անձնական, ապահով տեղում։</p>
+          <button id="vault-export" type="button" class="secondary">Ներբեռնել գաղտնագրված մուտքը</button>
+          <p class="hint">Գաղտնաբառը ֆայլում չկա։ Գաղտնաբառը փոխելուց հետո նորից ներբեռնիր ֆայլը․ նախկին պատճենն ինքնաբերաբար չի փոխվում։</p>
           <h3>Փոխել այս սարքի գաղտնաբառը</h3>
           <form id="change-password-form" autocomplete="off">
             <label for="old-password">Գործող գաղտնաբառը</label>

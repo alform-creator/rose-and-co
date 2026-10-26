@@ -164,6 +164,32 @@ with TemporaryDirectory() as temp:
               tested+=1
               if dim["width"]>dim["viewport"]+8:
                   errors.append(lang+route+" 320px device horizontal overflow: "+str(dim))
+      # Production ordering regression: initial hrefs and category deep links.
+      from selenium.webdriver.support.ui import WebDriverWait
+      for product_width in (375,1440):
+        driver.execute_cdp_cmd("Emulation.setDeviceMetricsOverride",{
+          "width":product_width,"height":900,"deviceScaleFactor":1,"mobile":product_width<768})
+        for product_lang in ("hy","ru","en"):
+          driver.get(urlroot+"/"+product_lang+"/catalog/?category=romance#product-RF08")
+          WebDriverWait(driver,8).until(lambda x:x.execute_script("return !!document.querySelector('#product-dialog[open]')"))
+          order=driver.execute_script("""
+            const d=document.querySelector('#product-dialog'),wa=d.querySelector('[data-requires-contact=whatsapp]');
+            return {phone:d.querySelector('[data-requires-contact=phone]').getAttribute('href'),
+              wa:wa.getAttribute('href'),named:d.getAttribute('aria-labelledby'),
+              title:!!document.querySelector('#product-modal-title'),
+              overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+8};
+          """)
+          if not (order['phone']=='tel:+37433081898' and order['wa'].startswith('https://wa.me/37433081898?text=') and 'RF08' in order['wa'] and order['named']=='product-modal-title' and order['title'] and not order['overflow']):
+            errors.append('Production product ordering: '+str(order))
+          driver.execute_script("document.querySelector('#modal-close').click()")
+          WebDriverWait(driver,3).until(lambda x:x.execute_script("return !location.hash && !document.querySelector('#product-dialog').open"))
+          driver.execute_script("""
+            const input=document.querySelector('#catalog-search');input.value='no-such-bouquet-xyz';
+            input.dispatchEvent(new Event('input',{bubbles:true}));
+          """)
+          empty=driver.execute_script("return !document.querySelector('#no-results').hidden && [...document.querySelectorAll('#catalog-grid .product-card')].every(x=>getComputedStyle(x).display==='none')")
+          if not empty:errors.append('Catalog empty search state failed: '+product_lang)
+      print('Production order QA: 3 locales, phone/desktop, deep-linked item, initial contact URLs, modal close and empty search passed.')
       # Test encrypted first-time credential setup, recurring password
       # login, and GitHub publishing; mock all external writes.
       import base64
@@ -221,6 +247,18 @@ with TemporaryDirectory() as temp:
                       logged["vault"],logged["safe"],logged["homeVisible"],logged["stat"]>=60,not logged["tokenField"]]):
               errors.append("Encrypted admin account setup failed: "+str(logged))
               continue
+          transferred=driver.execute_script("return localStorage.getItem('rose_co_admin_encrypted_v1')")
+          driver.execute_script("""
+            document.querySelector('#disconnect').click();
+            localStorage.removeItem('rose_co_admin_encrypted_v1');
+            const file=new File([arguments[0]],'RoseCo-encrypted-access.json',{type:'application/json'});
+            const transfer=new DataTransfer();transfer.items.add(file);
+            const input=document.querySelector('#vault-import');input.files=transfer.files;
+            input.dispatchEvent(new Event('change',{bubbles:true}));
+          """,transferred)
+          WebDriverWait(driver,5).until(lambda x:x.execute_script("return !!localStorage.getItem('rose_co_admin_encrypted_v1') && !document.querySelector('#vault-login').hidden"))
+          if driver.execute_script("return localStorage.getItem('rose_co_admin_encrypted_v1')")!=transferred:
+              errors.append('Encrypted vault transfer changed its ciphertext')
           # Password-only login on the same browser after sign out.
           driver.execute_script("""
             document.querySelector('#disconnect').click();

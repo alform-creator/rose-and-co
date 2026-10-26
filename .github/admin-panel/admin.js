@@ -205,6 +205,35 @@ function renderAuth(){
  $('vault-setup').hidden=!!stored;
  $('login-error').hidden=true;
 }
+function validateVault(raw){
+ if(typeof raw!=='string'||raw.length>20000)throw Error('Մուտքի ֆայլը չափազանց մեծ է։');
+ const v=JSON.parse(raw);
+ if(v.v!==1||!['salt','iv','data'].every(k=>typeof v[k]==='string'&&/^[A-Za-z0-9+/]+={0,2}$/.test(v[k])))throw Error('Սա Rose & Co-ի մուտքի ֆայլ չէ։');
+ if(atob(v.salt).length!==16||atob(v.iv).length!==12||atob(v.data).length<32)throw Error('Մուտքի ֆայլը վնասված է։');
+ return JSON.stringify({v:1,salt:v.salt,iv:v.iv,data:v.data});
+}
+function exportVault(){
+ try{
+  const raw=validateVault(localStorage.getItem(VAULT_KEY));
+  const blob=new Blob([raw],{type:'application/json'}),url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='RoseCo-encrypted-access.json';a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  notice('Մուտքի գաղտնագրված ֆայլը պատրաստ է։ Նոր սարքում այն բացելու համար պետք է քո լոգինն ու գաղտնաբառը։');
+ }catch(e){notice(e.message,true);}
+}
+async function importVault(event){
+ const file=event.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>20000)throw Error('Մուտքի ֆայլը չափազանց մեծ է։');
+  const raw=validateVault(await file.text());
+  if(dirty&&!confirm('Չհրապարակված փոփոխությունները կկորչեն։ Շարունակե՞լ։'))return;
+  if(localStorage.getItem(VAULT_KEY)&&!confirm('Փոխարինե՞լ այս սարքում պահված մուտքը ներմուծվող ֆայլով։'))return;
+  localStorage.setItem(VAULT_KEY,raw);dirty=false;disconnect();renderAuth();
+  notice('Մուտքը ներմուծված է։ Օգտագործիր նույն լոգինն ու գաղտնաբառը։');
+  $('login-user').focus();
+ }catch(e){notice('Ֆայլը ներմուծել չհաջողվեց․ '+e.message,true);}
+ finally{event.target.value='';}
+}
 async function derivePasswordKey(password,salt){
  const keyMaterial=await crypto.subtle.importKey('raw',encoder.encode(password),'PBKDF2',false,['deriveKey']);
  return crypto.subtle.deriveKey({name:'PBKDF2',hash:'SHA-256',iterations:480000,salt},
@@ -265,7 +294,7 @@ async function setupAccount(event){
    $('setup-token').value='';$('setup-password').value='';$('setup-confirm').value='';
    currentUsername=username;
    renderAuth();
-   notice('Լոգինն ու գաղտնաբառը կարգավորվել են այս սարքի համար։');
+   notice('Մուտքը կարգավորված է։ Օգնություն բաժնից ներբեռնիր գաղտնագրված մուտքի ֆայլը՝ նոր սարքում նույն գաղտնաբառով աշխատելու համար։');
  }catch(e){notice('Կարգավորումը չհաջողվեց․ '+e.message,true);}
  finally{button.disabled=false;}
 }
@@ -356,6 +385,8 @@ async function changeDevicePassword(event){
  finally{button.disabled=false;}
 }
 for(const btn of document.querySelectorAll('[data-tab]'))btn.addEventListener('click',()=>nav(btn.dataset.tab));
+$('vault-import').addEventListener('change',importVault);
+$('vault-export').addEventListener('click',exportVault);
 $('setup-form').addEventListener('submit',setupAccount);
 $('login-form').addEventListener('submit',signIn);
 $('reset-vault').addEventListener('click',()=>{

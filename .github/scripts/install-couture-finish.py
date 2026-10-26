@@ -227,3 +227,7 @@ if marker not in base_text:
 """,encoding="utf-8")
 assert seen==96,seen
 print("Rose & Co couture: 96 localized pages; consistent design, admin pricing, accessible paths, ItemList & BreadcrumbList.")
+
+# Apply the final production repairs after all generators, every deployment.
+import runpy
+runpy.run_path(str(repo/'.github/scripts/production-finish.py'),run_name='__main__')
