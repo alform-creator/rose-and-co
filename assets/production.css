@@ -1,0 +1,33 @@
+/* ROSE PRODUCTION RELEASE 2026-10-26 */
+:root{--muted:#6b5b59}
+.language-switcher a{color:#76535d;min-width:30px;min-height:36px;display:inline-flex;align-items:center;justify-content:center}
+.category-label,.disclaimer,.modal-note{color:#79535e}
+.modal-info h2{font-size:clamp(26px,3vw,40px);line-height:1.4;overflow-wrap:break-word}
+.modal-actions{flex-wrap:wrap;gap:10px}
+.modal-actions .button{min-height:48px;white-space:normal;text-align:center}
+.product-card[hidden]{display:none!important}
+.product-card{scroll-margin-top:110px}
+.product-meta>p:has(+.card-action){display:none!important}
+.hero h1{font-size:clamp(40px,4.5vw,66px)}
+html[lang=hy] .hero h1{font-size:clamp(36px,3.7vw,54px);line-height:1.38}
+.rose-runner{width:220px!important;height:107px!important;left:auto!important;right:18px;bottom:12px;transform:translateY(14px);z-index:30!important}
+.rose-runner::before{inset:15px 4px 3px;border-radius:60px 60px 18px 18px}
+.rose-runner-close{top:0!important;right:0!important;min-width:32px;min-height:32px}
+@keyframes rr-scene-cycle{0%{opacity:0;transform:translateY(16px)}7%,86%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(13px)}}
+@media(max-width:760px){
+ .rose-runner{display:block!important;width:220px!important;height:107px!important;right:8px;bottom:max(8px,env(safe-area-inset-bottom,0px))}
+ .rose-runner-close{min-width:44px;min-height:44px}
+ input,select,textarea{font-size:16px!important}
+ .hero h1{font-size:clamp(32px,7.5vw,44px)}
+ html[lang=hy] .hero h1{font-size:clamp(30px,7.4vw,39px);line-height:1.42}
+ .language-switcher a,.menu-toggle{min-height:44px;min-width:36px}
+ .modal-info{padding:24px 20px}
+ .modal-info h2{font-size:28px}
+ .modal-actions .button{flex:1 1 130px}
+ .filter-chip,.type-chip{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto!important}
+ .rose-runner,.rose-runner.rose-runner-active,.rose-petal{display:none!important}
+ .marquee-track{animation:none!important}
+}

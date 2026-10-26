@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180" aria-hidden="true">
+  <title>Rose and Co monogram</title>
+  <defs>
+    <radialGradient id="paper" cx=".35" cy=".24" r=".95">
+      <stop stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#f6ebe5"/>
+    </radialGradient>
+  </defs>
+  <circle cx="90" cy="90" r="85.5" fill="url(#paper)" stroke="#692c42" stroke-width="2"/>
+  <g transform="translate(90 92) rotate(9)" fill="#6a2d42">
+    <text x="-63" y="11" font-size="48" font-style="italic" font-family="Georgia, 'Times New Roman',serif">R</text>
+    <path d="M-15 -2 L-8 1 L-5 10 L-2 1 L5 -2 L-2 -5 L-5 -14 L-8 -5 Z"
+          transform="translate(-2,-2) scale(.92)" fill="none" stroke="#b59872" stroke-width="2" stroke-linejoin="round"/>
+    <text x="13" y="11" font-size="41" letter-spacing="-2.2" font-family="Georgia, 'Times New Roman',serif">CO</text>
+  </g>
+</svg>

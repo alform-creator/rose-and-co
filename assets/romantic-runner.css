@@ -1,0 +1,172 @@
+
+/* ROSE-CO-ROMANTIC-RUNNER-v1: illustrated gift of flowers every 30 seconds */
+.rose-runner {
+  position:fixed;
+  left:50%;
+  bottom:max(12px,env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,14px);
+  width:min(435px,calc(100vw - 20px));
+  height:189px;
+  z-index:90;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  isolation:isolate;
+  contain:layout paint;
+}
+.rose-runner.rose-runner-active {
+  visibility:visible;
+  animation:rr-scene-cycle 5.5s ease both;
+}
+.rose-runner-art {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  filter:drop-shadow(0 8px 10px rgba(83,33,51,.12));
+}
+.rose-runner-close {
+  appearance:none;
+  position:absolute;
+  top:19px;
+  right:13px;
+  z-index:4;
+  display:grid;
+  place-items:center;
+  width:26px;
+  height:26px;
+  padding:0;
+  border:1px solid rgba(111,46,67,.25);
+  border-radius:100%;
+  background:rgba(255,250,247,.94);
+  color:#64273e;
+  font:18px/1 system-ui,sans-serif;
+  box-shadow:0 2px 8px rgba(70,34,47,.10);
+  cursor:pointer;
+  pointer-events:auto;
+  -webkit-tap-highlight-color:transparent;
+}
+.rose-runner-close:hover,
+.rose-runner-close:focus-visible {background:#64273e;color:#fff;}
+.rose-runner-active .rr-boy {animation:rr-approach 4.5s cubic-bezier(.2,.65,.4,1) both;}
+.rose-runner-active .rr-boy-body {animation:rr-bob .38s ease-in-out 7 alternate;}
+.rose-runner-active .rr-left-leg {animation:rr-leg-left .32s ease-in-out 8 alternate;}
+.rose-runner-active .rr-right-leg {animation:rr-leg-right .32s ease-in-out 8 alternate;}
+.rose-runner-active .rr-bouquet {animation:rr-offer .7s 3.05s ease-out both;}
+.rose-runner-active .rr-girl-hand {animation:rr-reach .8s 3.05s ease-out both;}
+.rose-runner-active .rr-girl-head {animation:rr-girl-tilt 1s 3.05s ease-out both;}
+.rose-runner-active .rr-heart {animation:rr-heart-pop 1.5s 3.3s ease-out both;}
+.rose-runner-active .rr-heart.rr-h2 {animation-delay:3.55s;}
+.rose-runner-active .rr-heart.rr-h3 {animation-delay:3.72s;}
+.rose-runner-active .rr-spark {animation:rr-spark .95s 3.55s ease-out both;}
+.rose-runner-active .rr-spark.rr-s2 {animation-delay:3.8s;}
+@keyframes rr-scene-cycle {
+  0% {opacity:0;transform:translate(-50%,20px)}
+  7% {opacity:1;transform:translate(-50%,0)}
+  86% {opacity:1;transform:translate(-50%,0)}
+  100% {opacity:0;transform:translate(-50%,13px)}
+}
+@keyframes rr-approach {
+  0% {transform:translateX(-126px)}
+  10% {transform:translateX(-90px)}
+  64% {transform:translateX(160px)}
+  77%,100% {transform:translateX(174px)}
+}
+@keyframes rr-bob {0% {transform:translateY(0)} 100% {transform:translateY(-4px)}}
+@keyframes rr-leg-left {0% {transform:rotate(17deg)} 100% {transform:rotate(-22deg)}}
+@keyframes rr-leg-right {0% {transform:rotate(-24deg)} 100% {transform:rotate(19deg)}}
+@keyframes rr-offer {
+  0% {transform:translate(0,0) rotate(-5deg)}
+  100% {transform:translate(13px,-6px) rotate(7deg)}
+}
+@keyframes rr-reach {
+  0% {transform:rotate(0deg)}
+  100% {transform:rotate(-19deg)}
+}
+@keyframes rr-girl-tilt {
+  0% {transform:rotate(0deg)}
+  100% {transform:rotate(-7deg)}
+}
+@keyframes rr-heart-pop {
+  0% {opacity:0;transform:translateY(12px) scale(.45)}
+  30% {opacity:1;transform:translateY(0) scale(1)}
+  100% {opacity:0;transform:translateY(-26px) scale(1.13)}
+}
+@keyframes rr-spark {
+  0%,100% {opacity:0;transform:scale(.5)}
+  45% {opacity:1;transform:scale(1.1)}
+}
+.rr-left-leg,.rr-right-leg,.rr-girl-hand,.rr-girl-head {
+  transform-box:fill-box;
+}
+.rr-left-leg,.rr-right-leg {transform-origin:top center;}
+.rr-girl-hand {transform-origin:85% 85%;}
+.rr-girl-head {transform-origin:50% 90%;}
+.rr-heart,.rr-spark {opacity:0;transform-box:fill-box;transform-origin:center;}
+.rose-runner:has(~ dialog[open]) {visibility:hidden !important;}
+@media(max-width:640px) {
+  .rose-runner {
+    height:145px;
+    bottom:max(10px,env(safe-area-inset-bottom,0px));
+    width:min(335px,calc(100vw - 14px));
+  }
+  .rose-runner-close {top:7px;right:4px;width:25px;height:25px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .rose-runner,.rose-runner.rose-runner-active {display:none !important;animation:none !important;}
+}
+
+/* ROSE-CO-ROMANTIC-RUNNER-SEE-IT-v2 */
+/* Stage is obvious on mobile, yet stays beneath native modal dialogs. */
+.rose-runner {
+  width:min(485px,calc(100vw - 16px));
+  height:211px;
+  z-index:2147483000;
+  bottom:max(8px,env(safe-area-inset-bottom,0px));
+}
+.rose-runner::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:26px 6px 4px;
+  border-radius:115px 115px 34px 34px;
+  background:
+    radial-gradient(ellipse at 75% 23%,rgba(255,248,243,.91),transparent 64%),
+    linear-gradient(140deg,rgba(255,249,246,.88),rgba(244,215,217,.93));
+  box-shadow:0 8px 25px rgba(96,42,62,.12), inset 0 1px rgba(255,255,255,.8);
+}
+.rose-runner-art { z-index:1;filter:drop-shadow(0 5px 6px rgba(83,33,51,.13)); }
+.rose-runner-close {top:24px;right:14px;z-index:6;}
+@media(max-width:640px) {
+  .rose-runner {
+    width:min(390px,calc(100vw - 12px));
+    height:177px;
+    bottom:max(8px,env(safe-area-inset-bottom,0px));
+  }
+  .rose-runner::before {inset:16px 3px 2px;border-radius:90px 90px 22px 22px;}
+  .rose-runner-close {top:12px;right:11px;}
+}
+/* Respect reduced-motion preference: show the illustrated exchange
+   without motion, rather than making the entire feature disappear. */
+@media (prefers-reduced-motion:reduce) {
+  .rose-runner {display:block !important;}
+  .rose-runner.rose-runner-active {
+    visibility:visible;
+    opacity:1;
+    transform:translate(-50%,0);
+    animation:none !important;
+  }
+  .rose-runner-active .rr-boy {transform:translateX(174px);}
+  .rose-runner-active .rr-bouquet {transform:translate(13px,-6px) rotate(7deg);}
+  .rose-runner-active .rr-girl-hand {transform:rotate(-19deg);}
+  .rose-runner-active .rr-heart {
+    opacity:.78;
+    transform:translateY(0) scale(.8);
+  }
+  .rose-runner-active .rr-boy-body,
+  .rose-runner-active .rr-left-leg,
+  .rose-runner-active .rr-right-leg,
+  .rose-runner-active .rr-girl-head,
+  .rose-runner-active .rr-spark {animation:none !important;}
+}
+

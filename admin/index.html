@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'">
+<title>Rose & Co — Կառավարման վահանակ</title>
+<link rel="stylesheet" href="./admin.css?v=7">
+<script src="./admin.js?v=7" defer></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo"><span class="flower">✿</span><span>Rose <i>&amp;</i> Co<small>ԿԱՌԱՎԱՐՈՒՄ</small></span></div>
+    <nav class="nav" id="nav">
+      <button data-tab="overview" class="current">⌂ Գլխավոր</button>
+      <button data-tab="products">🌹 Ապրանքներ</button>
+      <button data-tab="settings">⚙ Կարգավորումներ</button>
+      <button data-tab="reviews">♡ Կարծիքներ</button>
+      <button data-tab="pages">✎ Էջերի տեքստեր</button>
+      <button data-tab="help">? Օգնություն</button>
+    </nav>
+    <p class="smallnote">Փոփոխությունները պահպանվում են միայն GitHub-ում հրապարակելուց հետո։</p>
+    <a class="site-link" href="/rose-and-co/hy/" target="_blank" rel="noopener">↗ Դիտել կայքը</a>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="top-title"><span class="eyebrow">FLOWER ATELIER</span><h1 id="page-heading">Կառավարման գլխավոր էջ</h1></div>
+      <div class="top-actions"><span id="connection" class="pill offline">Չմիացված</span><button id="publish" class="primary" disabled>Հրապարակել փոփոխությունները</button></div>
+    </header>
+    <div id="banner" class="banner" hidden role="status"></div>
+    <section id="auth" class="login panel">
+      <div class="login-icon">✿</div>
+      <div id="vault-setup" hidden>
+        <h2>Առաջին մուտքի կարգավորում</h2>
+        <p>Ստեղծիր քո լոգինն ու գաղտնաբառը։ Միայն առաջին անգամ պետք է GitHub-ի հատուկ բանալի՝ կայքի փոփոխությունները պահպանելու համար։ Բանալին այս սարքում պահվում է գաղտնագրված և <strong>չի ուղարկվում Rose & Co-ի սերվերի</strong>։</p>
+        <form id="setup-form" autocomplete="off">
+          <label for="setup-user">Նոր լոգին</label><input id="setup-user" type="text" autocomplete="username" minlength="3" maxlength="60" value="RoseCoAdmin" placeholder="RoseCoAdmin" required>
+          <label for="setup-password">Նոր գաղտնաբառ</label><input id="setup-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required placeholder="Առնվազն 12 նիշ">
+          <label for="setup-confirm">Կրկնիր գաղտնաբառը</label><input id="setup-confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+          <label for="setup-token">GitHub-ի բանալի (միայն մեկ անգամ)</label><input id="setup-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" required>
+          <button id="setup-save" type="submit" class="primary">Պահպանել և մուտք գործել</button>
+        </form>
+        <p class="hint">Անհրաժեշտ է <strong>alform-creator/rose-and-co</strong> նախագծի fine-grained token՝ <strong>Contents: Read and write</strong> թույլտվությամբ։ Token-ը պահվում է AES-GCM գաղտնագրմամբ՝ գաղտնաբառից ստացված բանալիով։</p>
+        <details class="token-guide">
+          <summary>Ինչպե՞ս ստանալ GitHub-ի բանալին</summary>
+          <ol>
+            <li>Բացիր <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">GitHub-ի բանալի ստեղծելու էջը ↗</a>։</li>
+            <li>Անունը՝ <code>RoseCoAdmin</code>։ Expiration՝ օրինակ 90 օր։</li>
+            <li>Repository access՝ <strong>Only select repositories</strong> → <code>alform-creator/rose-and-co</code>։</li>
+            <li>Repository permissions → Contents → <strong>Read and write</strong>։</li>
+            <li>Սեղմիր Generate token, պատճենիր բանալին և տեղադրիր վերևի դաշտում։</li>
+          </ol>
+          <p class="hint">Բանալին երբեք մի ուղարկիր նամակով կամ զրույցով։</p>
+        </details>
+      </div>
+      <div id="vault-login" hidden>
+        <h2>Մուտք Rose & Co Admin</h2>
+        <p>Մուտք գործիր քո ընտրած լոգինով և գաղտնաբառով։</p>
+        <form id="login-form">
+          <label for="login-user">Լոգին</label><input id="login-user" type="text" autocomplete="username" maxlength="60" required>
+          <label for="login-password">Գաղտնաբառ</label><input id="login-password" type="password" autocomplete="current-password" required>
+          <button id="login-submit" type="submit" class="primary">Մուտք գործել</button>
+        </form>
+        <button id="reset-vault" type="button" class="reset-link">Փոխել սարքի մուտքի կարգավորումը</button>
+      </div>
+      <div class="vault-transfer">
+        <label for="vault-import">Արդեն կարգավորե՞լ ես մուտքն այլ սարքում</label>
+        <input id="vault-import" type="file" accept="application/json,.json" aria-describedby="vault-import-note">
+        <p id="vault-import-note" class="hint">Ընտրիր ադմինից ներբեռնած գաղտնագրված մուտքի ֆայլը։ Հետո մուտք գործիր նույն լոգինով ու գաղտնաբառով՝ առանց GitHub-ի բանալին նորից գրելու։</p>
+      </div>
+      <p id="login-error" class="form-error" role="alert" hidden></p>
+      <p class="hint">Մուտքը պահվում է այս բրաուզերում։ Նոր սարք տեղափոխվելու համար օգտվիր գաղտնագրված մուտքի ֆայլից։ Մասնավոր ռեժիմից դուրս գալիս կամ բրաուզերի տվյալները մաքրելիս տեղային մուտքը կարող է ջնջվել։</p>
+    </section>
+    <div id="workspace" hidden>
+      <section class="tab" id="tab-overview">
+        <div class="welcome-head">
+          <span class="eyebrow">WELCOME TO ROSE &amp; CO</span>
+          <h2>Բարի գալուստ խանութի կառավարում</h2>
+          <p>Կայքի բովանդակությունը փոխելու համար ընտրիր անհրաժեշտ բաժինը։ Փոփոխությունները միանգամից տեսանելի չեն լինի, մինչև չսեղմես վերևի «Հրապարակել» կոճակը։</p>
+        </div>
+        <div class="stats-grid" id="stats-grid" aria-label="Խանութի վիճակագրություն">
+          <div class="panel stat"><span>Ընդհանուր ապրանքներ</span><strong id="stat-all">—</strong></div>
+          <div class="panel stat"><span>Տեսանելի ապրանքներ</span><strong id="stat-visible">—</strong></div>
+          <div class="panel stat"><span>Գներով ապրանքներ</span><strong id="stat-priced">—</strong></div>
+          <div class="panel stat"><span>Իրական կարծիքներ</span><strong id="stat-reviews">—</strong></div>
+        </div>
+        <h3 class="quick-title">Արագ գործողություններ</h3>
+        <div class="quick-grid">
+          <button type="button" class="quick-action" data-goto="products"><span class="quick-icon">✿</span><strong>Խմբագրել ապրանքները</strong><small>Նկարներ, գներ, անվանումներ</small></button>
+          <button type="button" class="quick-action" id="quick-new-product"><span class="quick-icon">＋</span><strong>Ավելացնել նոր ապրանք</strong><small>Նկար և 3 լեզվի տվյալներ</small></button>
+          <button type="button" class="quick-action" data-goto="settings"><span class="quick-icon">⚙</span><strong>Փոխել կոնտակտները</strong><small>Հեռախոս, WhatsApp, առաքում</small></button>
+          <button type="button" class="quick-action" data-goto="pages"><span class="quick-icon">✎</span><strong>Փոխել կայքի տեքստերը</strong><small>Էջերի վերնագրեր և SEO</small></button>
+        </div>
+        <div class="panel launch-note">
+          <h3>Ինչպե՞ս փոխել ինչ-որ բան</h3>
+          <p>Ընտրիր ապրանքը, փոխիր գինը կամ նկարը, ապա սեղմիր «Հրապարակել փոփոխությունները»։ Կայքի հրապարակումը կատարվում է ավտոմատ GitHub-ի միջոցով։</p>
+          <p class="hint">Նշում․ պատվերներն այժմ գալիս են WhatsApp-ով, ոչ թե այս պանելի պատվերների բազա։</p>
+        </div>
+      </section>
+      <section class="tab" id="tab-products" hidden>
+        <div class="toolbar">
+          <div><h2>Ծաղկեփնջեր և ապրանքներ</h2><p>Նկար, անուն, գին, կատեգորիա, ցուցադրել կամ թաքցնել։</p></div>
+          <button id="add-product" class="primary">+ Նոր ապրանք</button>
+        </div>
+        <div class="products">
+          <div class="panel product-list">
+            <input type="search" id="product-search" placeholder="Որոնել անունով կամ համարով…" aria-label="Որոնել ապրանք">
+            <div id="product-count" class="hint"></div>
+            <div id="product-items" class="items"></div>
+          </div>
+          <form class="panel editor" id="product-form" autocomplete="off">
+            <h3 id="product-title">Ընտրիր ապրանք</h3>
+            <div id="product-fields" hidden>
+              <div class="preview"><img id="photo-preview" alt="Ապրանքի նկարը"><div><label for="photo-input" class="upload">📷 Փոխել նկարը</label><input id="photo-input" type="file" accept="image/*"><p class="hint">Նկարը ավտոմատ սեղմվում է։ Առավելագույնը 10 ՄԲ։</p></div></div>
+              <div class="grid2"><div><label for="product-id">Ապրանքի համարը</label><input id="product-id" type="text" readonly></div><div><label for="product-cat">Կատեգորիա</label><select id="product-cat"></select></div></div>
+              <div class="grid2"><div><label for="product-price">Գին (դրամ)</label><input id="product-price" inputmode="numeric" type="number" min="1" max="100000000" placeholder="Չնշված"></div><div class="switchbox"><label><input type="checkbox" id="product-enabled"> Ցուցադրել կայքում</label><label><input type="checkbox" id="product-featured"> Գլխավոր էջում</label></div></div>
+              <div class="langs"><h4>Հայերեն</h4><label for="name-hy">Անվանում</label><input id="name-hy" maxlength="160"><label for="desc-hy">Նկարագրություն</label><textarea id="desc-hy" rows="2" maxlength="800"></textarea></div>
+              <div class="langs"><h4>Русский</h4><label for="name-ru">Название</label><input id="name-ru" maxlength="160"><label for="desc-ru">Описание</label><textarea id="desc-ru" rows="2" maxlength="800"></textarea></div>
+              <div class="langs"><h4>English</h4><label for="name-en">Name</label><input id="name-en" maxlength="160"><label for="desc-en">Description</label><textarea id="desc-en" rows="2" maxlength="800"></textarea></div>
+              <p class="hint">Ապրանքի փոփոխությունները պահվում են խմբագրիչում։ Սեղմիր վերևի «Հրապարակել» կոճակը՝ կայքում տեղադրելու համար։</p>
+              <button type="button" id="remove-product" class="danger">Հեռացնել ապրանքը ցանկից</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="tab" id="tab-settings" hidden>
+        <div class="toolbar"><div><h2>Հիմնական տվյալներ</h2><p>Հեռախոս, WhatsApp, Instagram և առաքման սակագներ։</p></div></div>
+        <form id="settings-form" class="panel wide" autocomplete="off">
+          <div class="grid2"><div><label for="setting-phone">Հեռախոս (+374…)</label><input id="setting-phone" inputmode="tel"></div><div><label for="setting-wa">WhatsApp համար</label><input id="setting-wa" inputmode="numeric"></div></div>
+          <label for="setting-instagram">Instagram-ի հասցե</label><input type="url" id="setting-instagram">
+          <h3>Google Search Console</h3>
+          <p class="hint">Google-ի սեփականության հաստատման (HTML tag) կոդը կարող ես մուտքագրել այստեղ։ Տեղադրիր միայն <strong>content=</strong> արժեքը, ոչ ամբողջ HTML-ը։ Առանց կոդի այս դաշտը դատարկ թող։</p>
+          <label for="setting-google-verify">Google site verification code</label>
+          <input id="setting-google-verify" type="text" maxlength="160" autocomplete="off" spellcheck="false" placeholder="Կոդը Google Search Console-ից">
+          <p class="hint"><a href="https://search.google.com/search-console/welcome" target="_blank" rel="noopener noreferrer">Բացել Search Console ↗</a> · URL-prefix՝ https://alform-creator.github.io/rose-and-co/ · Sitemap՝ sitemap.xml։ Գործում է հրապարակումից հետո։</p>
+          <h3>Առաքման վճարներ (դրամ)</h3><p class="hint">Դաշտը դատարկ թողնելիս հաճախորդը կտեսնի «Գինը ճշտել»։ Մի լրացրու չհաստատված սակագներ։</p>
+          <div class="grid2"><div><label for="fee-zovuni">Զովունի</label><input id="fee-zovuni" type="number" min="0"></div><div><label for="fee-yerevan">Երևան</label><input id="fee-yerevan" type="number" min="0"></div><div><label for="fee-kotayk">Կոտայքի այլ բնակավայրեր</label><input id="fee-kotayk" type="number" min="0"></div><div><label for="fee-other">Հայաստանի այլ մարզեր</label><input id="fee-other" type="number" min="0"></div></div>
+        </form>
+      </section>
+      <section class="tab" id="tab-reviews" hidden>
+        <div class="toolbar"><div><h2>Իրական կարծիքներ</h2><p>Ավելացրու միայն իրական հաճախորդի համաձայնությամբ ստացված կարծիք։</p></div><button id="add-review" class="primary">+ Կարծիք</button></div>
+        <div class="panel wide"><div id="review-list"></div><div id="review-editor" hidden>
+          <h3>Խմբագրել կարծիքը</h3>
+          <label for="review-name">Հաճախորդի անուն</label><input id="review-name" maxlength="90">
+          <label for="review-rating">Գնահատական</label><select id="review-rating"><option value="5">5 / 5</option><option value="4">4 / 5</option><option value="3">3 / 5</option><option value="2">2 / 5</option><option value="1">1 / 5</option></select>
+          <div class="langs"><label for="review-hy">Հայերեն</label><textarea id="review-hy" rows="3" maxlength="700"></textarea><label for="review-ru">Русский</label><textarea id="review-ru" rows="3" maxlength="700"></textarea><label for="review-en">English</label><textarea id="review-en" rows="3" maxlength="700"></textarea></div>
+          <label class="checkboxline"><input id="review-approved" type="checkbox"> Այս կարծիքը իրական է, հաճախորդի հրապարակման համաձայնությունը կա</label>
+          <button type="button" id="review-delete" class="danger">Ջնջել կարծիքը</button>
+        </div></div>
+      </section>
+      <section class="tab" id="tab-pages" hidden>
+        <div class="toolbar"><div><h2>Էջերի վերնագրեր և SEO</h2><p>Փոխիր H1 վերնագիրը, էջի նկարագրությունը կամ ներածական տեքստը։</p></div></div>
+        <div class="panel wide">
+          <label for="page-select">Ընտրիր էջը</label><select id="page-select"></select>
+          <label for="page-h1">Գլխավոր վերնագիր (H1)</label><input id="page-h1" maxlength="180">
+          <label for="page-title">Google վերնագիր (Title)</label><input id="page-title" maxlength="130">
+          <label for="page-description">Google նկարագրություն</label><textarea id="page-description" maxlength="300" rows="3"></textarea>
+          <label for="page-intro">Էջի ներածություն (եթե կա)</label><textarea id="page-intro" maxlength="900" rows="4"></textarea>
+          <p class="hint">Դատարկ դաշտերը պահպանում են կայքի սկզբնական տեքստը։</p>
+        </div>
+      </section>
+      <section class="tab" id="tab-help" hidden>
+        <div class="panel wide">
+          <h2>Ինչպես օգտագործել</h2>
+          <ol>
+            <li>Առաջին անգամ ստեղծիր GitHub fine-grained token՝ միայն <strong>alform-creator/rose-and-co</strong> նախագծի <strong>Contents: Read and write</strong> իրավունքով։</li>
+            <li>Նշիր քո ընտրած լոգինն ու ուժեղ գաղտնաբառը։ Հաջորդ անգամ նույն սարքով մուտք գործիր միայն դրանցով։ Փոխիր ապրանքները, գները, նկարները և տեքստերը։</li>
+            <li>Սեղմիր <strong>«Հրապարակել փոփոխությունները»</strong>։ Նկարներն ու տվյալները կուղարկվեն GitHub, և կայքը ավտոմատ կթարմացվի։</li>
+            <li>Եթե պանելի փոփոխությունները ուրիշ աշխատակից է կատարել, մինչև աշխատելդ թարմացրու էջը, որպեսզի չվերագրես նրա աշխատանքը։ Նոր սարքի կարգավորումը առանձին է։</li>
+          </ol>
+          <p><strong>Անվտանգություն.</strong> Գաղտնագրված GitHub token-ը պահվում է միայն այս սարքի բրաուզերում, ոչ թե հրապարակային կոդում։ Մուտքի գաղտնաբառը երբեք չի պահվում բաց տեքստով։ Առանձին սերվերային հաշիվ դեռ միացված չէ։</p>
+          <p><strong>Պատվերներ.</strong> Գործող կայքը պատվերի հարցումները փոխանցում է WhatsApp-ին։ Այն չունի պատվերների սերվերային բազա, հետևաբար այս պանելում WhatsApp հաղորդագրությունների պատմությունը հասանելի չէ։</p>
+          <h3>Մուտք գործել նաև այլ սարքից</h3>
+          <p>Ներբեռնիր մուտքի գաղտնագրված ֆայլը, նոր սարքում բացիր այս ադմինի էջը և ընտրիր այդ ֆայլը։ Հետո օգտագործիր նույն լոգինն ու գաղտնաբառը։ Ֆայլը պահիր անձնական, ապահով տեղում։</p>
+          <button id="vault-export" type="button" class="secondary">Ներբեռնել գաղտնագրված մուտքը</button>
+          <p class="hint">Գաղտնաբառը ֆայլում չկա։ Գաղտնաբառը փոխելուց հետո նորից ներբեռնիր ֆայլը․ նախկին պատճենն ինքնաբերաբար չի փոխվում։</p>
+          <h3>Փոխել այս սարքի գաղտնաբառը</h3>
+          <form id="change-password-form" autocomplete="off">
+            <label for="old-password">Գործող գաղտնաբառը</label>
+            <input id="old-password" type="password" autocomplete="current-password" required>
+            <label for="new-password">Նոր գաղտնաբառը (առնվազն 12 նիշ)</label>
+            <input id="new-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+            <label for="confirm-new-password">Կրկնել նոր գաղտնաբառը</label>
+            <input id="confirm-new-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+            <button type="submit" class="secondary">Փոխել գաղտնաբառը</button>
+          </form>
+          <p class="hint">Սա փոխում է միայն այս սարքում պահված գաղտնագրված մուտքը։</p>
+          <hr class="soft-divider">
+          <button id="disconnect" class="secondary">Դուրս գալ ադմին պանելից</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+</body>
+</html>
