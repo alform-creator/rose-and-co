@@ -86,10 +86,10 @@ count=0
 for lang in ('hy','ru','en'):
  for p in (root/lang).rglob('index.html'):
   doc=BeautifulSoup(p.read_text(),'html.parser')
-  doc.head.append(doc.new_tag('link',rel='stylesheet',href='/rose-and-co/assets/production.css?v=20261026-animation2'))
+  doc.head.append(doc.new_tag('link',rel='stylesheet',href='/rose-and-co/assets/production.css?v=20261026-intro3'))
   for script in doc.select('script[src]'):
    src=script['src']
-   if '/assets/' in src:script['src']=src.split('?')[0]+'?v=release20261026-animation2'
+   if '/assets/' in src:script['src']=src.split('?')[0]+'?v=release20261026-intro3'
   # Honor no-JS, copy-link and open-in-new-tab behavior throughout public pages.
   for a in doc.select('[data-requires-contact]'):
    kind=a.get('data-requires-contact')

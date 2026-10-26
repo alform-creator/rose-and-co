@@ -1,0 +1,112 @@
+/* Rose & Co — a quiet, luminous floral atelier entrance. */
+@font-face{
+ font-family:'Rose Bloom Armenian';
+ src:url('/rose-and-co/assets/fonts/NotoSerifArmenian-SemiCondensedLight.woff') format('woff');
+ font-style:normal;font-weight:300;font-display:swap;
+}
+html.rose-bloom-on .rose-bloom-overlay{
+ background:radial-gradient(ellipse at 50% 43%,#fffdf9 0%,#fbf3ec 47%,#edd7d5 100%);
+ color:#673447;padding:110px 28px 64px;
+ animation:rb-leave .7s 5.9s forwards;
+}
+html.rose-bloom-on .rose-bloom-overlay::before{
+ inset:24px;left:24px;top:24px;width:auto;height:auto;border-radius:3px;
+ border:1px solid rgba(160,119,76,.35);
+ box-shadow:inset 0 0 0 7px rgba(255,255,255,.28);
+}
+html.rose-bloom-on .rose-bloom-overlay::after{
+ width:min(700px,90vw);height:min(700px,90vw);left:50%;top:48%;bottom:auto;right:auto;
+ transform:translate(-50%,-50%);border:0;
+ background:radial-gradient(ellipse,rgba(244,219,200,.23),transparent 68%);
+}
+.rose-bloom-overlay .rose-bloom-brand{
+ top:54px;left:15%;right:15%;font:400 clamp(24px,3vw,35px)/1.2 Georgia,serif;
+ letter-spacing:.23em;color:#633044;animation:rb-caption-in .9s .1s both;
+}
+.rose-bloom-overlay .rose-bloom-brand span{font-style:italic;color:#ac815d}
+.rose-bloom-brand small{
+ display:block;font:500 8px/1.5 'DM Sans',sans-serif;letter-spacing:.38em;
+ color:#977456;margin-top:13px;
+}
+.rose-bloom-overlay .rose-bloom-skip{
+ top:max(39px,env(safe-area-inset-top));right:max(43px,env(safe-area-inset-right));
+ min-height:44px;padding:10px 17px;background:rgba(255,252,247,.7);
+ border-color:rgba(156,112,78,.3);font-size:11px;color:#744f51;letter-spacing:0;
+}
+.rose-bloom-overlay .rose-bloom-scene{
+ width:min(295px,32vh,66vw);min-width:0;aspect-ratio:420/390;
+ margin:0 0 7px;flex:0 0 auto;
+}
+.rose-bloom-overlay .rose-bloom-scene::before{
+ inset:5% 2%;border:1px solid rgba(184,145,104,.2);
+ background:radial-gradient(ellipse,rgba(255,255,255,.78),transparent 70%);
+ border-radius:50% 50% 46% 46%;
+ animation:rb-halo-in 1.7s .3s both;
+}
+.rose-bloom-scene::after{
+ content:'';position:absolute;inset:0 -4% 2%;border:1px solid rgba(184,145,104,.12);
+ border-radius:50%;transform:rotate(-17deg);pointer-events:none;
+ animation:rb-halo-in 2s .4s both;
+}
+.rose-bloom-overlay .rb-stem{stroke:#697864;stroke-width:4.3}
+.rose-bloom-overlay .rb-soil{opacity:0;animation:rb-soil-in 1.1s .1s forwards}
+.rose-bloom-overlay .rb-soil>path{opacity:.45}
+.rose-bloom-overlay .rb-leaf-left,.rose-bloom-overlay .rb-leaf-right{stroke:#72826a;stroke-width:.7}
+.rose-bloom-overlay .rb-petals{stroke:#bd8590;stroke-width:.7;filter:drop-shadow(0 5px 7px rgba(114,58,71,.1))}
+.rose-bloom-overlay .rose-bloom-caption,
+html[lang='hy'].rose-bloom-on .rose-bloom-overlay .rose-bloom-caption{
+ font-family:'Playfair Display',Georgia,serif;font-weight:400;font-style:normal;
+ font-size:clamp(28px,3.6vw,46px);line-height:1.2;letter-spacing:0;
+ display:flex;flex-direction:column;align-items:center;width:100%;max-width:800px;
+ margin:0;gap:2px;color:#643347;text-wrap:balance;
+ animation:rb-caption-in 1s 1.1s both;
+}
+html[lang='hy'].rose-bloom-on .rose-bloom-overlay .rose-bloom-caption{
+ font-family:'Rose Bloom Armenian','Noto Serif Armenian',serif;
+ font-weight:300;font-size:clamp(30px,3.7vw,47px);line-height:1.38;
+ font-synthesis:none;
+}
+.rose-bloom-caption .rb-caption-middle{
+ font-size:.68em;line-height:1.5;color:#8a6164;font-weight:400;
+}
+.rose-bloom-caption .rb-caption-accent{
+ display:block;font-size:1.52em;line-height:1.28;
+ color:#89566a;
+ background:linear-gradient(115deg,#6b3047 15%,#af8258 53%,#6b3047 85%);
+ background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+ padding:0 .1em .12em;
+ animation:rb-accent-in 1.25s 1.65s both;
+}
+.rose-bloom-overlay .rose-bloom-subtitle{
+ display:flex;align-items:center;gap:17px;margin:20px 0 0;
+ font:500 8px/1.5 'DM Sans',sans-serif;letter-spacing:.32em;color:#997452;
+ animation:rb-caption-in 1s 2.1s both;
+}
+.rose-bloom-subtitle::before,.rose-bloom-subtitle::after{
+ content:'';height:1px;width:48px;background:linear-gradient(90deg,transparent,#c4a47c);
+}
+.rose-bloom-subtitle::after{transform:rotate(180deg)}
+@keyframes rb-halo-in{from{opacity:0;scale:.94}to{opacity:1;scale:1}}
+@keyframes rb-accent-in{from{opacity:0;transform:translateY(9px);filter:blur(3px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@media(max-width:640px){
+ html.rose-bloom-on .rose-bloom-overlay{padding:117px 25px 50px}
+ html.rose-bloom-on .rose-bloom-overlay::before{inset:13px}
+ .rose-bloom-overlay .rose-bloom-brand{top:73px;left:20px;right:20px;font-size:26px}
+ .rose-bloom-brand small{font-size:7px;margin-top:11px}
+ .rose-bloom-overlay .rose-bloom-skip{top:max(22px,env(safe-area-inset-top));right:23px;font-size:10px;min-height:38px;padding:8px 13px}
+ .rose-bloom-overlay .rose-bloom-scene{width:min(245px,29vh,65vw);margin-bottom:14px}
+ .rose-bloom-overlay .rose-bloom-caption{font-size:clamp(28px,7.5vw,38px)}
+ html[lang='hy'].rose-bloom-on .rose-bloom-overlay .rose-bloom-caption{font-size:clamp(28px,7.7vw,35px);line-height:1.42}
+ .rose-bloom-overlay .rose-bloom-subtitle{font-size:7px;letter-spacing:.24em;gap:12px;margin-top:17px}
+ .rose-bloom-subtitle::before,.rose-bloom-subtitle::after{width:28px}
+}
+@media(max-height:650px){
+ html.rose-bloom-on .rose-bloom-overlay{padding-top:90px;padding-bottom:30px}
+ .rose-bloom-overlay .rose-bloom-brand{top:34px;font-size:22px}
+ .rose-bloom-brand small{margin-top:6px;font-size:7px}
+ .rose-bloom-overlay .rose-bloom-scene{width:min(180px,26vh);margin-bottom:5px}
+ html[lang='hy'].rose-bloom-on .rose-bloom-overlay .rose-bloom-caption{font-size:28px;line-height:1.25}
+ .rose-bloom-overlay .rose-bloom-subtitle{margin-top:10px}
+ .rose-bloom-overlay .rose-bloom-skip{top:18px;right:23px}
+}
+@media(prefers-reduced-motion:reduce){.rose-bloom-overlay{display:none!important}}
