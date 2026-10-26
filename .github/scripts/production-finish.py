@@ -24,7 +24,8 @@ html[lang=hy] .hero h1{font-size:clamp(36px,3.7vw,54px);line-height:1.38}
 .rose-runner-close{top:0!important;right:0!important;min-width:32px;min-height:32px}
 @keyframes rr-scene-cycle{0%{opacity:0;transform:translateY(16px)}7%,86%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(13px)}}
 @media(max-width:760px){
- .rose-runner,.rose-runner.rose-runner-active{display:none!important}
+ .rose-runner{display:block!important;width:220px!important;height:107px!important;right:8px;bottom:max(8px,env(safe-area-inset-bottom,0px))}
+ .rose-runner-close{min-width:44px;min-height:44px}
  input,select,textarea{font-size:16px!important}
  .hero h1{font-size:clamp(32px,7.5vw,44px)}
  html[lang=hy] .hero h1{font-size:clamp(30px,7.4vw,39px);line-height:1.42}
@@ -85,10 +86,10 @@ count=0
 for lang in ('hy','ru','en'):
  for p in (root/lang).rglob('index.html'):
   doc=BeautifulSoup(p.read_text(),'html.parser')
-  doc.head.append(doc.new_tag('link',rel='stylesheet',href='/rose-and-co/assets/production.css?v=20261026'))
+  doc.head.append(doc.new_tag('link',rel='stylesheet',href='/rose-and-co/assets/production.css?v=20261026-animation2'))
   for script in doc.select('script[src]'):
    src=script['src']
-   if '/assets/' in src:script['src']=src.split('?')[0]+'?v=release20261026'
+   if '/assets/' in src:script['src']=src.split('?')[0]+'?v=release20261026-animation2'
   # Honor no-JS, copy-link and open-in-new-tab behavior throughout public pages.
   for a in doc.select('[data-requires-contact]'):
    kind=a.get('data-requires-contact')

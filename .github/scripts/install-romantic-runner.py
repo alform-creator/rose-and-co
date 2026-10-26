@@ -320,8 +320,9 @@ js = r'''(() => {
   const intervalMs = 30000;  // Every thirty seconds after the first preview
   const durationMs = 6500;
   const closeButton = stage.querySelector(".rose-runner-close");
+  const replay = new URLSearchParams(location.search).get("animation") === "1";
   let dismissed = reduced.matches;
-  try { dismissed = dismissed || sessionStorage.getItem('rose-runner-dismissed') === '1'; } catch {}
+  try { dismissed = dismissed || (!replay && sessionStorage.getItem('rose-runner-dismissed') === '1'); } catch {}
   let finishTimer = null;
   let intervalTimer = null;
   let startTimer = null;
@@ -352,8 +353,8 @@ js = r'''(() => {
   function begin() {
     if (dismissed || intervalTimer !== null || startTimer !== null) return;
     // On homepages, do not cover the separate flower-growing intro.
-    // On interior pages, the first gift appears almost immediately.
-    const delay = 30000;
+    // Start after the intro; subsequent appearances keep their 30-second cycle.
+    const delay = 6500;
     startTimer = window.setTimeout(() => {
       startTimer = null;
       play();
